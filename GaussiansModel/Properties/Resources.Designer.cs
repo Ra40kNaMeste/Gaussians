@@ -70,6 +70,15 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Export prn.
+        /// </summary>
+        internal static string ExportToPrn {
+            get {
+                return ResourceManager.GetString("ExportToPrn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Extremums.
         /// </summary>
         internal static string ExtremumParameterName {
@@ -354,6 +363,15 @@ namespace GaussiansModel.Properties {
         internal static string StretchXChanger {
             get {
                 return ResourceManager.GetString("StretchXChanger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Stretch Y.
+        /// </summary>
+        internal static string StretchYChanger {
+            get {
+                return ResourceManager.GetString("StretchYChanger", resourceCulture);
             }
         }
     }

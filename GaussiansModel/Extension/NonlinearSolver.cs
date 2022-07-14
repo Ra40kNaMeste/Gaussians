@@ -80,8 +80,8 @@ namespace GaussiansModel.Extension
         }
         public static double FindExtremum(Func<double, double> func, double min, double max, double error)
         {
-            double derMin = Derivative(func, min, error / 10);
-            double derMax = Derivative(func, max, error / 10);
+            double derMin = Derivative(func, min, error / 100);
+            double derMax = Derivative(func, max, error / 100);
             if (derMin * derMax > 0)
                 throw new ArgumentException("range");
             while (Math.Abs(max-min)>error)

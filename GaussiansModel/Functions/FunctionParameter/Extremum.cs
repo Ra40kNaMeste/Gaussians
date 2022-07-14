@@ -56,7 +56,7 @@ namespace GaussiansModel.Functions
             List<(double, double)> rangesMax = new();
             for (double x = start + step; x < end; x += step)
             {
-                nextDer = NonlinearSolver.Derivative(func, x, step / 100);
+                nextDer = NonlinearSolver.Derivative(func, x, maxError / 100);
                 if (nextDer * der <= 0)
                 {
                     if (der > 0)
@@ -79,38 +79,34 @@ namespace GaussiansModel.Functions
             }).OrderBy(i => i.X).ToList();
             var enMax = maxes.GetEnumerator();
             var enMin = mins.GetEnumerator();
+            List<Point> newMin = new();
+            List<Point> newMax = new();
             if (enMax.MoveNext() && enMin.MoveNext())
             {
                 Point oldMin = enMin.Current, oldMax = enMax.Current;
-                List<Point> removedMin = new();
-                List<Point> removedMax = new();
-                var currentEnum = oldMax.X > oldMin.X ? enMin : enMax;
+                 var currentEnum = oldMax.X > oldMin.X ? enMin : enMax;
                 while (currentEnum.MoveNext())
                 {
                     Point cur = currentEnum.Current;
                     if (oldMax.X > oldMin.X)
                     {
-                        if (Math.Abs(oldMin.Y - oldMax.Y) <= range && Math.Abs(cur.Y - oldMax.Y) <= range)
-                            removedMax.Add(oldMax);
+                        if (Math.Abs(oldMin.Y - oldMax.Y) > range || Math.Abs(cur.Y - oldMax.Y) > range)
+                            newMax.Add(oldMax);
                         oldMin = cur;
                         currentEnum = enMax;
                     }
                     else
                     {
-                        if (Math.Abs(oldMax.Y - oldMin.Y) >= range && Math.Abs(cur.Y - oldMin.Y) >= range)
-                            removedMin.Add(oldMin);
+                        if (Math.Abs(oldMax.Y - oldMin.Y) > range || Math.Abs(cur.Y - oldMin.Y) > range)
+                            newMin.Add(oldMin);
                         oldMax = cur;
                         currentEnum = enMin;
                     }
                 }
-                maxes = maxes.Except(removedMax);
-                mins = mins.Except(removedMin);
-                maxes.Count();
-                mins.Count();
             }
 
-            SetOutputParameter(Properties.Resources.OutputMaxGraph, new PointGraph(maxes));
-            SetOutputParameter(Properties.Resources.OutputMinGraph, new PointGraph(mins));
+            SetOutputParameter(Properties.Resources.OutputMaxGraph, new PointGraph(newMax));
+            SetOutputParameter(Properties.Resources.OutputMinGraph, new PointGraph(newMin));
         }
     }
 }

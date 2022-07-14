@@ -42,7 +42,7 @@ namespace GaussiansModel.Functions
         {
             Inputs = new List<FunctionParameter>()
             {
-                new FunctionParameter(Properties.Resources.InputSource, typeof(Stream), null)
+                new FunctionParameter(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Open))
             };
             Outputs = new List<FunctionParameter>()
             {
@@ -52,7 +52,7 @@ namespace GaussiansModel.Functions
 
         public override void Invoke()
         {
-            SetOutputParameter(Properties.Resources.OutputGraph, ReadFile((Stream)FindInputParameter(Properties.Resources.InputSource).Value));
+            SetOutputParameter(Properties.Resources.OutputGraph, ReadFile(((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).Stream));
         }
 
         public abstract PointGraph ReadFile(Stream file);
@@ -131,5 +131,15 @@ namespace GaussiansModel.Functions
         public override string GetName() => Properties.Resources.ByPatternReaderName;
     }
 
+    public class StreamData
+    {
+        public StreamData(Stream stream, FileMode mode)
+        {
+            Stream = stream;
+            Mode = mode;
+        }
+        public Stream Stream { get; set; }
+        public FileMode Mode { get; set; }
+    }
     #endregion//RealizationsFileReader
 }

@@ -16,7 +16,7 @@ namespace Gaussians.DataConverters
     {
         public bool CanConvert(Type type)
         {
-            return type == typeof(Stream);
+            return type == typeof(StreamData);
         }
 
         public FrameworkElement GetView(FunctionParameter property, ViewModel viewModel)
@@ -46,15 +46,24 @@ namespace Gaussians.DataConverters
         {
             try
             {
-
-                OpenFileDialog dialog = new()
+                if (((StreamData)TargetParameter.Value).Mode == FileMode.Open)
                 {
-                    Title = Properties.Resources.MenuOpen
-                };
-                if (dialog.ShowDialog() == true)
-                {
-                    Stream = dialog.OpenFile();
+                    var dialog = new OpenFileDialog() { Title = Properties.Resources.MenuOpen };
+                    if (dialog.ShowDialog() == true)
+                    {
+                        Stream = dialog.OpenFile();
+                    }
                 }
+                else
+                {
+                    var dialog = new SaveFileDialog() { Title = Properties.Resources.MenuSave };
+                    if (dialog.ShowDialog() == true)
+                    {
+                        Stream = dialog.OpenFile();
+                    }
+                }
+
+ 
             }
             catch (Exception)
             {
@@ -75,7 +84,8 @@ namespace Gaussians.DataConverters
         }
         private void OnStreamChanged()
         {
-            TargetParameter.Value = Stream;
+            StreamData data = (StreamData)TargetParameter.Value;
+            data.Stream = Stream;
         }
     }
 }

@@ -120,6 +120,9 @@
   <data name="ByPatternReaderName" xml:space="preserve">
     <value>Import file</value>
   </data>
+  <data name="ExportToPrn" xml:space="preserve">
+    <value>Export prn</value>
+  </data>
   <data name="ExtremumParameterName" xml:space="preserve">
     <value>Extremums</value>
   </data>
@@ -215,5 +218,8 @@
   </data>
   <data name="StretchXChanger" xml:space="preserve">
     <value>Stretch X</value>
+  </data>
+  <data name="StretchYChanger" xml:space="preserve">
+    <value>Stretch Y</value>
   </data>
 </root>

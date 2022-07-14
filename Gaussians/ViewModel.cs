@@ -33,7 +33,8 @@ namespace Gaussians
             {Properties.Resources.OperationGraphChangers, typeof(FunctionChangedAttribute) },
             {Properties.Resources.ApproximationOperations, typeof(ApproximationFunctionAttribute) },
             {Properties.Resources.GraphProperties, typeof(FunctionParameterAttribute) },
-            {Properties.Resources.GraphGaussianFinders, typeof(GaussianFinderAttribute) }
+            {Properties.Resources.GraphGaussianFinders, typeof(GaussianFinderAttribute) },
+            {Properties.Resources.ExportGraphOperations, typeof(ExportGraphAttribute) }
         };
 
         #endregion
@@ -165,6 +166,9 @@ namespace Gaussians
         private DefaultCommand readFileCommand;
         public DefaultCommand ReadFileCommand { get { return readFileCommand ??= new(ReadFileCommandBody); } }
 
+        //private DefaultCommand exportFileCommand;
+        //public DefaultCommand ExportFileCommand { get { return exportFileCommand ??= new(ExportFileCommandBody); } }
+
         private DefaultCommand showPropertiesGraphCommand;
         public DefaultCommand ShowPropertiesGraphCommand => showPropertiesGraphCommand ??= new(ShowPropertiesGraphBody);
 
@@ -218,6 +222,34 @@ namespace Gaussians
             }
 
         }
+
+        //public void ExportFileCommandBody(object? parameter)
+        //{
+        //    try
+        //    {
+
+        //            SaveFileDialog dialog = new()
+        //            {
+        //                Title = Properties.Resources.MenuSave
+        //            };
+        //            if (dialog.ShowDialog() == true)
+        //            {
+        //                Stream file = dialog.OpenFile();
+        //                ExportToPrn writer = new();
+        //                writer.Inputs.Where(i=>i.ValueType == typeof(Stream)).First().Value = file;
+        //            foreach (var item in GraphList.GraphDataList)
+        //            {
+        //                IGraph graph = item.GraphModel;
+                        
+        //            }
+        //            }
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //    }
+
+        //}
 
         public void ShowPropertiesGraphBody(object? parameter)
         {

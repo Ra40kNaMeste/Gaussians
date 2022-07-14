@@ -94,6 +94,15 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Export.
+        /// </summary>
+        public static string ExportGraphOperations {
+            get {
+                return ResourceManager.GetString("ExportGraphOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Show graph.
         /// </summary>
         public static string FunctionNodeShowGraphName {
@@ -180,6 +189,15 @@ namespace Gaussians.Properties {
         public static string MenuOperations {
             get {
                 return ResourceManager.GetString("MenuOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save.
+        /// </summary>
+        public static string MenuSave {
+            get {
+                return ResourceManager.GetString("MenuSave", resourceCulture);
             }
         }
         

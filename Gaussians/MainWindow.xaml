@@ -1,0 +1,216 @@
+﻿<Window x:Class="Gaussians.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaussians"
+        xmlns:res="clr-namespace:Gaussians.Properties"
+        xmlns:pl="clr-namespace:InteractiveDataDisplay.WPF;assembly=Plots"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:con="clr-namespace:Gaussians.DataConverters"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <con:VisibilityConverter x:Key="visibilityConverter"/>
+        <local:ViewModel x:Key="vm"/>
+        <con:InputPropertyModelToVisualConverter ViewModel="{StaticResource ResourceKey=vm}" x:Key="inputPropConverter"/>
+        <con:OutputPropertyModelToVisualConverter ViewModel="{StaticResource ResourceKey=vm}" x:Key="outputPropConverter"/>
+
+    </Window.Resources>
+    <Window.DataContext>
+        <StaticResource ResourceKey="vm"/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="{x:Static res:Resources.MenuFile}">
+                <MenuItem Header="{x:Static res:Resources.MenuOpen}">
+                </MenuItem>
+                <MenuItem ItemsSource="{Binding MenuFileReaders}" Header="{x:Static res:Resources.MenuImportFile}">
+                    <MenuItem.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Value}">
+                            <TextBlock Text="{Binding Key}"/>
+                        </HierarchicalDataTemplate>
+                    </MenuItem.ItemTemplate>
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding RelativeSource=
+                                {RelativeSource AncestorType=Window}, Path=DataContext.ReadFileCommand}"/>
+                            <Setter Property="CommandParameter" Value="{Binding Value}"/>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem ItemsSource="{Binding OperationGroupList}" Header="{x:Static res:Resources.MenuOperations}">
+                <MenuItem.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Value}">
+                        <TextBlock Text="{Binding Key}"/>
+                    </HierarchicalDataTemplate>
+                </MenuItem.ItemTemplate>
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Command" Value="{Binding RelativeSource=
+                                {RelativeSource AncestorType=Window}, Path=DataContext.CreateOperationCommand}"/>
+                        <Setter Property="CommandParameter" Value="{Binding Value}"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
+            <MenuItem ItemsSource="{Binding OperationGroupList}" Header="{x:Static res:Resources.MenuInsertOperations}">
+                <MenuItem.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Value}">
+                        <TextBlock Text="{Binding Key}"/>
+                    </HierarchicalDataTemplate>
+                </MenuItem.ItemTemplate>
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Command" Value="{Binding RelativeSource=
+                                {RelativeSource AncestorType=Window}, Path=DataContext.InsertOperationInNodeCommand}"/>
+                        <Setter Property="CommandParameter" Value="{Binding Value}"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
+            <MenuItem ItemsSource="{Binding OperationGroupList}" Header="{x:Static res:Resources.MenuAddOperations}">
+                <MenuItem.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Value}">
+                        <TextBlock Text="{Binding Key}"/>
+                    </HierarchicalDataTemplate>
+                </MenuItem.ItemTemplate>
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Command" Value="{Binding RelativeSource=
+                                {RelativeSource AncestorType=Window}, Path=DataContext.AddOperationInNodeCommand}"/>
+                        <Setter Property="CommandParameter" Value="{Binding Value}"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
+
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Visibility="{Binding Nodes}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ListBox ItemsSource="{Binding Nodes.Functions}" SelectedItem="{Binding SelectedOperation}"/>
+                <StackPanel Grid.Row="1">
+                    <Button Content="{x:Static res:Resources.OperationRemove}" HorizontalAlignment="Center"
+                        Command="{Binding RemoveOperationInNodeCommand}"/>
+                    <Button Content="{x:Static res:Resources.OperationInvoke}" HorizontalAlignment="Center"
+                        Command="{Binding InvokeFunctionGraphCommand}"/>
+                </StackPanel>
+            </Grid>
+            <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+
+            <StackPanel Grid.Column="2" Visibility="{Binding SelectedOperation, Converter={StaticResource visibilityConverter}}">
+                <TextBox Text="{Binding SelectedOperation.Function.Name}"/>
+                <TextBlock Text="{x:Static res:Resources.OperationInputs}" HorizontalAlignment="Center"/>
+                <ListView ItemsSource="{Binding SelectedOperation.Function.Inputs}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="{x:Static res:Resources.OperationPropertyName}" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="{x:Static res:Resources.OperationPropertyValue}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ContentPresenter Content="{Binding Converter={StaticResource inputPropConverter}}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <TextBlock Text="{x:Static res:Resources.OperationOutputs}" HorizontalAlignment="Center"/>
+                <ListView ItemsSource="{Binding SelectedOperation.Function.Outputs}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="{x:Static res:Resources.OperationPropertyName}" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="{x:Static res:Resources.OperationPropertyValue}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ContentPresenter Content="{Binding Converter={StaticResource outputPropConverter}}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+            <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+            <pl:Chart Grid.Column="4" Content="{Binding GraphList.GraphList}">
+                <pl:Chart.LegendContent>
+                    <ItemsControl ItemsSource="{Binding GraphList.GraphDataList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Line Width="20" Height="20" X1="0" Y1="0" X2="1" Y2="1" Stroke="{Binding GraphBrush}" StrokeThickness="2" Stretch="Fill"/>
+                                    <TextBlock Text="{Binding Name}" Grid.Column="1" Margin="10, 0">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ShowPropertiesGraphCommand}"
+                                                                       CommandParameter="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBlock>
+                                    <Image Grid.Column="2" Style="{DynamicResource VisibleGraphImageStyle}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SwapVisibleGraphCommand}"
+                                                                       CommandParameter="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </pl:Chart.LegendContent>
+            </pl:Chart>
+            <GridSplitter Grid.Column="5" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+            <StackPanel Grid.Column="6">
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding ViewProperties.SettingProperties}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" Margin="10, 0" HorizontalAlignment="Left"/>
+                                <ContentPresenter Grid.Column="1" Content="{Binding Value}" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding ViewProperties.SettingActions}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Name}" Command="{Binding Command}" Background="{Binding Brush}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>

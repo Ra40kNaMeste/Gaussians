@@ -1,0 +1,41 @@
+﻿Для чтого чтобы добавить новуй операцию необходимо перейти в папку Funvtions и выбрать нужную папку характеризующую группу функций
+В папке есть класс-аттрибут. На данный момент:
+FileReaderAttribute SmoothingFinctionAttribute ApproximationFunctionAttribute FunctionParameterAttribute GaussianFinderAttribute
+Для создания своего метода необходимо:
+1) унаследовать публичнй класс с публичным конструктором без параметров от NodeFunctionBase<T>, где T - созданный класс, например
+public class Func : NodeFunctionBase<Func>
+{
+	public Func()
+	{
+		Inputs = new List<FunctionParameter>()
+		{
+			new FunctionParameter("inputPar", typeof(type_Parameter), standartValue)
+		};
+		Outputs = new List<FunctionParameter>()
+		{
+			new FunctionParameter("outputPar", typeof(type_Parameter), standartValue)
+		}
+	}
+	public string GetName()
+	{
+		return "Name";//Properties.Resources.Name
+	}
+	public void Invoke()
+	{
+		var input = FindInputParameter("inputPar").Value;
+		//Какие-то операции
+		SetOutputParameter("outputPar");
+	}
+}
+2) Реализовать абстрактный метод GetName(), который выдаёт название операции. Лучше всего использовать ресурсы (Properties.Resources.resx)
+и обращаться к нему как Properties.Resources.Имя_ресурса
+3) В конструкторе класса определить Inputs и Otputs - массив входов и выходов операции. Поддерживаются типы:
+IGraph (PointGraph и FuncGraph), double, bool, string, int. В методе Invoke получить входной параметр можно с помощью функции
+FindInputParameter("Имя_параметра").Value; а присвоить на выход SetOutputParameter("outputParameter").
+Если попробовать получить/присвоить параметр не из коллекции Inputs Outputs соответственно то выдаст ошибку
+В параметрах может быть объект только типа ValueType и его производных.
+Также в классах по пути GaussiansModel\Extension есть пара интересных статичских классов по обработке данных. А именно:
+MathPoint - математика с точками
+MatrixMath - операции над матрицами
+NonlinearSolver - Поиск решений нелинейных уравненийэ
+FunctionCollection - Некоторые функции

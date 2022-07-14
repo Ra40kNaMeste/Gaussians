@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Gaussians</id>
+    <version>1.0.0</version>
+    <authors>Gaussians</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0-windows7.0">
+        <dependency id="Plots" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Extended.Wpf.Toolkit" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="1.1.39" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net6.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WPF" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.runtimeconfig.json" target="lib\net6.0-windows7.0\Gaussians.runtimeconfig.json" />
+    <file src="E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.dll" target="lib\net6.0-windows7.0\Gaussians.dll" />
+  </files>
+</package>

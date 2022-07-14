@@ -1,0 +1,104 @@
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.exe
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.deps.json
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.runtimeconfig.json
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.pdb
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.csproj.AssemblyReference.cache
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\MainWindow.g.cs
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\App.g.cs
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians_MarkupCompile.cache
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians_MarkupCompile.lref
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\MainWindow.baml
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.g.resources
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.AssemblyInfoInputs.cache
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.AssemblyInfo.cs
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.csproj.CoreCompileInputs.cache
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\refint\Gaussians.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.pdb
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.genruntimeconfig.cache
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\ref\Gaussians.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\System.Reactive.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Plots.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Plots.pdb
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.csproj.CopyComplete
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.Properties.Resources.resources
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.csproj.GenerateResource.cache
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Properties\ColorsForGraphs.txt
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.AvalonDock.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.Toolkit.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Microsoft.Xaml.Behaviors.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\cs-CZ\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\de\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\es\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\fr\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\hu\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\it\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\ja-JP\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\ro\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\ru\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\sv\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\ResourceDictionaries\DefaultResourceDictionary.baml
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\obj\Debug\net6.0-windows\App.baml
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\GaussiansModel.dll
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\GaussiansModel.pdb
+E:\Projects\c# Project\Gaussians\Gaussians\Gaussians\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.exe
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Properties\ColorsForGraphs.txt
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.deps.json
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.runtimeconfig.json
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Gaussians.pdb
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.AvalonDock.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Xceed.Wpf.Toolkit.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Microsoft.Xaml.Behaviors.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\System.Reactive.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\cs-CZ\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\de\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\es\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\fr\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\hu\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\it\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\ja-JP\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\ro\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\ru\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\sv\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\GaussiansModel.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Plots.dll
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\GaussiansModel.pdb
+F:\Лёши\обмен\Gaussians\Gaussians\bin\Debug\net6.0-windows\Plots.pdb
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.csproj.AssemblyReference.cache
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\ResourceDictionaries\DefaultResourceDictionary.baml
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\MainWindow.g.cs
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\App.g.cs
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians_MarkupCompile.cache
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians_MarkupCompile.lref
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\App.baml
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\MainWindow.baml
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.g.resources
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.Properties.Resources.resources
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.csproj.GenerateResource.cache
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.GeneratedMSBuildEditorConfig.editorconfig
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.AssemblyInfoInputs.cache
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.AssemblyInfo.cs
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.csproj.CoreCompileInputs.cache
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.csproj.CopyComplete
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.dll
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\refint\Gaussians.dll
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.pdb
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\Gaussians.genruntimeconfig.cache
+F:\Лёши\обмен\Gaussians\Gaussians\obj\Debug\net6.0-windows\ref\Gaussians.dll

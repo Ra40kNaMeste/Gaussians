@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "83lyl9OegDPUFYvMmIt8iPgtHdby9OSKSfDd+02JAVvZPQ1f97LzoiOLXa5uW8Bp0WfVJeTOFjuzKxixkLApmQ==",
+  "dgSpecHash": "8tnszPWpFNf8l0KDaFJ0i80nxiZb+tIDF3cl4KPIPNPP/6WuO2KdEmTQL18/EJc2U0h1W5KfyUBj4UcpSTNs5g==",
   "success": true,
-  "projectFilePath": "F:\\Лёши\\обмен\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
+  "projectFilePath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\aleks\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\KPACAB4UK\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }

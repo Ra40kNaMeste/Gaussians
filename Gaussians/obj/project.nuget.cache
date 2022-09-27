@@ -1,25 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "otLIY1YweDaBxxqMZYqG9J9Ny9w2eD42XwH5YrIIqR5cQ7r3z3osEq3FH3MoT6O5XzjuL3GnD0ts0HFEB9aVkQ==",
+  "dgSpecHash": "2TRg8WTd8ua/drZ00O5kLrwveLxzdpphQ2mrjTX8OcYoFcoD+9gRnVdGKXMcZiBEsoQOh6efz+k6eEnYFupYRQ==",
   "success": true,
-  "projectFilePath": "F:\\Лёши\\обмен\\Gaussians\\Gaussians\\Gaussians.csproj",
+  "projectFilePath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\aleks\\.nuget\\packages\\extended.wpf.toolkit\\4.3.0\\extended.wpf.toolkit.4.3.0.nupkg.sha512",
-    "C:\\Users\\aleks\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
-    "C:\\Users\\aleks\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
-    "C:\\Users\\aleks\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512",
-    "C:\\Users\\aleks\\.nuget\\packages\\system.reactive\\5.0.0\\system.reactive.5.0.0.nupkg.sha512"
+    "C:\\Users\\KPACAB4UK\\.nuget\\packages\\extended.wpf.toolkit\\4.4.0\\extended.wpf.toolkit.4.4.0.nupkg.sha512",
+    "C:\\Users\\KPACAB4UK\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
+    "C:\\Users\\KPACAB4UK\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\KPACAB4UK\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512",
+    "C:\\Users\\KPACAB4UK\\.nuget\\packages\\system.reactive\\5.0.0\\system.reactive.5.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Пакет \"Extended.Wpf.Toolkit 4.3.0\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\", а не целевой платформы проекта \"net6.0-windows7.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
-      "libraryId": "Extended.Wpf.Toolkit",
-      "targetGraphs": [
-        "net6.0-windows7.0"
-      ]
-    }
-  ]
+  "logs": []
 }

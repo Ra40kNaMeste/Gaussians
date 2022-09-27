@@ -112,6 +112,24 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Show value.
+        /// </summary>
+        public static string FunctionNodeShowValueName {
+            get {
+                return ResourceManager.GetString("FunctionNodeShowValueName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Value.
+        /// </summary>
+        public static string FunctionNodeValueName {
+            get {
+                return ResourceManager.GetString("FunctionNodeValueName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Graph.
         /// </summary>
         public static string FunctionParameterGraph {
@@ -175,6 +193,51 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Add nodes.
+        /// </summary>
+        public static string MenuItemAddNodes {
+            get {
+                return ResourceManager.GetString("MenuItemAddNodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Nodes.
+        /// </summary>
+        public static string MenuItemNodes {
+            get {
+                return ResourceManager.GetString("MenuItemNodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Read.
+        /// </summary>
+        public static string MenuItemNodesReadNode {
+            get {
+                return ResourceManager.GetString("MenuItemNodesReadNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Write.
+        /// </summary>
+        public static string MenuItemNodesWriteNode {
+            get {
+                return ResourceManager.GetString("MenuItemNodesWriteNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Remove nodes.
+        /// </summary>
+        public static string MenuItemRemoveNodes {
+            get {
+                return ResourceManager.GetString("MenuItemRemoveNodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Open.
         /// </summary>
         public static string MenuOpen {
@@ -184,20 +247,20 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Operations.
-        /// </summary>
-        public static string MenuOperations {
-            get {
-                return ResourceManager.GetString("MenuOperations", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Save.
         /// </summary>
         public static string MenuSave {
             get {
                 return ResourceManager.GetString("MenuSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Stop.
+        /// </summary>
+        public static string OperationCancelInvoke {
+            get {
+                return ResourceManager.GetString("OperationCancelInvoke", resourceCulture);
             }
         }
         
@@ -274,11 +337,29 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Node .
+        /// </summary>
+        public static string ReaderNodeName {
+            get {
+                return ResourceManager.GetString("ReaderNodeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Read graph.
         /// </summary>
         public static string ReadGraphOperations {
             get {
                 return ResourceManager.GetString("ReadGraphOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Read nodes.
+        /// </summary>
+        public static string ReadNodesOperation {
+            get {
+                return ResourceManager.GetString("ReadNodesOperation", resourceCulture);
             }
         }
         
@@ -335,6 +416,15 @@ namespace Gaussians.Properties {
             get {
                 object obj = ResourceManager.GetObject("VisibleGraph", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Write nodes.
+        /// </summary>
+        public static string WriteNodesOperation {
+            get {
+                return ResourceManager.GetString("WriteNodesOperation", resourceCulture);
             }
         }
     }

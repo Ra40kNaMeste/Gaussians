@@ -8,6 +8,5 @@ namespace GaussiansModel.Functions
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class GaussianFinderAttribute:Attribute
-    {
-    }
+    {   }
 }

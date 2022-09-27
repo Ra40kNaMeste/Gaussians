@@ -20,6 +20,9 @@ using GaussiansModel;
 using Gaussians.Extension;
 using Gaussians.DataConverters;
 using System.Windows;
+using System.Reflection;
+using System.Threading;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Gaussians
 {
@@ -28,7 +31,7 @@ namespace Gaussians
         #region Settings
         private static Dictionary<string, Type> listOperationGroups = new()
         {
-            { Properties.Resources.ReadGraphOperations, typeof(FileReaderAttribute) },
+            {Properties.Resources.ReadGraphOperations, typeof(FileReaderAttribute) },
             {Properties.Resources.SmoothingOperations, typeof(SmoothingFinctionAttribute) },
             {Properties.Resources.OperationGraphChangers, typeof(FunctionChangedAttribute) },
             {Properties.Resources.ApproximationOperations, typeof(ApproximationFunctionAttribute) },
@@ -47,11 +50,13 @@ namespace Gaussians
 
         private void Init()
         {
-            CreateGrapgs();
-            CreateListReaders();
-            CreateOperationGropList();
+            TreesManager = new();
             PropertyConverter = new(this);
             Generator = new();
+            IsInvoke = false;
+            CreateGrapgs();
+            CreateListReaders();
+            CreateOperationGroupList();
         }
 
         private void CreateGrapgs()
@@ -63,15 +68,45 @@ namespace Gaussians
         {
             MenuFileReaders = FunctionManagerOperations.FindFunctionRealizationsByAttribute(typeof(FileReaderAttribute));
         }
-        private void CreateOperationGropList()
+        private void CreateOperationGroupList()
         {
             OperationGroupList = listOperationGroups.ToDictionary(i => i.Key,
-                i => FunctionManagerOperations.FindFunctionRealizationsByAttribute(i.Value));
+                i => FunctionManagerOperations.FindFunctionRealizationsByAttribute(i.Value)
+                .Union(FunctionManagerOperations.FindFunctionRealizationsByAttribute(i.Value, Assembly.GetExecutingAssembly())
+                .Select(i =>
+                {
+                    if (i.Value is ISetGeneratorElements t)
+                        t.SetViewModelElements(Generator);
+                    return i;
+                }))
+                .ToDictionary(i => i.Key, i => i.Value)
+                );
+
         }
         #endregion //Constructions
 
         #region VisualProperties
 
+        private string invokeFunctionName;
+        public string InvokeFunctionName
+        {
+            get => invokeFunctionName;
+            set
+            {
+                invokeFunctionName = value;
+                OnPropertyChanged();
+            }
+        }
+        private double invokeFunctionProgress;
+        public double InvokeFunctionProgress
+        {
+            get => invokeFunctionProgress;
+            set
+            {
+                invokeFunctionProgress = value;
+                OnPropertyChanged();
+            }
+        }
 
         private GraphViewManager graphList;
         /// <summary>
@@ -120,13 +155,24 @@ namespace Gaussians
             }
         }
 
-        private FunctionNodeTree nodes;
-        public FunctionNodeTree Nodes
+        private TreesManager treesManager;
+        public TreesManager TreesManager
         {
-            get { return nodes; }
-            private set
+            get { return treesManager; }
+            set
             {
-                nodes = value;
+                treesManager = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private FunctionNodeTree selectNodeTree;
+        public FunctionNodeTree SelectNodeTree
+        {
+            get { return selectNodeTree; }
+            set
+            {
+                selectNodeTree = value;
                 OnPropertyChanged();
             }
         }
@@ -155,19 +201,12 @@ namespace Gaussians
 
         #endregion //VisualProperties
 
-        #region PrivateProperties
-
-        #endregion//PeivateProperties
-
         #region Commands
 
         #region HeaderComamnd
 
         private DefaultCommand readFileCommand;
-        public DefaultCommand ReadFileCommand { get { return readFileCommand ??= new(ReadFileCommandBody); } }
-
-        //private DefaultCommand exportFileCommand;
-        //public DefaultCommand ExportFileCommand { get { return exportFileCommand ??= new(ExportFileCommandBody); } }
+        public DefaultCommand ReadFileCommand { get { return readFileCommand ??= new(ReadFileBody); } }
 
         private DefaultCommand showPropertiesGraphCommand;
         public DefaultCommand ShowPropertiesGraphCommand => showPropertiesGraphCommand ??= new(ShowPropertiesGraphBody);
@@ -176,29 +215,42 @@ namespace Gaussians
         public DefaultCommand SwapVisibleGraphCommand => swapVisibleGraphCommand ??= new(SwapVisibleGraphBody);
 
         private DefaultCommand invokeFunctionGraphCommand;
-        public DefaultCommand InvokeFunctionGraphCommand => invokeFunctionGraphCommand ??= new(InvokeFunctionGraphBody);
+        public DefaultCommand InvokeFunctionGraphCommand => invokeFunctionGraphCommand ??= new(InvokeFunctionGraphBody, CanInvokeFunctionGraphBody);
 
-        private DefaultCommand createOperationCommand;
-        public DefaultCommand CreateOperationCommand => createOperationCommand ??= new(CreateOperationBody);
+        private DefaultCommand cancelInvokeFunctionGraphCommand;
+        public DefaultCommand CancelInvokeFunctionGraphCommand => cancelInvokeFunctionGraphCommand ??= new(CancelInvokeFunctionGraphBody, CanCancelInvokeFunctionGraphBody);
+
+        private DefaultCommand addNodeTreeCommand;
+        public DefaultCommand AddNodeTreeCommand => addNodeTreeCommand ??= new(AddNodeTreeBody);
+
+        private DefaultCommand removeNodeTreeCommand;
+        public DefaultCommand RemoveNodeTreeCommand => removeNodeTreeCommand ??= new(RemoveNodeTreeBody, CanRemoveNodeTreeBody);
 
         private DefaultCommand closeGraphCommand;
         public DefaultCommand CloseGraphCommand => closeGraphCommand ??= new(CloseGraphBody);
 
-        private DefaultCommand addOperationInNodeCommand;
-        public DefaultCommand AddOpertionInNodeCommand => addOperationInNodeCommand ??= new(AddOperationInNodeBody);
+        private OnlyConditionCommand canChangedNodeCommand;
+        public OnlyConditionCommand CanChangedNodeCommand => canChangedNodeCommand ??= new(CanChangedNodeBody);
 
-        private DefaultCommand insertOperationInNodeCommand;
-        public DefaultCommand InsertOperationInNodeCommand => insertOperationInNodeCommand ??= new(InsertOperationInNodeBody);
+        private DefaultCommand appendNodeCommand;
+        public DefaultCommand AppendNodeCommand => appendNodeCommand ??= new(AppendNodeBody);
 
-        private DefaultCommand removeOperationInNodeCommand;
-        public DefaultCommand RemoveOperationInNodeCommand => removeOperationInNodeCommand ??= new(RemoveOperationInNodeBody);
+        private DefaultCommand insertNodeCommand;
+        public DefaultCommand InsertNodeCommand => insertNodeCommand ??= new(InsertNodeBody, CanInsertNodeBody);
 
+        private DefaultCommand removeNodeCommand;
+        public DefaultCommand RemoveNodeCommand => removeNodeCommand ??= new(RemoveNodeBody, CanRemoveNodeBody);
+
+        private DefaultCommand writeTreeCommand;
+        public DefaultCommand WriteTreeCommand => writeTreeCommand ??= new(WriteTreeBody, CanWriteTreeBody);
+
+        private DefaultCommand readTreeCommand;
+        public DefaultCommand ReadTreeCommand => readTreeCommand ??= new(ReadTreeBody);
 
         #endregion //HeaderCommand
 
         #region BodyCommand
-
-        public void ReadFileCommandBody(object? parameter)
+        public void ReadFileBody(object? parameter)
         {
             try
             {
@@ -223,34 +275,6 @@ namespace Gaussians
 
         }
 
-        //public void ExportFileCommandBody(object? parameter)
-        //{
-        //    try
-        //    {
-
-        //            SaveFileDialog dialog = new()
-        //            {
-        //                Title = Properties.Resources.MenuSave
-        //            };
-        //            if (dialog.ShowDialog() == true)
-        //            {
-        //                Stream file = dialog.OpenFile();
-        //                ExportToPrn writer = new();
-        //                writer.Inputs.Where(i=>i.ValueType == typeof(Stream)).First().Value = file;
-        //            foreach (var item in GraphList.GraphDataList)
-        //            {
-        //                IGraph graph = item.GraphModel;
-                        
-        //            }
-        //            }
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //    }
-
-        //}
-
         public void ShowPropertiesGraphBody(object? parameter)
         {
             if (parameter is GraphVisualData metadata)
@@ -263,31 +287,81 @@ namespace Gaussians
                 metadata.IsVisible = !metadata.IsVisible;
         }
 
+        public bool CanInvokeFunctionGraphBody(object? parameter)
+        {
+            return !IsInvoke;
+        }
         public void InvokeFunctionGraphBody(object? parameter)
         {
-            try
+            InvokeFunctionGraphBodyAsync();
+        }
+        public async void InvokeFunctionGraphBodyAsync()
+        {
+            IsInvoke = true;
+            TokenSource = new();
+            if (SelectNodeTree != null)
             {
-                if (Nodes != null)
-                {
-                    Nodes.InputContext = new(GraphList.GraphDataList.DistinctBy(i => i.Name).ToDictionary(i => i.Name, i => new FunctionParameter(i.Name, typeof(IGraph), null) { Value = i.GraphModel }));
-                    Nodes.Invoke();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error");
-            }
 
+                SelectNodeTree.InputContext = new(GraphList.GraphDataList.DistinctBy(i => i.Name)
+                    .ToDictionary(i => i.Name, i => new FunctionParameter(i.Name, typeof(IGraph), null) { Value = i.GraphModel }));
+                SelectNodeTree.FunctionProgressChanged += SetInvokeFunctionProgress;
+                try
+                {
+                    await Task.Run(() => SelectNodeTree.Invoke(TokenSource.Token));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error");
+                    SelectNodeTree.FunctionProgressChanged -= SetInvokeFunctionProgress;
+                    IsInvoke = false;
+                    return;
+                }
+                SelectNodeTree.FunctionProgressChanged -= SetInvokeFunctionProgress;
+                
+                foreach (var function in SelectNodeTree.Functions)
+                    if (function.Function is IVisualGraph graph)
+                    {
+                        var metadata = graph.ResultGraphMetadata;
+                        if (metadata == null)
+                            break;
+                        metadata.GraphBrush = new SolidColorBrush(Generator.GetColor());
+                        GraphList.AddGraph(metadata);
+                        BindingOperations.SetBinding(metadata.Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = metadata, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+                    }
+                TokenSource.Dispose();
+
+                SelectNodeTree.InputContext = new();
+            }
+            IsInvoke = false;
         }
 
-        public void CreateOperationBody(object? parameter)
+        public bool CanCancelInvokeFunctionGraphBody(object? parameter)
         {
-            if (parameter is INodeFunction function)
+            return IsInvoke;
+        }
+        public void CancelInvokeFunctionGraphBody(object? parameter)
+        {
+            TokenSource.Cancel();
+        }
+
+        public void AddNodeTreeBody(object? parameter)
+        {
+            FunctionNodeTree tree = new();
+            tree.Name = Generator.NodeNameGenerator.Next();
+            TreesManager.Trees.Add(tree);
+            SelectNodeTree = tree;
+        }
+
+        public bool CanRemoveNodeTreeBody(object? parameter)
+        {
+            return SelectNodeTree != null;
+        }
+        public void RemoveNodeTreeBody(object? parameter)
+        {
+            if(SelectNodeTree != null && TreesManager.Trees.Contains(SelectNodeTree))
             {
-                FunctionNodeTree tree = new();
-                tree.AddFunction((INodeFunction)function.Clone());
-                tree.AddFunction(new ShowGraphNode(GraphList, Generator));
-                Nodes = tree;
+                TreesManager.Trees.Remove(SelectNodeTree);
+                SelectNodeTree = null;
             }
         }
 
@@ -296,24 +370,96 @@ namespace Gaussians
             ViewProperties = null;
         }
 
-        public void AddOperationInNodeBody(object? parameter)
+        public bool CanChangedNodeBody(object? parameter)
         {
-            if (parameter is INodeFunction function && Nodes != null)
-                Nodes.AddFunction(function);
-        }
-        public void InsertOperationInNodeBody(object? parameter)
-        {
-            if (parameter is INodeFunction function && Nodes != null)
-            {
-                int index = Nodes.Functions.IndexOf(SelectedOperation);
-                Nodes.InsertFunction(function, index);
-            }
-        }
-        public void RemoveOperationInNodeBody(object? parameter)
-        {
-            Nodes.RemoveFunction(SelectedOperation.Function);
+            return SelectNodeTree != null;
         }
 
+        public void AppendNodeBody(object? parameter)
+        {
+            if (parameter is INodeFunction function && SelectNodeTree != null)
+                SelectNodeTree.AddFunction((INodeFunction)function.Clone());
+        }
+        public bool CanInsertNodeBody(object? parameter)
+        {
+            return SelectedOperation != null;
+        }
+        public void InsertNodeBody(object? parameter)
+        {
+            if (parameter is INodeFunction function && SelectNodeTree != null)
+            {
+                var functions = SelectNodeTree.Functions;
+                if (functions.Contains(SelectedOperation))
+                {
+                    int index = SelectNodeTree.Functions.IndexOf(SelectedOperation);
+                    SelectNodeTree.InsertFunction(function, index);
+                }
+                else
+                    AppendNodeBody(function);
+            }
+        }
+        public bool CanRemoveNodeBody(object? parameter)
+        {
+            return SelectedOperation != null;
+        }
+        public void RemoveNodeBody(object? parameter)
+        {
+            SelectNodeTree.RemoveFunction(SelectedOperation.Function);
+        }
+
+        public bool CanWriteTreeBody(object? parameter)
+        {
+            return SelectNodeTree != null;
+        }
+        public void WriteTreeBody(object? parameter)
+        {
+            try
+            {
+
+                SaveFileDialog dialog = new()
+                {
+                    Title = Properties.Resources.WriteNodesOperation,
+                    Filter = "All nodes|*.nodes"
+                };
+                if (dialog.ShowDialog() == true)
+                {
+                    using (Stream file = dialog.OpenFile())
+                    {
+                        TreesManager.WriteFile(file, SelectNodeTree);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Write error");
+            }
+        }
+
+        public void ReadTreeBody(object? parameter)
+        {
+            try
+            {
+
+                OpenFileDialog dialog = new()
+                {
+                    Title = Properties.Resources.WriteNodesOperation,
+                    Filter = "Nodes|*.nodes"
+                };
+                if (dialog.ShowDialog() == true)
+                {
+                    Stream file = dialog.OpenFile();
+                    var nodes = TreesManager.ReadFile(file);
+                    foreach (var node in nodes.Functions)
+                        if (node.Function is ISetGeneratorElements t)
+                            t.SetViewModelElements(Generator);
+                    TreesManager.Trees.Add(nodes);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
 
         #endregion //BodyCommand
 
@@ -321,17 +467,28 @@ namespace Gaussians
 
         #region PrivateMethods
 
+        private void SetInvokeFunctionProgress(object? sender, FunctionProgressEventArgs e)
+        {
+            InvokeFunctionName = e.FuncName;
+            InvokeFunctionProgress = e.Progress;
+        }
+
         private void AddPointsGraph(IGraph graph)
         {
-            GraphVisualData metadata = new(Generator.GetNameGraph(), graph, new SolidColorBrush(Generator.GetColor()));
+            GraphVisualData metadata = new(Generator.GraphNameGenerator.Next(), graph, new SolidColorBrush(Generator.GetColor()));
             GraphList.AddGraph(metadata);
             BindingOperations.SetBinding(metadata.Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = metadata, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
         }
         #endregion//PrivateMethods
 
         #region PrivateProperties
-        private SourceGenerator Generator { get; set; }
-        #endregion//PriavteProperties
+        private CancellationTokenSource TokenSource { get; set; }
+        private bool IsInvoke { get; set; }
+        #endregion //PrivateProperties
+
+        #region InternalProperties
+        protected internal SourceGenerator Generator { get; set; }
+        #endregion //InternalProperties
 
         #region Events
         private void OnPropertyChanged([CallerMemberName] string? prop = null) => PropertyChanged?.Invoke(this, new(prop));

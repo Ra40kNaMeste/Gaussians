@@ -4,7 +4,7 @@
 library
 C#
 .cs
-F:\Лёши\обмен\Gaussians\Plots\obj\Debug\net6.0-windows\
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\
 Plots
 none
 false
@@ -13,7 +13,7 @@ TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 3795499198
 
 49-1157582845
-195-1997186703
+195-2125532822
 Legend\DefaultTemplates.xaml;Plots\Markers\MarkerTemplates.xaml;Themes\Generic.xaml;
 
 False

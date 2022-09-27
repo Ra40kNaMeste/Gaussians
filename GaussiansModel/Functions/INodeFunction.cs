@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -23,9 +24,12 @@ namespace GaussiansModel.Functions
         /// <returns>Функции группы</returns>
         public static Dictionary<string, INodeFunction> FindFunctionRealizationsByAttribute(Type attributeType)
         {
-            Dictionary<string, INodeFunction> res = new();
+            return FindFunctionRealizationsByAttribute(attributeType, Assembly.GetExecutingAssembly());
+        }
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
+        public static Dictionary<string, INodeFunction> FindFunctionRealizationsByAttribute(Type attributeType, Assembly assembly)
+        {
+            Dictionary<string, INodeFunction> res = new();
             var objs = assembly.FindTypesWithAttribute(attributeType);
             foreach (var obj in objs)
             {
@@ -45,11 +49,13 @@ namespace GaussiansModel.Functions
     /// <summary>
     /// Некоторая функция
     /// </summary>
+    [JsonObject]
     public interface INodeFunction : INotifyPropertyChanged, ICloneable
     {
         /// <summary>
         /// Имя функции
         /// </summary>
+        [JsonProperty]
         public string Name
         {
             get; set;
@@ -57,11 +63,12 @@ namespace GaussiansModel.Functions
         /// <summary>
         /// Массив входных значений
         /// </summary>
-        public IEnumerable<FunctionParameter>? Inputs { get; set; }
+        [JsonProperty]
+        public ICollection<FunctionParameter>? Inputs { get; }
         /// <summary>
         /// Запуск функции
         /// </summary>
-        public void Invoke();
+        public void Invoke(CancellationToken token);
         /// <summary>
         /// Название функции. Будет отображаться в меню
         /// </summary>
@@ -70,27 +77,95 @@ namespace GaussiansModel.Functions
         /// <summary>
         /// Массив выходных значений
         /// </summary>
-        public IEnumerable<FunctionParameter>? Outputs { get; set; }
+        [JsonProperty]
+        public ICollection<FunctionParameter>? Outputs { get; }
+        /// <summary>
+        /// Прогресс выполнения от 0 до 100
+        /// </summary>
+        public double Progress { get; }
     }
     /// <summary>
     /// Реализация функции с некоторыми методами
     /// </summary>
-    [JsonObject]
-    public abstract class NodeFunctionBase<T> : INodeFunction where T : INodeFunction
+    public abstract class NodeFunctionBase<T> : INodeFunction, INotifyPropertyChanged where T : INodeFunction
     {
         public NodeFunctionBase()
         {
             Name = GetName();
+            Progress = 0.0;
+            Inputs = CreateCollection();
+            Outputs = CreateCollection();
         }
-        [JsonProperty]
-        public string Name { get; set; }
-        [JsonProperty]
-        public IEnumerable<FunctionParameter>? Inputs { get; set; }
-        [JsonProperty]
-        public IEnumerable<FunctionParameter>? Outputs { get; set; }
-        public abstract string GetName();
+        private ObservableCollection<FunctionParameter> CreateCollection()
+        {
+            var res = new ObservableCollection<FunctionParameter>();
+            res.CollectionChanged += OnCollectionChanged;
+            return res;
+        }
 
-        public abstract void Invoke();
+        private void OnCollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems == null || sender == null)
+                return;
+            var res = (ObservableCollection<FunctionParameter>)sender;
+            foreach (FunctionParameter item in e.NewItems)
+                foreach (FunctionParameter oldItem in res)
+                    if (item.Name == oldItem.Name && item != oldItem)
+                    {
+                        res.Remove(oldItem);
+                        break;
+                    }
+        }
+
+        private string name;
+        public string Name 
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ICollection<FunctionParameter>? inputs;
+        public ICollection<FunctionParameter>? Inputs 
+        {
+            get => inputs;
+            private set
+            {
+                inputs = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ICollection<FunctionParameter>? outputs;
+        public ICollection<FunctionParameter>? Outputs 
+            {
+            get => outputs;
+            private set
+            {
+                outputs = value;
+                OnPropertyChanged();
+            }
+}
+
+        private double progress;
+        /// <summary>
+        /// Прогресс выполнения функции от 0 до 100
+        /// </summary>
+        public double Progress 
+        {
+            get => progress;
+            protected set
+            {
+                progress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public abstract string GetName();
+        public abstract void Invoke(CancellationToken token);
         /// <summary>
         /// Ищет входной параметр по имени
         /// </summary>
@@ -156,10 +231,15 @@ namespace GaussiansModel.Functions
                 if (value == null)
                     return;
                 Type type = value.GetType();
-                if (ValueType.IsInstanceOfType(value))
+                if (ValueType.IsInstanceOfType(value) || type.IsSubclassOf(ValueType) || type == ValueType)
                     this.value = value;
+                else if (ValueType == typeof(int))
+                    this.value = System.Convert.ToInt32(value); 
                 else
+                {
                     throw new ArgumentException("value");
+
+                }
             }
         }
         public override string ToString()

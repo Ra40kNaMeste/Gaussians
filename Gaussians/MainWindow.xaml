@@ -25,6 +25,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <!--TopMenu-->
         <Menu>
             <MenuItem Header="{x:Static res:Resources.MenuFile}">
                 <MenuItem Header="{x:Static res:Resources.MenuOpen}">
@@ -44,7 +45,13 @@
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
             </MenuItem>
-            <MenuItem ItemsSource="{Binding OperationGroupList}" Header="{x:Static res:Resources.MenuOperations}">
+            <MenuItem Header="{x:Static res:Resources.MenuItemNodes}">
+                <MenuItem Header="{x:Static res:Resources.MenuItemAddNodes}" Command="{Binding AddNodeTreeCommand}"/>
+                <MenuItem Header="{x:Static res:Resources.MenuItemRemoveNodes}" Command="{Binding RemoveNodeTreeCommand}"/>
+                <MenuItem Header="{x:Static res:Resources.MenuItemNodesWriteNode}" Command="{Binding WriteTreeCommand}"/>
+                <MenuItem Header="{x:Static res:Resources.MenuItemNodesReadNode}" Command="{Binding ReadTreeCommand}"/>
+            </MenuItem>
+            <MenuItem ItemsSource="{Binding OperationGroupList}" Command="{Binding CanChangedNodeCommand}" Header="{x:Static res:Resources.MenuInsertOperations}">
                 <MenuItem.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Value}">
                         <TextBlock Text="{Binding Key}"/>
@@ -53,12 +60,12 @@
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="MenuItem">
                         <Setter Property="Command" Value="{Binding RelativeSource=
-                                {RelativeSource AncestorType=Window}, Path=DataContext.CreateOperationCommand}"/>
+                                {RelativeSource AncestorType=Window}, Path=DataContext.InsertNodeCommand}"/>
                         <Setter Property="CommandParameter" Value="{Binding Value}"/>
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
-            <MenuItem ItemsSource="{Binding OperationGroupList}" Header="{x:Static res:Resources.MenuInsertOperations}">
+            <MenuItem ItemsSource="{Binding OperationGroupList}" Command="{Binding CanChangedNodeCommand}" Header="{x:Static res:Resources.MenuAddOperations}">
                 <MenuItem.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Value}">
                         <TextBlock Text="{Binding Key}"/>
@@ -67,92 +74,99 @@
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="MenuItem">
                         <Setter Property="Command" Value="{Binding RelativeSource=
-                                {RelativeSource AncestorType=Window}, Path=DataContext.InsertOperationInNodeCommand}"/>
+                                {RelativeSource AncestorType=Window}, Path=DataContext.AppendNodeCommand}"/>
                         <Setter Property="CommandParameter" Value="{Binding Value}"/>
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
-            <MenuItem ItemsSource="{Binding OperationGroupList}" Header="{x:Static res:Resources.MenuAddOperations}">
-                <MenuItem.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Value}">
-                        <TextBlock Text="{Binding Key}"/>
-                    </HierarchicalDataTemplate>
-                </MenuItem.ItemTemplate>
-                <MenuItem.ItemContainerStyle>
-                    <Style TargetType="MenuItem">
-                        <Setter Property="Command" Value="{Binding RelativeSource=
-                                {RelativeSource AncestorType=Window}, Path=DataContext.AddOperationInNodeCommand}"/>
-                        <Setter Property="CommandParameter" Value="{Binding Value}"/>
-                    </Style>
-                </MenuItem.ItemContainerStyle>
-            </MenuItem>
-
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding InvokeFunctionName}"/>
+                <ProgressBar Minimum="0" Maximum="100" Value="{Binding InvokeFunctionProgress}" Width="50"/>
+            </StackPanel>
         </Menu>
+        <!--Body-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
+            <!--NodesView-->
+            <TabControl Grid.Column="0" ItemsSource="{Binding TreesManager.Trees}" SelectedItem="{Binding SelectNodeTree}" TabStripPlacement="Left">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <!--NodeTreeView-->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TabControl ItemsSource="{Binding Functions}" SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}, Path=DataContext.SelectedOperation}" TabStripPlacement="Left">
+                                <TabControl.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBox Text="{Binding Function.Name}"/>
+                                            <TextBlock Text="{x:Static res:Resources.OperationInputs}" HorizontalAlignment="Center"/>
+                                            <ListView ItemsSource="{Binding Function.Inputs}">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridView.Columns>
+                                                            <GridViewColumn Header="{x:Static res:Resources.OperationPropertyName}" DisplayMemberBinding="{Binding Name}"/>
+                                                            <GridViewColumn Header="{x:Static res:Resources.OperationPropertyValue}">
+                                                                <GridViewColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <ContentPresenter Content="{Binding Converter={StaticResource inputPropConverter}}"/>
+                                                                    </DataTemplate>
+                                                                </GridViewColumn.CellTemplate>
+                                                            </GridViewColumn>
+                                                        </GridView.Columns>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                            <TextBlock Text="{x:Static res:Resources.OperationOutputs}" HorizontalAlignment="Center"/>
+                                            <ListView ItemsSource="{Binding Function.Outputs}">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridView.Columns>
+                                                            <GridViewColumn Header="{x:Static res:Resources.OperationPropertyName}" DisplayMemberBinding="{Binding Name}"/>
+                                                            <GridViewColumn Header="{x:Static res:Resources.OperationPropertyValue}">
+                                                                <GridViewColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <ContentPresenter Content="{Binding Converter={StaticResource outputPropConverter}}"/>
+                                                                    </DataTemplate>
+                                                                </GridViewColumn.CellTemplate>
+                                                            </GridViewColumn>
+                                                        </GridView.Columns>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </TabControl.ContentTemplate>
+                            </TabControl>
+                            <StackPanel Grid.Row="1">
+                                <Button Content="{x:Static res:Resources.OperationRemove}" HorizontalAlignment="Center"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}, Path=DataContext.RemoveNodeCommand}"/>
+                                <Button Content="{x:Static res:Resources.OperationInvoke}" HorizontalAlignment="Center"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}, Path=DataContext.InvokeFunctionGraphCommand}"/>
+                                <Button Content="{x:Static res:Resources.OperationCancelInvoke}" HorizontalAlignment="Center"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}, Path=DataContext.CancelInvokeFunctionGraphCommand}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
 
-            <Grid Grid.Column="0" Visibility="{Binding Nodes}">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <ListBox ItemsSource="{Binding Nodes.Functions}" SelectedItem="{Binding SelectedOperation}"/>
-                <StackPanel Grid.Row="1">
-                    <Button Content="{x:Static res:Resources.OperationRemove}" HorizontalAlignment="Center"
-                        Command="{Binding RemoveOperationInNodeCommand}"/>
-                    <Button Content="{x:Static res:Resources.OperationInvoke}" HorizontalAlignment="Center"
-                        Command="{Binding InvokeFunctionGraphCommand}"/>
-                </StackPanel>
-            </Grid>
+                </TabControl.ContentTemplate>
+            </TabControl>
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
-
-            <StackPanel Grid.Column="2" Visibility="{Binding SelectedOperation, Converter={StaticResource visibilityConverter}}">
-                <TextBox Text="{Binding SelectedOperation.Function.Name}"/>
-                <TextBlock Text="{x:Static res:Resources.OperationInputs}" HorizontalAlignment="Center"/>
-                <ListView ItemsSource="{Binding SelectedOperation.Function.Inputs}">
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn Header="{x:Static res:Resources.OperationPropertyName}" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="{x:Static res:Resources.OperationPropertyValue}">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ContentPresenter Content="{Binding Converter={StaticResource inputPropConverter}}"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <TextBlock Text="{x:Static res:Resources.OperationOutputs}" HorizontalAlignment="Center"/>
-                <ListView ItemsSource="{Binding SelectedOperation.Function.Outputs}">
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn Header="{x:Static res:Resources.OperationPropertyName}" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="{x:Static res:Resources.OperationPropertyValue}">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ContentPresenter Content="{Binding Converter={StaticResource outputPropConverter}}"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </StackPanel>
-            <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
-            <pl:Chart Grid.Column="4" Content="{Binding GraphList.GraphList}">
+            <!--GrapsView-->
+            <pl:Chart Grid.Column="2" Content="{Binding GraphList.GraphList}">
                 <pl:Chart.LegendContent>
                     <ItemsControl ItemsSource="{Binding GraphList.GraphDataList}">
                         <ItemsControl.ItemTemplate>
@@ -186,8 +200,9 @@
                     </ItemsControl>
                 </pl:Chart.LegendContent>
             </pl:Chart>
-            <GridSplitter Grid.Column="5" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
-            <StackPanel Grid.Column="6">
+            <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+            <!--GraphPropertiesView-->
+            <StackPanel Grid.Column="4">
                 <ItemsControl Grid.Column="1" ItemsSource="{Binding ViewProperties.SettingProperties}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>

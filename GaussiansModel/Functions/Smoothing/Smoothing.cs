@@ -19,20 +19,15 @@ namespace GaussiansModel.Functions
     {
         public SmoothingByAverageValue()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()),
-                new(Properties.Resources.InputValueName, typeof(int), 200)
-            };
-            Outputs = new List<FunctionParameter>()
-            {
-                new(Properties.Resources.OutputGraph, typeof(IGraph), new PointGraph())
-            };
+            Inputs.Add(new(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()));
+            Inputs.Add(new(Properties.Resources.InputValueName, typeof(int), 200));
+
+            Outputs.Add(new(Properties.Resources.OutputGraph, typeof(IGraph), new PointGraph()));
         }
 
         public override string GetName() => Properties.Resources.SmoothingByAverageFunctionName;
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             int length = (int)FindInputParameter(Properties.Resources.InputValueName).Value;
             PointGraph graph = (PointGraph)FindInputParameter(Properties.Resources.InputChartName).Value;
@@ -42,6 +37,13 @@ namespace GaussiansModel.Functions
                 SetOutputParameter(Properties.Resources.OutputGraph, null);
                 return;
             }
+            Progress = 30;
+            if (token.IsCancellationRequested)
+            {
+                en.Dispose();
+                return;
+            }
+
             PointGraph res = new();
             Queue<Point> queue = new();
             int i = 0;
@@ -55,6 +57,13 @@ namespace GaussiansModel.Functions
                 }
                 i++;
             }
+            Progress += 30;
+            if (token.IsCancellationRequested)
+            {
+                en.Dispose();
+                return;
+            }
+
             res.Add(GetAvegare(queue));
             while (en.MoveNext())
             {
@@ -62,7 +71,10 @@ namespace GaussiansModel.Functions
                 queue.Dequeue();
                 res.Add(GetAvegare(queue));
             }
+            Progress = 100;
             en.Dispose();
+            if (token.IsCancellationRequested)
+                return;
             SetOutputParameter(Properties.Resources.OutputGraph, res);
             return;
         }
@@ -83,23 +95,18 @@ namespace GaussiansModel.Functions
     {
         public SmoothingByDistanceValue()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.InputDistanceY, typeof(double), 0.5),
-                new FunctionParameter(Properties.Resources.InputDistanceX, typeof(double), 0.5),
-                new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph())
-            };
-            Outputs = new List<FunctionParameter>()
-            {
-               new FunctionParameter(Properties.Resources.OutputGraph, typeof(IGraph), new PointGraph())
-            };
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputDistanceY, typeof(double), 0.5));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputDistanceX, typeof(double), 0.5));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()));
+
+            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(IGraph), new PointGraph()));
         }
         public override string GetName()
         {
             return Properties.Resources.SmoothingByDistanceFunctionName;
         }
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             PointGraph points = (PointGraph)FindInputParameter(Properties.Resources.InputChartName).Value;
             double disX = (double)FindInputParameter(Properties.Resources.InputDistanceX).Value;
@@ -108,6 +115,7 @@ namespace GaussiansModel.Functions
             PointGraph res = new();
 
             var enumerator = points.GetEnumerator();
+            Progress = 0;
             while (enumerator.MoveNext())
             {
                 Point? point = FindNextPoint(enumerator, disX, disY);
@@ -120,6 +128,7 @@ namespace GaussiansModel.Functions
                 res.Add((Point)point);
             }
             enumerator.Dispose();
+            Progress = 100;
             SetOutputParameter(Properties.Resources.OutputGraph, res);
             return;
         }
@@ -143,30 +152,24 @@ namespace GaussiansModel.Functions
     {
         public SmoothingForSplineApproximation()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()),
-                new FunctionParameter(Properties.Resources.InputMaxtanValue, typeof(double), 0.01),
-                new FunctionParameter(Properties.Resources.InputNoizePoint, typeof(int), 2)
-            };
-            Outputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph())
-            };
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputMaxtanValue, typeof(double), 0.01));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputNoizePoint, typeof(int), 2));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()));
+
+            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph()));
         }
         public override string GetName()
         {
             return Properties.Resources.SmoothingForSplineApprozimation;
         }
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             PointGraph points = (PointGraph)FindInputParameter(Properties.Resources.InputChartName).Value;
             int noize = (int)FindInputParameter(Properties.Resources.InputNoizePoint).Value;
-
             PointGraph res = new();
-
             double maxAngle = (double)FindInputParameter(Properties.Resources.InputMaxtanValue).Value;
+            Progress = 0;
 
             var en = points.GetEnumerator();
             if(!en.MoveNext())
@@ -199,6 +202,8 @@ namespace GaussiansModel.Functions
                 curAngle = nextTan;
                 deltaTan = nextDeltaTan;
             }
+            en.Dispose();
+            Progress = 100;
             SetOutputParameter(Properties.Resources.OutputGraph, res);
         }
         private bool IsNoize(Point startPoint, double maxAngle, double curAngle, int noizeCount, IEnumerator<Point> points, ref int steps)
@@ -231,28 +236,24 @@ namespace GaussiansModel.Functions
     {
         public SplittingGraph()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()),
-                new FunctionParameter(Properties.Resources.InputMaxtanValue, typeof(double), 0.01),
-                new FunctionParameter(Properties.Resources.InputUncorrectPointsValue, typeof(int), 1)
-            };
-            Outputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.OutputGraphs, typeof(PointGraph), new PointGraph())
-            };
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputMaxtanValue, typeof(double), 0.01));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputUncorrectPointsValue, typeof(int), 1));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()));
+
+            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph()));
         }
         public override string GetName()
         {
             return Properties.Resources.SmoothingSplitingGraph;
         }
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             PointGraph points = (PointGraph)FindInputParameter(Properties.Resources.InputChartName).Value;
             double maxTan = (double)FindInputParameter(Properties.Resources.InputMaxtanValue).Value;
             int maxUncorrectPoints = (int)FindInputParameter(Properties.Resources.InputUncorrectPointsValue).Value + 1;
 
+            Progress = 0;
             int uncorrectPoints = 0;
             var en = points.GetEnumerator();
             if (!en.MoveNext())
@@ -275,8 +276,9 @@ namespace GaussiansModel.Functions
                 }
                 else
                     uncorrectPoints = 0;
-
             }
+            en.Dispose();
+            Progress = 100;
 
             SetOutputParameter(Properties.Resources.OutputGraphs, new PointGraph(res));
 

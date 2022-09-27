@@ -21,7 +21,11 @@ namespace Gaussians.Commands
         private Action<object?> Command { get; set; }
         private Func<object?, bool>? CanCommand { get; set; }
 
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested+=value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         public bool CanExecute(object? parameter)
         {
@@ -31,6 +35,28 @@ namespace Gaussians.Commands
         public void Execute(object? parameter)
         {
             Command.Invoke(parameter);
+        }
+    }
+    internal class OnlyConditionCommand : ICommand
+    {
+        public OnlyConditionCommand(Func<object?, bool> canCommand)
+        {
+            CanCommand = canCommand;
+        }
+        private Func<object?, bool> CanCommand { get; init; }
+        public event EventHandler? CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+        public bool CanExecute(object? parameter)
+        {
+            return CanCommand.Invoke(parameter);
+        }
+
+        public void Execute(object? parameter)
+        {
+            
         }
     }
 }

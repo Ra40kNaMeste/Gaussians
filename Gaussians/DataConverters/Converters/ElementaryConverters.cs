@@ -8,8 +8,13 @@ using System.Windows.Data;
 
 namespace Gaussians.DataConverters
 {
-    internal class DoubleConverter : IValueConverter
+    internal class DoubleConverter : IValidationConverter
     {
+        public bool CanValidation(object obj, CultureInfo cultureInfo)
+        {
+            double temp = new();
+            return double.TryParse(obj.ToString(), out temp);
+        }
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value.ToString();
@@ -20,7 +25,7 @@ namespace Gaussians.DataConverters
             return System.Convert.ToDouble(value);
         }
     }
-    internal class IntConverter : IValueConverter
+    internal class IntConverter : IValidationConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -31,8 +36,14 @@ namespace Gaussians.DataConverters
         {
             return System.Convert.ToInt32(value);
         }
+
+        public bool CanValidation(object value, CultureInfo cultureInfo)
+        {
+            int temp = new();
+            return int.TryParse(value.ToString(), out temp);
+        }
     }
-    internal class StringConverter : IValueConverter
+    internal class StringConverter : IValidationConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -43,9 +54,14 @@ namespace Gaussians.DataConverters
         {
             return value.ToString();
         }
+
+        public bool CanValidation(object value, CultureInfo cultureInfo)
+        {
+            return true;
+        }
     }
 
-    internal class BoolConverter : IValueConverter
+    internal class BoolConverter : IValidationConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -55,6 +71,12 @@ namespace Gaussians.DataConverters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return System.Convert.ToBoolean(value);
+        }
+
+        public bool CanValidation(object value, CultureInfo cultureInfo)
+        {
+            bool temp = new();
+            return bool.TryParse(value.ToString(), out temp);
         }
     }
 }

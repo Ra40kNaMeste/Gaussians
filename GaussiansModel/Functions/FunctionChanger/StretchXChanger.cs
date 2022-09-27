@@ -16,23 +16,18 @@ namespace GaussiansModel.Functions
     {
         public StretchXChanger()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()),
-                new FunctionParameter(Properties.Resources.InputMinValue, typeof(double), 0.0),
-                new FunctionParameter(Properties.Resources.InputMaxValue, typeof(double), 1.0)
-            };
-            Outputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph())
-            };
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputMinValue, typeof(double), 0.0));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputMaxValue, typeof(double), 1.0));
+
+            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph()));
         }
         public override string GetName()
         {
             return Properties.Resources.StretchXChanger;
         }
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             PointGraph points = (PointGraph)FindInputParameter(Properties.Resources.InputChartName).Value;
             double min = (double)FindInputParameter(Properties.Resources.InputMinValue).Value;
@@ -42,8 +37,13 @@ namespace GaussiansModel.Functions
             double minPointX = points.Min(i => i.X);
 
             double multiply = (max - min) / (maxPointX - minPointX);
+            double progressStep = 100 / points.Count;
 
-            PointGraph res = new(points.Select(i => new Point((i.X - minPointX) * multiply + min, i.Y)));
+            PointGraph res = new(points.Select(i =>
+            {
+                Progress += progressStep;
+                return new Point((i.X - minPointX) * multiply + min, i.Y);
+            }));
             SetOutputParameter(Properties.Resources.OutputGraph, res);
         }
     }

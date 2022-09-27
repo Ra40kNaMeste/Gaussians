@@ -40,17 +40,11 @@ namespace GaussiansModel.Functions
     {
         public FileReaderBase()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Open))
-            };
-            Outputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph())
-            };
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Open)));
+            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph()));
         }
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             SetOutputParameter(Properties.Resources.OutputGraph, ReadFile(((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).Stream));
         }

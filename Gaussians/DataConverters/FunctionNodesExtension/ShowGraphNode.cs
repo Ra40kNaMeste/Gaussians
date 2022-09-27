@@ -3,54 +3,84 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using Gaussians.Properties;
 using GaussiansModel;
 using GaussiansModel.Functions;
 using InteractiveDataDisplay.WPF;
+using Newtonsoft.Json;
 
 namespace Gaussians.DataConverters
 {
-    internal class ShowGraphNode : NodeFunctionBase<ShowGraphNode>
+    internal interface ISetGeneratorElements
+    {
+        public void SetViewModelElements(SourceGenerator generator);
+    }
+
+    internal interface IVisualGraph
+    {
+        public GraphVisualData ResultGraphMetadata { get; set; }
+
+
+    }
+    [JsonObject]
+    [ExportGraph]
+    internal class ShowGraphNode : NodeFunctionBase<ShowGraphNode>, ISetGeneratorElements, IVisualGraph
     {
         public ShowGraphNode()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.FunctionParameterGraph, typeof(IGraph), new GaussiansModel.PointGraph())
-            };
+            Inputs.Add(new FunctionParameter(Properties.Resources.FunctionParameterGraph, typeof(IGraph), new GaussiansModel.PointGraph()));
         }
-        public ShowGraphNode(GraphViewManager manager, SourceGenerator generator)
+        public ShowGraphNode(SourceGenerator generator)
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.FunctionParameterGraph, typeof(IGraph), null)
-            };
-            Manager = manager;
+            Inputs.Add(new FunctionParameter(Properties.Resources.FunctionParameterGraph, typeof(IGraph), new GaussiansModel.PointGraph()));
+
             Generator = generator;
         }
-        private GraphViewManager Manager { get; set; }
+        [JsonIgnore]
         private SourceGenerator Generator { get; set; }
         public override string GetName()
         {
             return Properties.Resources.FunctionNodeShowGraphName;
         }
+        public void SetViewModelElements(SourceGenerator generator)
+        {
+            Generator = generator;
+        }
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             var graph = (IGraph)FindInputParameter(Properties.Resources.FunctionParameterGraph).Value;
 
-            GraphVisualData metadata = new(Generator.GetNameGraph(), graph, new SolidColorBrush(Generator.GetColor()));
-            Manager.AddGraph(metadata);
-            BindingOperations.SetBinding(metadata.Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = metadata, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+            ResultGraphMetadata = new(Generator.GraphNameGenerator.Next(), graph, null);
         }
+        [JsonIgnore]
+        public GraphVisualData ResultGraphMetadata { get; set; }
         public override object Clone()
         {
             ShowGraphNode res = (ShowGraphNode)base.Clone();
-            res.Manager = Manager;
             res.Generator = Generator;
             return res;
         }
     }
+    //[ExportGraph]
+    //internal class ShowValueNode : NodeFunctionBase<ShowValueNode>
+    //{
+    //    public ShowValueNode()
+    //    {
+    //        Inputs.Add(new(Resources.FunctionNodeValueName, typeof(object), string.Empty));
+    //    }
+    //    public override string GetName()
+    //    {
+    //        return Resources.FunctionNodeShowGraphName;
+    //    }
+
+    //    public override void Invoke(CancellationToken token)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

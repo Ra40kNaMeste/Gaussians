@@ -19,10 +19,10 @@ namespace Gaussians.DataConverters
         public IDataToViewShowConverter ShowConverter { get; set; }
         public abstract Type Type { get; }
 
-        protected abstract IValueConverter GetConverter();
+        protected abstract IValidationConverter GetConverter();
         public FrameworkElement GetView(FunctionParameter property, ViewModel viewModel)
         {
-            IValueConverter valueConverter = GetConverter();
+            IValidationConverter valueConverter = GetConverter();
             Binding binding = new("Value") { Source = property, Converter = valueConverter };
             binding.ValidationRules.Add(new ValidationRuleWithConverter(valueConverter));
             return ShowConverter.Show(binding);
@@ -62,7 +62,7 @@ namespace Gaussians.DataConverters
         public DoubleDataToViewConverter(IDataToViewShowConverter converter) : base(converter) { }
         public override Type Type => typeof(double);
 
-        protected override IValueConverter GetConverter() => new DoubleConverter();
+        protected override IValidationConverter GetConverter() => new DoubleConverter();
     }
     internal class IntDataToViewConverter : ElementaryDataToViewConverterBase
     {
@@ -70,7 +70,7 @@ namespace Gaussians.DataConverters
 
         public override Type Type => typeof(int);
 
-        protected override IValueConverter GetConverter() => new IntConverter();
+        protected override IValidationConverter GetConverter() => new IntConverter();
     }
     internal class StringDataToViewConverter : ElementaryDataToViewConverterBase
     {
@@ -78,7 +78,7 @@ namespace Gaussians.DataConverters
 
         public override Type Type => typeof(string);
 
-        protected override IValueConverter GetConverter() => new StringConverter();
+        protected override IValidationConverter GetConverter() => new StringConverter();
     }
     internal class BooleanDataToViewConverter : ElementaryDataToViewConverterBase
     {
@@ -86,6 +86,6 @@ namespace Gaussians.DataConverters
 
         public override Type Type => typeof(bool);
 
-        protected override IValueConverter GetConverter() => new BoolConverter();
+        protected override IValidationConverter GetConverter() => new BoolConverter();
     }
 }

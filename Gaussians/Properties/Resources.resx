@@ -133,6 +133,12 @@
   <data name="FunctionNodeShowGraphName" xml:space="preserve">
     <value>Show graph</value>
   </data>
+  <data name="FunctionNodeShowValueName" xml:space="preserve">
+    <value>Show value</value>
+  </data>
+  <data name="FunctionNodeValueName" xml:space="preserve">
+    <value>Value</value>
+  </data>
   <data name="FunctionParameterGraph" xml:space="preserve">
     <value>Graph</value>
   </data>
@@ -154,14 +160,29 @@
   <data name="MenuInsertOperations" xml:space="preserve">
     <value>Insert operation</value>
   </data>
+  <data name="MenuItemAddNodes" xml:space="preserve">
+    <value>Add nodes</value>
+  </data>
+  <data name="MenuItemNodes" xml:space="preserve">
+    <value>Nodes</value>
+  </data>
+  <data name="MenuItemNodesReadNode" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="MenuItemNodesWriteNode" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="MenuItemRemoveNodes" xml:space="preserve">
+    <value>Remove nodes</value>
+  </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="MenuOperations" xml:space="preserve">
-    <value>Operations</value>
-  </data>
   <data name="MenuSave" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="OperationCancelInvoke" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="OperationGraphChangers" xml:space="preserve">
     <value>Graph changer</value>
@@ -187,8 +208,14 @@
   <data name="ReaderGraphName" xml:space="preserve">
     <value>Graph</value>
   </data>
+  <data name="ReaderNodeName" xml:space="preserve">
+    <value>Node </value>
+  </data>
   <data name="ReadGraphOperations" xml:space="preserve">
     <value>Read graph</value>
+  </data>
+  <data name="ReadNodesOperation" xml:space="preserve">
+    <value>Read nodes</value>
   </data>
   <data name="SettingColorGraph" xml:space="preserve">
     <value>Color</value>
@@ -207,5 +234,8 @@
   </data>
   <data name="VisibleGraph" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\VisibleGraph.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WriteNodesOperation" xml:space="preserve">
+    <value>Write nodes</value>
   </data>
 </root>

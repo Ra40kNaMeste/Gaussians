@@ -26,3 +26,17 @@ F:\Лёши\обмен\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.
 F:\Лёши\обмен\Gaussians\GaussiansModel\obj\Debug\net6.0\refint\GaussiansModel.dll
 F:\Лёши\обмен\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.pdb
 F:\Лёши\обмен\Gaussians\GaussiansModel\obj\Debug\net6.0\ref\GaussiansModel.dll
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\bin\Debug\net6.0\GaussiansModel.deps.json
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\bin\Debug\net6.0\GaussiansModel.dll
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\bin\Debug\net6.0\GaussiansModel.pdb
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.csproj.AssemblyReference.cache
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.Properties.Resources.resources
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.csproj.GenerateResource.cache
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.AssemblyInfoInputs.cache
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.AssemblyInfo.cs
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.csproj.CoreCompileInputs.cache
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.dll
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\refint\GaussiansModel.dll
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\GaussiansModel.pdb
+D:\Projects\c# Project\Gaussians\Gaussians\GaussiansModel\obj\Debug\net6.0\ref\GaussiansModel.dll

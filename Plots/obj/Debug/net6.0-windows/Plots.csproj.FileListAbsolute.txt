@@ -36,3 +36,22 @@ F:\Лёши\обмен\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.dll
 F:\Лёши\обмен\Gaussians\Plots\obj\Debug\net6.0-windows\refint\Plots.dll
 F:\Лёши\обмен\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.pdb
 F:\Лёши\обмен\Gaussians\Plots\obj\Debug\net6.0-windows\ref\Plots.dll
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\bin\Debug\net6.0-windows\Plots.deps.json
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\bin\Debug\net6.0-windows\Plots.dll
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\bin\Debug\net6.0-windows\Plots.pdb
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.csproj.AssemblyReference.cache
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots_MarkupCompile.cache
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots_MarkupCompile.lref
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Legend\DefaultTemplates.baml
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots\Markers\MarkerTemplates.baml
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Themes\Generic.baml
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.g.resources
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.AssemblyInfoInputs.cache
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.AssemblyInfo.cs
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.csproj.CoreCompileInputs.cache
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.dll
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\refint\Plots.dll
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\Plots.pdb
+D:\Projects\c# Project\Gaussians\Gaussians\Plots\obj\Debug\net6.0-windows\ref\Plots.dll

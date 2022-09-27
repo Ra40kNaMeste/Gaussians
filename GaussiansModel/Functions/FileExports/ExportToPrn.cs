@@ -17,21 +17,18 @@ namespace GaussiansModel.Functions
     {
         public ExportToPrn()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.InputChartName, typeof(IGraph), new PointGraph()),
-                new FunctionParameter(Properties.Resources.InputMinValue, typeof(double), 0.0),
-                new FunctionParameter(Properties.Resources.InputMaxValue, typeof(double), 1.0),
-                new FunctionParameter(Properties.Resources.InputStep, typeof(double), 0.1),
-                new FunctionParameter(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Create))
-            };
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputChartName, typeof(IGraph), new PointGraph()));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputMinValue, typeof(double), 0.0));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputMaxValue, typeof(double), 1.0));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputStep, typeof(double), 0.1));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Create)));
         }
         public override string GetName()
         {
             return Properties.Resources.ExportToPrn;
         }
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             IGraph graph = (IGraph)FindInputParameter(Properties.Resources.InputChartName).Value;
             double max = (double)FindInputParameter(Properties.Resources.InputMaxValue).Value;
@@ -40,11 +37,13 @@ namespace GaussiansModel.Functions
             StreamData file = (StreamData)FindInputParameter(Properties.Resources.InputSource).Value;
 
             var points = GetPoints(graph, min, max, step);
+            double progressStep = 100 / points.Count();
             using (StreamWriter sw = new(file.Stream))
             {
                 foreach (var item in points)
                 {
                     sw.WriteLine(item.X.ToString() + ' ' + item.Y.ToString());
+                    Progress += progressStep;
                 }
             }
         }
@@ -59,4 +58,10 @@ namespace GaussiansModel.Functions
         }
 
     }
+
+    //[ExportGraph]
+    //public class ExportString
+    //{
+
+    //}
 }

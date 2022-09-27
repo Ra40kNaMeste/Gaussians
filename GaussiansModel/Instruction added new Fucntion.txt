@@ -7,14 +7,9 @@ public class Func : NodeFunctionBase<Func>
 {
 	public Func()
 	{
-		Inputs = new List<FunctionParameter>()
-		{
-			new FunctionParameter("inputPar", typeof(type_Parameter), standartValue)
-		};
-		Outputs = new List<FunctionParameter>()
-		{
-			new FunctionParameter("outputPar", typeof(type_Parameter), standartValue)
-		}
+		Inputs.Add(new FunctionParameter("inputPar", typeof(type_Parameter), standartValue))
+
+		Outputs.Add(new FunctionParameter("outputPar", typeof(type_Parameter), standartValue))
 	}
 	public string GetName()
 	{
@@ -34,6 +29,7 @@ IGraph (PointGraph и FuncGraph), double, bool, string, int. В методе Inv
 FindInputParameter("Имя_параметра").Value; а присвоить на выход SetOutputParameter("outputParameter").
 Если попробовать получить/присвоить параметр не из коллекции Inputs Outputs соответственно то выдаст ошибку
 В параметрах может быть объект только типа ValueType и его производных.
+Свойство Progress - прогресс выполнения нода. Меняется в функции Invoke от 0 до 100.
 Также в классах по пути GaussiansModel\Extension есть пара интересных статичских классов по обработке данных. А именно:
 MathPoint - математика с точками
 MatrixMath - операции над матрицами

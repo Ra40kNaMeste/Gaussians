@@ -47,5 +47,22 @@ namespace GaussiansModel.Extension
             point.Y /= points.Length;
             return point;
         }
+        /// <summary>
+        /// Усреднение массива точек
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public static Point CenterPoint(IEnumerable<Point> points)
+        {
+            Point point = new Point();
+            foreach (var item in points)
+            {
+                point.X += item.X;
+                point.Y += item.Y;
+            }
+            point.X /= points.Count();
+            point.Y /= points.Count();
+            return point;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace Gaussians.DataConverters
         public FrameworkElement GetView(FunctionParameter parameter, ViewModel viewModel)
         {
             TextBlock res = new();
-            res.SetBinding(TextBlock.TextProperty, new Binding("Name") { Source = parameter });
+            res.SetBinding(TextBlock.TextProperty, new Binding("Name") { Source = parameter, });
             return res;
         }
     }
@@ -39,34 +39,46 @@ namespace Gaussians.DataConverters
         public FrameworkElement GetView(FunctionParameter parameter, ViewModel viewModel)
         {
             ComboBox box = new ComboBox();
-
+            if (viewModel.SelectedOperation == null)
+                return box;
+            box.MinWidth = 50;
+            //Менеджер, состоящий из контекста и графиков
             UnionGraphListManager manager = new(viewModel.GraphList.GraphDataList, GraphDataListBuilder.ConvertToManager(viewModel.SelectedOperation.Context).GraphDataList);
-
+            //Установка элементов
             box.SetBinding(ItemsControl.ItemsSourceProperty, new Binding("GraphDataList") { Source = manager });
-
-            FunctionNodeBindingData binding =
+            //Получение данных о привязке сначала для графиков из нодов, а затем для графиков приложения
+            FunctionNodeBindingData? bindingData =
                 viewModel.SelectedOperation.BindingDates.Where(i => i.NameTargetProperty == parameter.Name).FirstOrDefault();
-            if (binding == null)
+            if (bindingData == null)
             {
-                binding =new FunctionNodeBindingData()
+                bindingData = new FunctionNodeBindingData()
                 {
                     NameTargetProperty = parameter.Name
                 };
-                viewModel.SelectedOperation.BindingDates.Add(binding);
+                viewModel.SelectedOperation.BindingDates.Add(bindingData);
             }
-            string namePropertyOnContext = binding.NamePropertyOnContext;
+            //Установка привязки на существующей привязке
+            string namePropertyOnContext = bindingData.NamePropertyOnContext;
             if (namePropertyOnContext == null && box.Items.Count > 0)
+            {
                 namePropertyOnContext = ((GraphData)box.Items[0]).Name;
+                bindingData.NamePropertyOnContext = namePropertyOnContext;
+            }
+            Binding binding = new("NamePropertyOnContext")
+            {
+                Source = bindingData,
+                Converter = new GraphNameToGraphModelConverter(manager),
+                Mode = BindingMode.OneWayToSource
+            };
+            binding.ValidationRules.Add(new ValidationRuleWithConverter(new GraphNameToGraphModelConverter(manager)));
+            box.SetBinding(ComboBox.SelectedValueProperty, binding);
 
-            box.SetBinding(ComboBox.SelectedValueProperty, new Binding("NamePropertyOnContext")
-            { Source = binding, Converter = new GraphNameToGraphModelConverter(manager), Mode = BindingMode.OneWayToSource });
 
-
-            binding.NamePropertyOnContext = namePropertyOnContext;
+            
 
 
             if (box.Items.Count > 0)
-                box.SelectedItem = manager.GraphDataList.Where(i => i.Name == binding.NamePropertyOnContext).FirstOrDefault();
+                box.SelectedItem = manager.GraphDataList.Where(i => i.Name == bindingData.NamePropertyOnContext).FirstOrDefault();
 
             return box;
         }
@@ -82,7 +94,7 @@ namespace Gaussians.DataConverters
                 if (typeof(GaussiansModel.IGraph).IsInstanceOfType(item.Value.Value))
                     manager.AddGraph(new GraphData(item.Key, (GaussiansModel.IGraph)item.Value.Value));
             }
-            
+
             return manager;
         }
     }

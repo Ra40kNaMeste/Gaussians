@@ -122,7 +122,7 @@ namespace Gaussians.DataConverters
         }
     }
 
-    internal class GraphNameToGraphModelConverter : IValueConverter
+    internal class GraphNameToGraphModelConverter : IValidationConverter
     {
         public GraphNameToGraphModelConverter(GraphManager manager)
         {
@@ -137,18 +137,22 @@ namespace Gaussians.DataConverters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
-                return null;
+                throw new ArgumentException("value");
             if (value is GraphData data)
                 return data.Name;
             throw new ArgumentException("value");
+        }
 
+        public bool CanValidation(object value, CultureInfo cultureInfo)
+        {
+            return value != null && value is GraphData;
         }
     }
 
     internal interface IPropertyModelToViewable
     {
         public bool CanConvert(Type type);
-        public FrameworkElement GetView(GaussiansModel.Functions.FunctionParameter property, ViewModel viewModel);
+        public FrameworkElement GetView(FunctionParameter property, ViewModel viewModel);
     }
     internal class InputPropertyModelToVisualConverter : IValueConverter
     {
@@ -170,7 +174,7 @@ namespace Gaussians.DataConverters
             new InputGraphDataToViewConverter(),
             new InputSourceDataToViewConverter()
         };
-        public static PropertyNodeFuncView ConvertPropertyModelToVisualProperty(GaussiansModel.Functions.FunctionParameter property, ViewModel viewModel)
+        public static PropertyNodeFuncView ConvertPropertyModelToVisualProperty(FunctionParameter property, ViewModel viewModel)
         {
             foreach (var converter in converters)
                 if (converter.CanConvert(property.ValueType))
@@ -180,7 +184,7 @@ namespace Gaussians.DataConverters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is GaussiansModel.Functions.FunctionParameter par && ViewModel != null)
+            if (value is FunctionParameter par && ViewModel != null)
                 return ConvertPropertyModelToVisualProperty(par, ViewModel).Value;
             throw new ArgumentException("value");
         }
@@ -209,7 +213,7 @@ namespace Gaussians.DataConverters
             new BooleanDataToViewConverter(new OutputDataShow()),
             new OutputGraphDataToViewConverter(),
         };
-        public static PropertyNodeFuncView ConvertPropertyModelToVisualProperty(GaussiansModel.Functions.FunctionParameter property, ViewModel viewModel)
+        public static PropertyNodeFuncView ConvertPropertyModelToVisualProperty(FunctionParameter property, ViewModel viewModel)
         {
             foreach (var converter in converters)
                 if (converter.CanConvert(property.ValueType))
@@ -219,7 +223,7 @@ namespace Gaussians.DataConverters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is GaussiansModel.Functions.FunctionParameter par && ViewModel != null)
+            if (value is FunctionParameter par && ViewModel != null)
                 return ConvertPropertyModelToVisualProperty(par, ViewModel).Value;
             throw new ArgumentException("value");
         }

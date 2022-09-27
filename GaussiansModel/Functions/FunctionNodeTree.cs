@@ -53,7 +53,6 @@ namespace GaussiansModel.Functions
                 OnPropertyChanged();
             }
         }
-
         public void AddFunction(INodeFunction function)
         {
             var coll = (ICollection<FunctionNodeData>)Functions;
@@ -67,13 +66,18 @@ namespace GaussiansModel.Functions
             coll.Remove(coll.Where(i => i.Function == function).FirstOrDefault());
             UpdateContext();
         }
-        public void Invoke()
+        public void Invoke(CancellationToken token)
         {
             foreach (var function in Functions)
             {
                 FindAndSetNodePropertyFunction(function);
-                function.Function.Invoke();
+                INodeFunction nodeFunction = function.Function;
+                SetInvokeFunction(nodeFunction);
+                nodeFunction.Invoke(token);
+                ClearInvokeFunction(nodeFunction);
                 AddOutputPropertyInContext(function);
+                if (token.IsCancellationRequested)
+                    return;
             }
         }
         private void FindAndSetNodePropertyFunction(FunctionNodeData function)
@@ -118,19 +122,55 @@ namespace GaussiansModel.Functions
                 OnPropertyChanged();
             }
         }
+
+        private string name;
+        [JsonProperty]
+        public string Name 
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
         private void OnPropertyChanged([CallerMemberName] string? property = null) => PropertyChanged?.Invoke(this, new(property));
         public event PropertyChangedEventHandler? PropertyChanged;
+        private void SetInvokeFunction(INodeFunction function)
+        {
+            function.PropertyChanged += InvokeFunctionPropertyChanged;
+            FunctionProgressChanged?.Invoke(this, new(function.Name, 0));
+        }
+        private void ClearInvokeFunction(INodeFunction function)
+        {
+            FunctionProgressChanged?.Invoke(this, new(function.Name, 100));
+            function.PropertyChanged -= InvokeFunctionPropertyChanged;
+        }
+        private void InvokeFunctionPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if(sender != null && e.PropertyName == "Progress")
+            {
+                INodeFunction function = (INodeFunction)sender;
+                FunctionProgressChanged?.Invoke(this, new(function.Name, function.Progress));
+            }
+        }
 
+        public event FunctionProgressEventHandler? FunctionProgressChanged;
     }
     [JsonObject]
     public class FunctionNodeData : INotifyPropertyChanged
     {
-        protected internal FunctionNodeData(INodeFunction function)
+        public FunctionNodeData()
+        {
+
+        }
+        public FunctionNodeData(INodeFunction function)
         {
             Function = function;
             BindingDates = new();
         }
-        protected internal FunctionNodeData(INodeFunction function, FunctionNodeContext context):this(function)
+        public FunctionNodeData(INodeFunction function, FunctionNodeContext context):this(function)
         {
             Context = context;
         }
@@ -199,6 +239,18 @@ namespace GaussiansModel.Functions
         {
             return new FunctionNodeContext(Context.ToDictionary(i => i.Key, i => i.Value));
         }
+    }
+    public delegate void FunctionProgressEventHandler(object sender, FunctionProgressEventArgs e);
+    public class FunctionProgressEventArgs
+    {
+        protected internal FunctionProgressEventArgs(string funcName, double progress)
+        {
+            FuncName = funcName;
+            Progress = progress;
+        }
+
+        public string FuncName { get; init; }
+        public double Progress { get; init; }
     }
 
     [JsonObject]

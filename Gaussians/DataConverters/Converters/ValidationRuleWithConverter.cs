@@ -9,27 +9,22 @@ using System.Windows.Data;
 
 namespace Gaussians.DataConverters
 {
+    internal interface IValidationConverter : IValueConverter
+    {
+        public bool CanValidation(object value, CultureInfo cultureInfo);
+    }
     internal class ValidationRuleWithConverter : ValidationRule
     {
         public ValidationRuleWithConverter() { }
-        public ValidationRuleWithConverter(IValueConverter converter)
+        public ValidationRuleWithConverter(IValidationConverter converter)
         {
             Converter = converter;
         }
-        public IValueConverter Converter { get; set; }
+        public IValidationConverter Converter { get; set; }
         public object Parameter { get; set; }
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            try
-            {
-                Converter.ConvertBack(value, value.GetType(), Parameter, cultureInfo);
-                return new ValidationResult(true, null);
-            }
-            catch (Exception)
-            {
-
-                return new ValidationResult(false, null);
-            }
+                return new ValidationResult(Converter.CanValidation(value, cultureInfo), null);
         }
     }
 }

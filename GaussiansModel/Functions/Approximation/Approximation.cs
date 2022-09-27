@@ -19,25 +19,19 @@ namespace GaussiansModel.Functions
     {
         public SplineApproximation()
         {
-            Inputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.InputSkeleton, typeof(PointGraph), new PointGraph()),
-                new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()),
-                //new FunctionParameter(Properties.Resources.InputCountInflection, typeof(int), 2),
-                new FunctionParameter(Properties.Resources.InputMaxSteps, typeof(int), 60),
-                new FunctionParameter(Properties.Resources.InputMaxAngle, typeof(double), 1.0)
-            };
-            Outputs = new List<FunctionParameter>()
-            {
-                new FunctionParameter(Properties.Resources.OutputGraph, typeof(MultiGraph), new MultiGraph())
-            };
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputSkeleton, typeof(PointGraph), new PointGraph()));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputMaxSteps, typeof(int), 60));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputMaxAngle, typeof(double), 1.0));
+
+            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(MultiGraph), new MultiGraph()));
         }
         public override string GetName()
         {
             return Properties.Resources.SplineApproximationName;
         }
 
-        public override void Invoke()
+        public override void Invoke(CancellationToken token)
         {
             PointGraph skeleton = (PointGraph)FindInputParameter(Properties.Resources.InputSkeleton).Value;
             PointGraph pointGraphs = (PointGraph)FindInputParameter(Properties.Resources.InputChartName).Value;
@@ -50,6 +44,7 @@ namespace GaussiansModel.Functions
             List<Point> skeletPoint = new();
             IEnumerator<Point> enPoints = pointGraphs.GetEnumerator();
             PointGraph points = new();
+            double progressStep = 20 / skeleton.Count;
 
             foreach (var item in skeleton)
             {
@@ -73,7 +68,7 @@ namespace GaussiansModel.Functions
                     skeletPoint.Add(item);
                     i = 1;
                 }
-
+                Progress += progressStep;
             }
 
             var splines = beziers.Select(i => new
@@ -82,10 +77,14 @@ namespace GaussiansModel.Functions
                 XMin = i.Item2.ElementAt(0),
                 XMax = i.Item2.ElementAt(i.Item2.Count() - 1)
             });
-
+            if (token.IsCancellationRequested)
+                return;
             MultiGraph res = new();
             res.Graphs = splines.AsParallel().Select(i => new MultiGraphItem(i.XMin.X, i.XMax.X, new FuncGraph() { Func = i.Bezier.GetPoint })).ToList();
+            Progress = 100;
             SetOutputParameter(Properties.Resources.OutputGraph, res);
+            if (token.IsCancellationRequested)
+                return;
         }
         private static BeziersSpline MinimizeBeziers(PointGraph beziersPoints, PointGraph points, double maxAngle, int maxSteps)
         {
@@ -97,7 +96,6 @@ namespace GaussiansModel.Functions
             BeziersSpline beziers = new(beziersPoints);
             int size = beziersPoints.Count - 1;
             Vector startPoints = ConvertPointsToVector(beziersPoints);
-
             Vector res = NonlinearSolver.Minimize((v) =>
             {
                 beziers.SetValuesByPoints(ConvertVectorToPoint(start, end, v));
@@ -142,18 +140,4 @@ namespace GaussiansModel.Functions
             return res;
         }
     }
-
-    //[ApproximationFunction]
-    //internal class Test : NodeFunctionBase<Test>
-    //{
-    //    public override string GetName()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public override void Invoke()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
 }

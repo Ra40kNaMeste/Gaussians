@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Dynamic;
 
 namespace Gaussians
 {
@@ -23,18 +24,29 @@ namespace Gaussians
             Colors.Enqueue(color);
             return color;
         }
-        private int index = -1;
-        public string GetNameGraph()
-        {
-            index++;
-            if (index == 0)
-                return Properties.Resources.ReaderGraphName;
-            return Properties.Resources.ReaderGraphName + index.ToString();
-        }
         private void ReadColors()
         {
             string[] colors = Properties.Resources.ColorsForGraphs.Split('\n');
             Colors = new(colors.Select(i => (Color)ColorConverter.ConvertFromString(i.Trim())));
+        }
+
+        public NameGenerator GraphNameGenerator { get; set; } = new(Properties.Resources.ReaderGraphName);
+        public NameGenerator NodeNameGenerator { get; set; } = new(Properties.Resources.ReaderNodeName);
+    }
+    internal class NameGenerator
+    {
+        private int index = -1;
+        private string firstName;
+        public NameGenerator(string firstName)
+        {
+            this.firstName = firstName;
+        }
+        public string Next()
+        {
+            index++;
+            if (index == 0)
+                return firstName;
+            return firstName + index.ToString();
         }
     }
 }

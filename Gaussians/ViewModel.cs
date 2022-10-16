@@ -53,6 +53,7 @@ namespace Gaussians
             TreesManager = new();
             PropertyConverter = new(this);
             Generator = new();
+            GraphBuilder = new();
             IsInvoke = false;
             CreateGrapgs();
             CreateListReaders();
@@ -76,7 +77,7 @@ namespace Gaussians
                 .Select(i =>
                 {
                     if (i.Value is ISetGeneratorElements t)
-                        t.SetViewModelElements(Generator);
+                        t.SetViewModelElements(this);
                     return i;
                 }))
                 .ToDictionary(i => i.Key, i => i.Value)
@@ -262,9 +263,11 @@ namespace Gaussians
                     };
                     if (dialog.ShowDialog() == true)
                     {
-                        Stream file = dialog.OpenFile();
-                        GaussiansModel.PointGraph chart = reader.ReadFile(file);
-                        AddPointsGraph(chart);
+                        using (Stream file = dialog.OpenFile())
+                        {
+                            GaussiansModel.PointGraph chart = reader.ReadFile(file);
+                            CreateVisualGraphByModel(chart);
+                        }
                     }
                 }
             }
@@ -278,7 +281,7 @@ namespace Gaussians
         public void ShowPropertiesGraphBody(object? parameter)
         {
             if (parameter is GraphVisualData metadata)
-                ViewProperties = new SettingGraphComponent(metadata, GraphList);
+                ViewProperties = metadata.GetSettingGraph(GraphList);
         }
 
         public void SwapVisibleGraphBody(object? parameter)
@@ -302,7 +305,8 @@ namespace Gaussians
             if (SelectNodeTree != null)
             {
 
-                SelectNodeTree.InputContext = new(GraphList.GraphDataList.DistinctBy(i => i.Name)
+                SelectNodeTree.InputContext = new(GraphList.GraphDataList.DistinctBy(i => 
+                i.Name)
                     .ToDictionary(i => i.Name, i => new FunctionParameter(i.Name, typeof(IGraph), null) { Value = i.GraphModel }));
                 SelectNodeTree.FunctionProgressChanged += SetInvokeFunctionProgress;
                 try
@@ -319,15 +323,20 @@ namespace Gaussians
                 SelectNodeTree.FunctionProgressChanged -= SetInvokeFunctionProgress;
                 
                 foreach (var function in SelectNodeTree.Functions)
+                {
                     if (function.Function is IVisualGraph graph)
                     {
-                        var metadata = graph.ResultGraphMetadata;
+                        var metadata = graph.CreateVisualElements();
                         if (metadata == null)
                             break;
                         metadata.GraphBrush = new SolidColorBrush(Generator.GetColor());
                         GraphList.AddGraph(metadata);
-                        BindingOperations.SetBinding(metadata.Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = metadata, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+                        metadata.SetBindings();
                     }
+                    else if (function.Function is IVisualMessage message)
+                        MessageBox.Show(message.Message);
+                }
+
                 TokenSource.Dispose();
 
                 SelectNodeTree.InputContext = new();
@@ -451,7 +460,7 @@ namespace Gaussians
                     var nodes = TreesManager.ReadFile(file);
                     foreach (var node in nodes.Functions)
                         if (node.Function is ISetGeneratorElements t)
-                            t.SetViewModelElements(Generator);
+                            t.SetViewModelElements(this);
                     TreesManager.Trees.Add(nodes);
                 }
             }
@@ -473,11 +482,12 @@ namespace Gaussians
             InvokeFunctionProgress = e.Progress;
         }
 
-        private void AddPointsGraph(IGraph graph)
+        private void CreateVisualGraphByModel(IGraph graph)
         {
-            GraphVisualData metadata = new(Generator.GraphNameGenerator.Next(), graph, new SolidColorBrush(Generator.GetColor()));
+            GraphVisualData metadata = GraphBuilder.Build(Generator.GraphNameGenerator.Next(), graph);
+            metadata.GraphBrush = new SolidColorBrush(Generator.GetColor());
             GraphList.AddGraph(metadata);
-            BindingOperations.SetBinding(metadata.Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = metadata, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+            metadata.SetBindings();
         }
         #endregion//PrivateMethods
 
@@ -488,6 +498,7 @@ namespace Gaussians
 
         #region InternalProperties
         protected internal SourceGenerator Generator { get; set; }
+        protected internal GraphVisualDataBuilder GraphBuilder { get; set; }
         #endregion //InternalProperties
 
         #region Events

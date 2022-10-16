@@ -51,7 +51,7 @@ namespace Gaussians.DataConverters
                     var dialog = new OpenFileDialog() { Title = Properties.Resources.MenuOpen };
                     if (dialog.ShowDialog() == true)
                     {
-                        Stream = dialog.OpenFile();
+                        FileName = dialog.FileName;
                     }
                 }
                 else
@@ -59,11 +59,9 @@ namespace Gaussians.DataConverters
                     var dialog = new SaveFileDialog() { Title = Properties.Resources.MenuSave };
                     if (dialog.ShowDialog() == true)
                     {
-                        Stream = dialog.OpenFile();
+                        FileName = dialog.FileName;
                     }
                 }
-
- 
             }
             catch (Exception)
             {
@@ -72,20 +70,17 @@ namespace Gaussians.DataConverters
 
         }
         private FunctionParameter TargetParameter { get; set; }
-        private Stream stream;
-        public Stream Stream 
+        public string FileName 
         {
-            get { return stream; }
+            get 
+            {
+                return ((StreamData)TargetParameter.Value).FileName;
+
+            }
             set 
             {
-                stream = value;
-                OnStreamChanged();
+                ((StreamData)TargetParameter.Value).FileName = value;
             }
-        }
-        private void OnStreamChanged()
-        {
-            StreamData data = (StreamData)TargetParameter.Value;
-            data.Stream = Stream;
         }
     }
 }

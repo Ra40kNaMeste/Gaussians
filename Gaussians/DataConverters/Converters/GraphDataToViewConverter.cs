@@ -43,7 +43,7 @@ namespace Gaussians.DataConverters
                 return box;
             box.MinWidth = 50;
             //Менеджер, состоящий из контекста и графиков
-            UnionGraphListManager manager = new(viewModel.GraphList.GraphDataList, GraphDataListBuilder.ConvertToManager(viewModel.SelectedOperation.Context).GraphDataList);
+            UnionGraphListManager manager = new(viewModel.GraphList.GraphDataList, GraphDataListBuilder.ConvertToManager(viewModel.SelectedOperation.Context, parameter.ValueType).GraphDataList);
             //Установка элементов
             box.SetBinding(ItemsControl.ItemsSourceProperty, new Binding("GraphDataList") { Source = manager });
             //Получение данных о привязке сначала для графиков из нодов, а затем для графиков приложения
@@ -74,7 +74,7 @@ namespace Gaussians.DataConverters
             box.SetBinding(ComboBox.SelectedValueProperty, binding);
 
 
-            
+
 
 
             if (box.Items.Count > 0)
@@ -86,12 +86,12 @@ namespace Gaussians.DataConverters
 
     internal static class GraphDataListBuilder
     {
-        public static GraphViewManager ConvertToManager(FunctionNodeContext context)
+        public static GraphViewManager ConvertToManager(FunctionNodeContext context, Type type)
         {
             GraphViewManager manager = new();
             foreach (var item in context.Context)
             {
-                if (typeof(GaussiansModel.IGraph).IsInstanceOfType(item.Value.Value))
+                if (FunctionParameter.CanValidation(type, item.Value))
                     manager.AddGraph(new GraphData(item.Key, (GaussiansModel.IGraph)item.Value.Value));
             }
 

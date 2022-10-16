@@ -118,7 +118,7 @@ namespace GaussiansModel.Functions
         }
 
         private string name;
-        public string Name 
+        public string Name
         {
             get => name;
             set
@@ -129,7 +129,7 @@ namespace GaussiansModel.Functions
         }
 
         private ICollection<FunctionParameter>? inputs;
-        public ICollection<FunctionParameter>? Inputs 
+        public ICollection<FunctionParameter>? Inputs
         {
             get => inputs;
             private set
@@ -140,21 +140,21 @@ namespace GaussiansModel.Functions
         }
 
         private ICollection<FunctionParameter>? outputs;
-        public ICollection<FunctionParameter>? Outputs 
-            {
+        public ICollection<FunctionParameter>? Outputs
+        {
             get => outputs;
             private set
             {
                 outputs = value;
                 OnPropertyChanged();
             }
-}
+        }
 
         private double progress;
         /// <summary>
         /// Прогресс выполнения функции от 0 до 100
         /// </summary>
-        public double Progress 
+        public double Progress
         {
             get => progress;
             protected set
@@ -171,7 +171,9 @@ namespace GaussiansModel.Functions
         /// </summary>
         /// <param name="name">Имя параметра</param>
         /// <returns>Входной параметр</returns>
-        protected FunctionParameter? FindInputParameter(string name) => Inputs.Where(i => i.Name == name).FirstOrDefault();
+        protected FunctionParameter? FindInputParameter
+
+            (string name) => Inputs.Where(i => i.Name == name).FirstOrDefault();
         /// <summary>
         /// Ищет выходной параметр по имени
         /// </summary>
@@ -222,24 +224,37 @@ namespace GaussiansModel.Functions
         [JsonProperty]
         public string Name { get; set; }
         private object value;
+        public static bool CanValidation(Type type, object obj)
+        {
+            if (obj == null)
+                return true;
+            if (obj is FunctionParameter parameter)
+            {
+                return parameter.ValueType == typeof(long) && type == typeof(int) ||
+                    type.IsInstanceOfType(parameter.Value) || parameter.ValueType.IsSubclassOf(type) || parameter.ValueType == type;
+            }
+            return false;
+        }
+        protected static object Validation(Type type, object obj)
+        {
+            if (obj == null)
+                return null;
+            Type typeObj = obj.GetType();
+            if (typeObj == typeof(long) && type == typeof(int))
+                return Convert.ToInt32(obj);
+            if (type.IsInstanceOfType(obj) || typeObj.IsSubclassOf(type) || typeObj == type)
+                return obj;
+            return null;
+        }
         [JsonProperty]
         public object Value
         {
             get { return value; }
             set
             {
-                if (value == null)
-                    return;
-                Type type = value.GetType();
-                if (ValueType.IsInstanceOfType(value) || type.IsSubclassOf(ValueType) || type == ValueType)
-                    this.value = value;
-                else if (ValueType == typeof(int))
-                    this.value = System.Convert.ToInt32(value); 
-                else
-                {
-                    throw new ArgumentException("value");
+                object obj = Validation(ValueType, value);
+                this.value = obj;
 
-                }
             }
         }
         public override string ToString()

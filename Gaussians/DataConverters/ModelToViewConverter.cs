@@ -75,11 +75,7 @@ namespace Gaussians.DataConverters
                 throw new ArgumentException("plot");
             return (GaussiansModel.IGraph)expression.DataItem;
         }
-        private static Dictionary<Type, Type> modelGraphByView = new()
-        {
-            {typeof(FuncGraph), typeof(GaussiansModel.FuncGraph) },
-            {typeof(PointGraph), typeof(GaussiansModel.PointGraph) }
-        };
+
         public static Type ConvertTypeViewGraphToTypeModelGraph(Type modelGaph)
         {
             var temp = modelGraphByView.Where(i => i.Key == modelGaph || modelGaph.IsSubclassOf(i.Key));
@@ -89,7 +85,11 @@ namespace Gaussians.DataConverters
             return res;
         }
 
-
+        private static Dictionary<Type, Type> modelGraphByView = new()
+        {
+            {typeof(FuncGraph), typeof(GaussiansModel.FuncGraph) },
+            {typeof(PointGraph), typeof(GaussiansModel.PointGraph) }
+        };
     }
     internal class SumDoubleConverter : IMultiValueConverter
     {
@@ -171,6 +171,7 @@ namespace Gaussians.DataConverters
             new IntDataToViewConverter(new InputDataShow()),
             new StringDataToViewConverter(new InputDataShow()),
             new BooleanDataToViewConverter(new InputDataShow()),
+            new ObjectDataToViewConverter(new InputDataShow()),
             new InputGraphDataToViewConverter(),
             new InputSourceDataToViewConverter()
         };

@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 using Gaussians.DataConverters;
+using GaussiansModel;
+using System.Windows;
+using Gaussians.SettingComponents;
+using System.Windows.Input;
 
 namespace Gaussians
 {
@@ -54,16 +58,16 @@ namespace Gaussians
 
         protected void OnGraphDataListChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null)
-                foreach (GraphData item in e.NewItems)
-                {
-                    if (item is GraphVisualData viewData)
-                    {
-                        if (viewData.Graph is LineGraph)
-                            BindingOperations.SetBinding(viewData.Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = item });
+            //if (e.NewItems != null)
+            //    foreach (GraphData item in e.NewItems)
+            //    {
+            //        if (item is GraphVisualData viewData)
+            //        {
+            //            if (viewData.Graph is LineGraph)
+            //                BindingOperations.SetBinding(viewData.Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = item });
 
-                    }
-                }
+            //        }
+            //    }
             OnPropertyChanged("GraphName");
             OnPropertyChanged("GraphList");
         }
@@ -135,13 +139,53 @@ namespace Gaussians
                     GraphDataList.Remove(item);
         }
     }
+
+    internal class GraphVisualDataBuilder
+    {
+        private static readonly List<IGraphVisualDataCreater> visualDates = new()
+        {
+            new GraphVisualDataCreater(),
+            new PointGraphVisualDataCreater()
+        };
+        public GraphVisualData Build(string name, IGraph graph)
+        {
+            return visualDates.Where(i => i.CanSupportGraph(graph)).First()
+                .CreateGraphVisualData(name, graph, null);
+
+        }
+    }
+    internal interface IGraphVisualDataCreater
+    {
+        public bool CanSupportGraph(IGraph graph);
+        public GraphVisualData CreateGraphVisualData(string name, IGraph graph, Brush brush);
+
+    }
+    internal class GraphVisualDataCreater : IGraphVisualDataCreater
+    {
+        public bool CanSupportGraph(IGraph graph)
+        {
+            return typeof(GaussiansModel.FuncGraph) == graph.GetType();
+        }
+
+        public GraphVisualData CreateGraphVisualData(string name, IGraph graph, Brush brush)
+        {
+            return new GraphVisualData(name, graph, brush);
+        }
+    }
     internal class GraphVisualData : GraphData
     {
-        public GraphVisualData(string name, GaussiansModel.IGraph graph, Brush brush) : this(name, graph, brush, true) { }
-        public GraphVisualData(string name, GaussiansModel.IGraph graph, Brush brush, bool isVisible) : base(name, graph)
+
+        public GraphVisualData(string name, IGraph graph, Brush brush) : this(name, graph, brush, true) { }
+        public GraphVisualData(string name, IGraph graph, Brush brush, bool isVisible) : base(name, graph)
         {
             GraphBrush = brush;
             IsVisible = isVisible;
+
+            Commands = new();
+            Properties = new();
+            Commands.Add(new SettingGraphRemoved());
+            Properties.Add(new SettingGraphName());
+            Properties.Add(new SettingGraphColor());
         }
 
         private Brush graphBrush;
@@ -178,6 +222,64 @@ namespace Gaussians
                 isVisible = value;
                 OnPropertyChanged();
             }
+        }
+
+        public virtual void SetBindings()
+        {
+            if (Graph == null)
+                return;
+            BindingOperations.SetBinding(Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = this, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+        }
+
+
+
+        protected List<SettingGraphActionBase> Commands { get; init; }
+        protected List<SettingGraphPropertyBase> Properties { get; init; }
+        public SettingComponentBase GetSettingGraph(GraphViewManager manager)
+        {
+            return new SettingGraphComponent(this, manager, Properties, Commands);
+        }
+        
+    }
+    internal class PointGraphVisualDataCreater : IGraphVisualDataCreater
+    {
+        public bool CanSupportGraph(IGraph graph)
+        {
+            return typeof(GaussiansModel.PointGraph) == graph.GetType();
+        }
+
+        public GraphVisualData CreateGraphVisualData(string name, IGraph graph, Brush brush)
+        {
+            return new PointGraphVisualData(name, graph, brush);
+        }
+    }
+    internal class PointGraphVisualData : GraphVisualData
+    {
+        public PointGraphVisualData(string name, IGraph graph, Brush brush) : this(name, graph, brush, true)
+        {
+        }
+
+        public PointGraphVisualData(string name, IGraph graph, Brush brush, bool isVisible) : base(name, graph, brush, isVisible)
+        {
+            VisualMode = PointGraphState.OnlyPoints;
+            Properties.Add(new SettingGraphVisualMode());
+        }
+
+        private PointGraphState visualMode;
+        public PointGraphState VisualMode
+        {
+            get => visualMode;
+            set
+            {
+                visualMode = value;
+                OnPropertyChanged();
+            }
+        }
+        public override void SetBindings()
+        {
+            base.SetBindings();
+            BindingOperations.SetBinding(Graph, InteractiveDataDisplay.WPF.PointGraph.VisualModeProperty, new Binding("VisualMode") 
+            { Source = this, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
         }
     }
     internal class GraphData : INotifyPropertyChanged

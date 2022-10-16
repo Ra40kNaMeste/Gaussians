@@ -181,6 +181,9 @@
   <data name="MenuSave" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="NotBindingParameter" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="OperationCancelInvoke" xml:space="preserve">
     <value>Stop</value>
   </data>
@@ -225,6 +228,18 @@
   </data>
   <data name="SettingRemoveGraph" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="SettingViewModeProperty" xml:space="preserve">
+    <value>View mode</value>
+  </data>
+  <data name="SettingVisualModeOnlyLine" xml:space="preserve">
+    <value>Only line</value>
+  </data>
+  <data name="SettingVisualModeOnlyPoints" xml:space="preserve">
+    <value>Only points</value>
+  </data>
+  <data name="SettingVisualModePointsAndLine" xml:space="preserve">
+    <value>Points and line</value>
   </data>
   <data name="SmoothingOperations" xml:space="preserve">
     <value>Smoothing</value>

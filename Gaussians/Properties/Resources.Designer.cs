@@ -256,6 +256,15 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на None.
+        /// </summary>
+        public static string NotBindingParameter {
+            get {
+                return ResourceManager.GetString("NotBindingParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Stop.
         /// </summary>
         public static string OperationCancelInvoke {
@@ -387,6 +396,42 @@ namespace Gaussians.Properties {
         public static string SettingRemoveGraph {
             get {
                 return ResourceManager.GetString("SettingRemoveGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на View mode.
+        /// </summary>
+        public static string SettingViewModeProperty {
+            get {
+                return ResourceManager.GetString("SettingViewModeProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only line.
+        /// </summary>
+        public static string SettingVisualModeOnlyLine {
+            get {
+                return ResourceManager.GetString("SettingVisualModeOnlyLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only points.
+        /// </summary>
+        public static string SettingVisualModeOnlyPoints {
+            get {
+                return ResourceManager.GetString("SettingVisualModeOnlyPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Points and line.
+        /// </summary>
+        public static string SettingVisualModePointsAndLine {
+            get {
+                return ResourceManager.GetString("SettingVisualModePointsAndLine", resourceCulture);
             }
         }
         

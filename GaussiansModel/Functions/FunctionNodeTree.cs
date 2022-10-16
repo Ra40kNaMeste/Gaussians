@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 
 namespace GaussiansModel.Functions
 {
+    /// <summary>
+    /// Дерево из нол
+    /// </summary>
     [JsonObject]
     public class FunctionNodeTree : INotifyPropertyChanged
     {
@@ -19,6 +22,9 @@ namespace GaussiansModel.Functions
             OutputContext = new();
             InputContext = new();
         }
+        /// <summary>
+        /// Обновление контекста для всех функций
+        /// </summary>
         private void UpdateContext()
         {
             FunctionNodeContext context = (FunctionNodeContext)InputContext.Clone();
@@ -36,6 +42,9 @@ namespace GaussiansModel.Functions
         }
 
         private FunctionNodeContext outputContext;
+        /// <summary>
+        /// Все результаты выполнения дерева
+        /// </summary>
         public FunctionNodeContext OutputContext
         {
             get { return outputContext; }
@@ -43,6 +52,9 @@ namespace GaussiansModel.Functions
         }
 
         private FunctionNodeContext inputContext;
+        /// <summary>
+        /// Изначальные данные
+        /// </summary>
         public FunctionNodeContext InputContext
         {
             get { return inputContext; }
@@ -53,6 +65,10 @@ namespace GaussiansModel.Functions
                 OnPropertyChanged();
             }
         }
+        /// <summary>
+        /// Добавить функцию в конец цепочки
+        /// </summary>
+        /// <param name="function">Функция</param>
         public void AddFunction(INodeFunction function)
         {
             var coll = (ICollection<FunctionNodeData>)Functions;
@@ -60,12 +76,34 @@ namespace GaussiansModel.Functions
             function.PropertyChanged += OnFunctionPropertyChanged;
             UpdateContext();
         }
+
+        /// <summary>
+        /// Вставляет функцию по индексу
+        /// </summary>
+        /// <param name="function">Функция</param>
+        /// <param name="index">Индекс</param>
+        public void InsertFunction(INodeFunction function, int index)
+        {
+            var coll = Functions;
+            coll.Insert(index, new(function));
+            function.PropertyChanged += OnFunctionPropertyChanged;
+            UpdateContext();
+        }
+
+        /// <summary>
+        /// Удалить функцию из цепочки
+        /// </summary>
+        /// <param name="function">Функция</param>
         public void RemoveFunction(INodeFunction function)
         {
             var coll = (ICollection<FunctionNodeData>)Functions;
             coll.Remove(coll.Where(i => i.Function == function).FirstOrDefault());
             UpdateContext();
         }
+        /// <summary>
+        /// Запустить выполнение цепочки. В это случае обновиться OutputContext
+        /// </summary>
+        /// <param name="token">Токен для отмены</param>
         public void Invoke(CancellationToken token)
         {
             foreach (var function in Functions)
@@ -80,13 +118,21 @@ namespace GaussiansModel.Functions
                     return;
             }
         }
+
+        /// <summary>
+        /// Устанавливает входные значения для функции
+        /// </summary>
+        /// <param name="function">Все данные функции</param>
         private void FindAndSetNodePropertyFunction(FunctionNodeData function)
         {
             if (function.Function.Inputs == null)
                 return;
             function.OnBindings();
         }
-
+        /// <summary>
+        /// Добавляет результат выполнения функции в общий контекст
+        /// </summary>
+        /// <param name="function">Все данные функции</param>
         private void AddOutputPropertyInContext(FunctionNodeData function)
         {
             if (function.Function.Outputs == null)
@@ -95,16 +141,13 @@ namespace GaussiansModel.Functions
                 OutputContext.Context.Where(i => i.Key == CreateNameParameter(function.Function, property.Name));
         }
 
+        /// <summary>
+        /// Генератор имени выходного значения функции, как имя_функции.имя_выхода
+        /// </summary>
+        /// <param name="function">Функция</param>
+        /// <param name="name">Имя выхода</param>
+        /// <returns></returns>
         private static string CreateNameParameter(INodeFunction function, string name) => function.Name + "." + name;
-
-        public void InsertFunction(INodeFunction function, int index)
-        {
-            var coll = Functions;
-            coll.Insert(index, new(function));
-            function.PropertyChanged += OnFunctionPropertyChanged;
-            UpdateContext();
-        }
-
         private void OnFunctionPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Name")
@@ -112,6 +155,9 @@ namespace GaussiansModel.Functions
         }
 
         private ObservableCollection<FunctionNodeData> functions;
+        /// <summary>
+        /// Цепочка функций
+        /// </summary>
         [JsonProperty]
         public ObservableCollection<FunctionNodeData> Functions
         {
@@ -124,6 +170,9 @@ namespace GaussiansModel.Functions
         }
 
         private string name;
+        /// <summary>
+        /// Имя цепочки функций
+        /// </summary>
         [JsonProperty]
         public string Name 
         {
@@ -137,11 +186,19 @@ namespace GaussiansModel.Functions
 
         private void OnPropertyChanged([CallerMemberName] string? property = null) => PropertyChanged?.Invoke(this, new(property));
         public event PropertyChangedEventHandler? PropertyChanged;
+        /// <summary>
+        /// Добавить выполняющуюся функцию
+        /// </summary>
+        /// <param name="function">Функция</param>
         private void SetInvokeFunction(INodeFunction function)
         {
             function.PropertyChanged += InvokeFunctionPropertyChanged;
             FunctionProgressChanged?.Invoke(this, new(function.Name, 0));
         }
+        /// <summary>
+        /// Удалить выполняющую функцию
+        /// </summary>
+        /// <param name="function">Функция</param>
         private void ClearInvokeFunction(INodeFunction function)
         {
             FunctionProgressChanged?.Invoke(this, new(function.Name, 100));
@@ -155,27 +212,35 @@ namespace GaussiansModel.Functions
                 FunctionProgressChanged?.Invoke(this, new(function.Name, function.Progress));
             }
         }
-
+        /// <summary>
+        /// Прогресс выполнения цепочки
+        /// </summary>
         public event FunctionProgressEventHandler? FunctionProgressChanged;
     }
+    /// <summary>
+    /// Данные функции: сама функция + контекст
+    /// </summary>
     [JsonObject]
     public class FunctionNodeData : INotifyPropertyChanged
     {
-        public FunctionNodeData()
+        protected internal FunctionNodeData()
         {
 
         }
-        public FunctionNodeData(INodeFunction function)
+        protected internal FunctionNodeData(INodeFunction function)
         {
             Function = function;
             BindingDates = new();
         }
-        public FunctionNodeData(INodeFunction function, FunctionNodeContext context):this(function)
+        protected internal FunctionNodeData(INodeFunction function, FunctionNodeContext context):this(function)
         {
             Context = context;
         }
 
         private INodeFunction function;
+        /// <summary>
+        /// Функция
+        /// </summary>
         [JsonProperty]
         public INodeFunction Function
         {
@@ -187,6 +252,9 @@ namespace GaussiansModel.Functions
             }
         }
         private FunctionNodeContext context;
+        /// <summary>
+        /// Контекст функции
+        /// </summary>
         [JsonProperty]
         public FunctionNodeContext Context
         {
@@ -197,6 +265,9 @@ namespace GaussiansModel.Functions
                 OnPropertyChanged();
             }
         }
+        /// <summary>
+        /// Добавление привязок
+        /// </summary>
         protected internal void OnBindings()
         {
             foreach (var item in BindingDates)
@@ -205,6 +276,9 @@ namespace GaussiansModel.Functions
             }
         }
         private List<FunctionNodeBindingData> bindingDates;
+        /// <summary>
+        /// Возможные привязки
+        /// </summary>
         [JsonProperty]
         public List<FunctionNodeBindingData> BindingDates
         {
@@ -223,6 +297,9 @@ namespace GaussiansModel.Functions
             return Function.Name;
         }
     }
+    /// <summary>
+    /// Контекст функции
+    /// </summary>
     public class FunctionNodeContext : ICloneable
     {
         public FunctionNodeContext()
@@ -252,14 +329,26 @@ namespace GaussiansModel.Functions
         public string FuncName { get; init; }
         public double Progress { get; init; }
     }
-
+    /// <summary>
+    /// Привяка функции
+    /// </summary>
     [JsonObject]
     public class FunctionNodeBindingData
     {
+        /// <summary>
+        /// Имя входа функции под привязкой
+        /// </summary>
         [JsonProperty]
         public string NameTargetProperty { get; set; }
+        /// <summary>
+        /// Имя свойства в контексте
+        /// </summary>
         [JsonProperty]
         public string NamePropertyOnContext { get; set; }
+        /// <summary>
+        /// Назначает на вход функции свойство из контекста
+        /// </summary>
+        /// <param name="data"></param>
         protected internal void OnBinding(FunctionNodeData data)
         {
             var targetParameter = data.Function.Inputs.Where(i => i.Name == NameTargetProperty).FirstOrDefault();

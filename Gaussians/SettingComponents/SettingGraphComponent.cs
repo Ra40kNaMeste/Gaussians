@@ -11,25 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Xceed.Wpf.Toolkit;
 using Gaussians.Commands;
+using Gaussians.Properties;
+using InteractiveDataDisplay.WPF;
 
 namespace Gaussians.SettingComponents
 {
-    internal class SettingGraphComponent:SettingComponentBase
+    internal class SettingGraphComponent : SettingComponentBase
     {
-        private List<SettingGraphPropertyBase> properties = new()
+        public SettingGraphComponent(GraphVisualData data, GraphViewManager manager, List<SettingGraphPropertyBase> properties, List<SettingGraphActionBase> commands)
         {
-            new SettingGraphName(),
-            new SettingGraphColor()
-        };
-        private List<SettingGraphActionBase> commands = new()
-        {
-            new SettingGraphRemoved()
-        };
-        public SettingGraphComponent(GraphVisualData data, GraphViewManager manager)
-        {
-            Iniz(data, manager);
+            Iniz(data, manager, properties, commands);
         }
-        private void Iniz(GraphVisualData data, GraphViewManager manager)
+        private void Iniz(GraphVisualData data, GraphViewManager manager, List<SettingGraphPropertyBase> properties, List<SettingGraphActionBase> commands)
         {
             foreach (var item in properties)
             {
@@ -70,7 +63,7 @@ namespace Gaussians.SettingComponents
         {
             Value = new ColorPicker();
             ColorPicker colorPicker = new();
-            BindingOperations.SetBinding(Value, ColorPicker.SelectedColorProperty, new Binding("GraphBrush") 
+            BindingOperations.SetBinding(Value, ColorPicker.SelectedColorProperty, new Binding("GraphBrush")
             { Source = data, Converter = new SolidColorBrushToColorConverter() });
         }
 
@@ -93,6 +86,44 @@ namespace Gaussians.SettingComponents
             if (value is Color color)
                 return new SolidColorBrush(color);
             throw new ArgumentException("value");
+        }
+    }
+
+    internal class SettingGraphVisualMode : SettingGraphPropertyBase
+    {
+        public override string Name => Resources.SettingViewModeProperty;
+
+        public override UIElement Value { get; protected set; }
+        public override void SetDates(GraphVisualData data)
+        {
+            PointGraphVisualData pointsData = (PointGraphVisualData)data;
+            ComboBox res = new();
+            foreach (var item in VisualModeConverter.Names)
+                res.Items.Add(item.Value);
+
+            res.SelectedItem = VisualModeConverter.Names[pointsData.VisualMode];
+            Binding binding = new("VisualMode") { Source = data, Converter = new VisualModeConverter(), Mode = BindingMode.TwoWay };
+            res.SetBinding(ComboBox.SelectedItemProperty, binding);
+            Value = res;
+        }
+    }
+    internal class VisualModeConverter : IValueConverter
+    {
+        protected internal static readonly Dictionary<PointGraphState, string> Names = new()
+        {
+            {PointGraphState.OnlyPoints, Resources.SettingVisualModeOnlyPoints },
+            {PointGraphState.OnlyLine, Resources.SettingVisualModeOnlyLine },
+            {PointGraphState.PointsAndLine, Resources.SettingVisualModePointsAndLine }
+        };
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Names[(PointGraphState)value];
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string name = value.ToString();
+            return Names.Where(i => i.Value == name).First().Key;
         }
     }
 

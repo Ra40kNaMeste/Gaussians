@@ -48,7 +48,7 @@ namespace GaussiansModel
                     sw.Write(str);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new Exception();
             }

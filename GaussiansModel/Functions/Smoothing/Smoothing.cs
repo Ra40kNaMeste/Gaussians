@@ -22,7 +22,7 @@ namespace GaussiansModel.Functions
             Inputs.Add(new(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()));
             Inputs.Add(new(Properties.Resources.InputValueName, typeof(int), 200));
 
-            Outputs.Add(new(Properties.Resources.OutputGraph, typeof(IGraph), new PointGraph()));
+            Outputs.Add(new(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph()));
         }
 
         public override string GetName() => Properties.Resources.SmoothingByAverageFunctionName;
@@ -99,7 +99,8 @@ namespace GaussiansModel.Functions
             Inputs.Add(new FunctionParameter(Properties.Resources.InputDistanceX, typeof(double), 0.5));
             Inputs.Add(new FunctionParameter(Properties.Resources.InputChartName, typeof(PointGraph), new PointGraph()));
 
-            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(IGraph), new PointGraph()));
+            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph()));
+            Outputs.Add(new FunctionParameter("ggwp", typeof(int), 2));
         }
         public override string GetName()
         {

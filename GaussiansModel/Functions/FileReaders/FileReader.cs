@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GaussiansModel.Extension;
+using Newtonsoft.Json.Serialization;
 
 namespace GaussiansModel.Functions
 {
@@ -46,7 +47,11 @@ namespace GaussiansModel.Functions
 
         public override void Invoke(CancellationToken token)
         {
-            SetOutputParameter(Properties.Resources.OutputGraph, ReadFile(((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).Stream));
+            string fileName = ((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).FileName;
+            using (FileStream stream = new(fileName, FileMode.Open))
+            {
+                SetOutputParameter(Properties.Resources.OutputGraph, this.ReadFile(stream));
+            }
         }
 
         public abstract PointGraph ReadFile(Stream file);
@@ -127,12 +132,12 @@ namespace GaussiansModel.Functions
 
     public class StreamData
     {
-        public StreamData(Stream stream, FileMode mode)
+        public StreamData(string fileName, FileMode mode)
         {
-            Stream = stream;
+            FileName = fileName;
             Mode = mode;
         }
-        public Stream Stream { get; set; }
+        public string FileName { get; set; }
         public FileMode Mode { get; set; }
     }
     #endregion//RealizationsFileReader

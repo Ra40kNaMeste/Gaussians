@@ -1,7 +1,0 @@
-﻿#ff000000
-#ff0000ff
-#ff00ff00
-#ffff0000
-#fff000f0
-#ff00f0f0
-#ff00ffff

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GaussiansModel.Functions
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class ExportGraphAttribute:Attribute
+    public class ExportGraphAttribute : Attribute
     {
 
     }
@@ -34,25 +34,26 @@ namespace GaussiansModel.Functions
             double max = (double)FindInputParameter(Properties.Resources.InputMaxValue).Value;
             double min = (double)FindInputParameter(Properties.Resources.InputMinValue).Value;
             double step = (double)FindInputParameter(Properties.Resources.InputStep).Value;
-            StreamData file = (StreamData)FindInputParameter(Properties.Resources.InputSource).Value;
-
+            string fileName = ((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).FileName;
             var points = GetPoints(graph, min, max, step);
             double progressStep = 100 / points.Count();
-            using (StreamWriter sw = new(file.Stream))
+            using (StreamWriter sw = new(fileName, false))
             {
                 foreach (var item in points)
                 {
-                    sw.WriteLine(item.X.ToString() + ' ' + item.Y.ToString());
+                    string str = item.X.ToString() + ' ' + item.Y.ToString();
+                    sw.WriteLine(str.Replace(',', '.'));
                     Progress += progressStep;
                 }
             }
+
         }
-        private static IEnumerable<Point> GetPoints(IGraph graph, double  min, double max, double step)
+        private static IEnumerable<Point> GetPoints(IGraph graph, double min, double max, double step)
         {
             if (graph is PointGraph points)
                 return points.Where(i => i.X >= min && i.X <= max);
             List<Point> res = new();
-            for (double i = min; i < max; i+=step)
+            for (double i = min; i < max; i += step)
                 res.Add(new Point(i, graph.GetValue(i)));
             return res;
         }

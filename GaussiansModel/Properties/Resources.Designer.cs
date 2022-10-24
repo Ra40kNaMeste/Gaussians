@@ -70,6 +70,15 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Export string.
+        /// </summary>
+        internal static string ExportStringName {
+            get {
+                return ResourceManager.GetString("ExportStringName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Export prn.
         /// </summary>
         internal static string ExportToPrn {
@@ -214,15 +223,6 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Skeleton.
-        /// </summary>
-        internal static string InputSkeleton {
-            get {
-                return ResourceManager.GetString("InputSkeleton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Source.
         /// </summary>
         internal static string InputSource {
@@ -246,6 +246,24 @@ namespace GaussiansModel.Properties {
         internal static string InputStep {
             get {
                 return ResourceManager.GetString("InputStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на String.
+        /// </summary>
+        internal static string InputString {
+            get {
+                return ResourceManager.GetString("InputString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Two string.
+        /// </summary>
+        internal static string InputStringTwo {
+            get {
+                return ResourceManager.GetString("InputStringTwo", resourceCulture);
             }
         }
         
@@ -304,6 +322,15 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на String.
+        /// </summary>
+        internal static string OutputString {
+            get {
+                return ResourceManager.GetString("OutputString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на By average value.
         /// </summary>
         internal static string SmoothingByAverageFunctionName {
@@ -336,6 +363,15 @@ namespace GaussiansModel.Properties {
         internal static string StretchYChanger {
             get {
                 return ResourceManager.GetString("StretchYChanger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Add string.
+        /// </summary>
+        internal static string StringAddBuilderName {
+            get {
+                return ResourceManager.GetString("StringAddBuilderName", resourceCulture);
             }
         }
     }

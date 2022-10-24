@@ -120,6 +120,9 @@
   <data name="ByPatternReaderName" xml:space="preserve">
     <value>Import file</value>
   </data>
+  <data name="ExportStringName" xml:space="preserve">
+    <value>Export string</value>
+  </data>
   <data name="ExportToPrn" xml:space="preserve">
     <value>Export prn</value>
   </data>
@@ -168,9 +171,6 @@
   <data name="InputRangeYIgnore" xml:space="preserve">
     <value>Min range by Y </value>
   </data>
-  <data name="InputSkeleton" xml:space="preserve">
-    <value>Skeleton</value>
-  </data>
   <data name="InputSource" xml:space="preserve">
     <value>Source</value>
   </data>
@@ -179,6 +179,12 @@
   </data>
   <data name="InputStep" xml:space="preserve">
     <value>Step</value>
+  </data>
+  <data name="InputString" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="InputStringTwo" xml:space="preserve">
+    <value>Two string</value>
   </data>
   <data name="InputUncorrectPointsValue" xml:space="preserve">
     <value>Max point for corretion</value>
@@ -198,6 +204,9 @@
   <data name="OutputMinGraph" xml:space="preserve">
     <value>Min</value>
   </data>
+  <data name="OutputString" xml:space="preserve">
+    <value>String</value>
+  </data>
   <data name="SmoothingByAverageFunctionName" xml:space="preserve">
     <value>By average value</value>
   </data>
@@ -209,5 +218,8 @@
   </data>
   <data name="StretchYChanger" xml:space="preserve">
     <value>Stretch Y</value>
+  </data>
+  <data name="StringAddBuilderName" xml:space="preserve">
+    <value>Add string</value>
   </data>
 </root>

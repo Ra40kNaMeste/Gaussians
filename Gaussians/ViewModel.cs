@@ -35,7 +35,8 @@ namespace Gaussians
             {Properties.Resources.SmoothingOperations, typeof(SmoothingFinctionAttribute) },
             {Properties.Resources.OperationGraphChangers, typeof(FunctionChangedAttribute) },
             {Properties.Resources.GraphProperties, typeof(FunctionParameterAttribute) },
-            {Properties.Resources.ExportGraphOperations, typeof(ExportGraphAttribute) }
+            {Properties.Resources.ExportGraphOperations, typeof(ExportGraphAttribute) },
+            {Properties.Resources.StringOperations, typeof(StringFunctionsAttribute) }
         };
 
         #endregion

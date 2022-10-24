@@ -244,6 +244,9 @@
   <data name="SmoothingOperations" xml:space="preserve">
     <value>Smoothing</value>
   </data>
+  <data name="StringOperations" xml:space="preserve">
+    <value>String operations</value>
+  </data>
   <data name="UnvisibleGraph" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\UnvisibleGraph.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

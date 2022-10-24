@@ -445,6 +445,15 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на String operations.
+        /// </summary>
+        public static string StringOperations {
+            get {
+                return ResourceManager.GetString("StringOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
         public static byte[] UnvisibleGraph {

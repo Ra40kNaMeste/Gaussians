@@ -60,9 +60,30 @@ namespace GaussiansModel.Functions
 
     }
 
-    //[ExportGraph]
-    //public class ExportString
-    //{
+    [ExportGraph]
+    public class ExportString : NodeFunctionBase<ExportString>
+    {
+        public ExportString()
+        {
+            Inputs.Add(new(Properties.Resources.InputString, typeof(string), string.Empty));
+            Inputs.Add(new(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Create)));
+        }
+        public override string GetName()
+        {
+            return Properties.Resources.ExportStringName;
+        }
 
-    //}
+        public override void Invoke(CancellationToken token)
+        {
+            string str = (string)FindInputParameter(Properties.Resources.InputString).Value;
+            string fileName = ((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).FileName;
+            using (StreamWriter sw = new(fileName, false))
+            {
+                    sw.WriteLine(str);
+            }
+            Progress = 100;
+        }
+
+    }
+
 }

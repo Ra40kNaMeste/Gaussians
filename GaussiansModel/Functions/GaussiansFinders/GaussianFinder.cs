@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace GaussiansModel.Functions
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class GaussianFinderAttribute:Attribute
-    {   }
+    public class FuncApprocsimationsAttribute:Attribute
+    { 
+
+    }
 }

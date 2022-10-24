@@ -198,23 +198,11 @@
   <data name="OutputMinGraph" xml:space="preserve">
     <value>Min</value>
   </data>
-  <data name="PRNReaderName" xml:space="preserve">
-    <value>Import file as prn</value>
-  </data>
   <data name="SmoothingByAverageFunctionName" xml:space="preserve">
     <value>By average value</value>
   </data>
   <data name="SmoothingByDistanceFunctionName" xml:space="preserve">
     <value>By distance value</value>
-  </data>
-  <data name="SmoothingForSplineApprozimation" xml:space="preserve">
-    <value>Smooothing for spline approximation</value>
-  </data>
-  <data name="SmoothingSplitingGraph" xml:space="preserve">
-    <value>Split graph</value>
-  </data>
-  <data name="SplineApproximationName" xml:space="preserve">
-    <value>Pline Bezier lines</value>
   </data>
   <data name="StretchXChanger" xml:space="preserve">
     <value>Stretch X</value>

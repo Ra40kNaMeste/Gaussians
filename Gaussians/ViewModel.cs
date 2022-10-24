@@ -34,9 +34,7 @@ namespace Gaussians
             {Properties.Resources.ReadGraphOperations, typeof(FileReaderAttribute) },
             {Properties.Resources.SmoothingOperations, typeof(SmoothingFinctionAttribute) },
             {Properties.Resources.OperationGraphChangers, typeof(FunctionChangedAttribute) },
-            {Properties.Resources.ApproximationOperations, typeof(ApproximationFunctionAttribute) },
             {Properties.Resources.GraphProperties, typeof(FunctionParameterAttribute) },
-            {Properties.Resources.GraphGaussianFinders, typeof(GaussianFinderAttribute) },
             {Properties.Resources.ExportGraphOperations, typeof(ExportGraphAttribute) }
         };
 

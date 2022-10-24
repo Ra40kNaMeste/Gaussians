@@ -85,32 +85,6 @@ namespace GaussiansModel.Functions
     }
 
     [FileReader]
-    public class ReaderPRN : FileReaderBase<ReaderPRN>
-    {
-        public ReaderPRN() { }
-        Regex regex = new(@"^\s*-?\d+([.|,]\d*)?([e|E]-\d*)?\s*-?\d+([.|,]\d*)?([e|E]-\d*)?\s*$");
-        public override PointGraph ReadFile(Stream file)
-        {
-            var strings = ReaderSkripts.BuildStringArrayByFunction(file, i =>
-            {
-                Match match = regex.Match(i);
-                if (!match.Success)
-                    throw new FileLoadException();
-                return true;
-            });
-            return new(strings.Select(i =>
-            {
-                var strs = i.Split(new char[] { ' ', '\t', '\r' }).Where(i => i.Count() > 0).Select(i => i.Replace(',', '.'));
-                if (strs.Count() != 2)
-                    throw new FileLoadException();
-                return new Point(ConvertExtension.ToDoubleRich(strs.ElementAt(0)),
-                    ConvertExtension.ToDoubleRich(strs.ElementAt(1)));
-            }));
-        }
-        public override string GetName() => Properties.Resources.PRNReaderName;
-    }
-
-    [FileReader]
     public class ReaderFileByPattern : FileReaderBase<ReaderFileByPattern>
     {
         public ReaderFileByPattern() { }

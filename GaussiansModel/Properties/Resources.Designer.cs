@@ -304,15 +304,6 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Import file as prn.
-        /// </summary>
-        internal static string PRNReaderName {
-            get {
-                return ResourceManager.GetString("PRNReaderName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на By average value.
         /// </summary>
         internal static string SmoothingByAverageFunctionName {
@@ -327,33 +318,6 @@ namespace GaussiansModel.Properties {
         internal static string SmoothingByDistanceFunctionName {
             get {
                 return ResourceManager.GetString("SmoothingByDistanceFunctionName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Smooothing for spline approximation.
-        /// </summary>
-        internal static string SmoothingForSplineApprozimation {
-            get {
-                return ResourceManager.GetString("SmoothingForSplineApprozimation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Split graph.
-        /// </summary>
-        internal static string SmoothingSplitingGraph {
-            get {
-                return ResourceManager.GetString("SmoothingSplitingGraph", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Pline Bezier lines.
-        /// </summary>
-        internal static string SplineApproximationName {
-            get {
-                return ResourceManager.GetString("SplineApproximationName", resourceCulture);
             }
         }
         

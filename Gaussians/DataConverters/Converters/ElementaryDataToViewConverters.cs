@@ -198,17 +198,6 @@ namespace Gaussians.DataConverters
             return base.SelectTemplate(item, container);
         }
     }
-    internal class OutputDataShow : IDataToViewShowConverter
-    {
-        public FrameworkElement Show(FunctionParameter property, ViewModel viewModel, IValidationConverter converter)
-        {
-            TextBlock res = new();
-            Binding binding = new("Value") { Source = property, Converter = converter };
-            res.SetBinding(TextBlock.TextProperty, binding);
-            return res;
-        }
-
-    }
 
     internal class DoubleDataToViewConverter : ElementaryDataToViewConverterBase
     {

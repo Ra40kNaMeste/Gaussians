@@ -13,21 +13,6 @@ using System.Windows.Data;
 
 namespace Gaussians.DataConverters
 {
-    internal class OutputGraphDataToViewConverter : IPropertyModelToViewable
-    {
-        public bool CanConvert(Type type)
-        {
-            return typeof(GaussiansModel.IGraph).IsAssignableFrom(type);
-        }
-
-        public FrameworkElement GetView(FunctionParameter parameter, ViewModel viewModel)
-        {
-            TextBlock res = new();
-            res.SetBinding(TextBlock.TextProperty, new Binding("Name") { Source = parameter, });
-            return res;
-        }
-    }
-
 
     internal class InputGraphDataToViewConverter : IPropertyModelToViewable
     {

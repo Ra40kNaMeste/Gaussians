@@ -173,6 +173,7 @@ namespace Gaussians.DataConverters
             new BooleanDataToViewConverter(new InputDataShow()),
             new ObjectDataToViewConverter(new InputDataShow()),
             new InputGraphDataToViewConverter(),
+            new InputMultiSourceDataToViewConverter(),
             new InputSourceDataToViewConverter()
         };
         public static PropertyNodeFuncView ConvertPropertyModelToVisualProperty(FunctionParameter property, ViewModel viewModel)
@@ -208,11 +209,7 @@ namespace Gaussians.DataConverters
 
         private static List<IPropertyModelToViewable> converters = new()
         {
-            new DoubleDataToViewConverter(new OutputDataShow()),
-            new IntDataToViewConverter(new OutputDataShow()),
-            new StringDataToViewConverter(new OutputDataShow()),
-            new BooleanDataToViewConverter(new OutputDataShow()),
-            new OutputGraphDataToViewConverter(),
+            new DefaultOutputDataShow()
         };
         public static PropertyNodeFuncView ConvertPropertyModelToVisualProperty(FunctionParameter property, ViewModel viewModel)
         {
@@ -259,5 +256,19 @@ namespace Gaussians.DataConverters
             throw new NotImplementedException();
         }
     }
+    internal class DefaultOutputDataShow : IPropertyModelToViewable
+    {
+        public bool CanConvert(Type type)
+        {
+            return true;
+        }
 
+        public FrameworkElement GetView(FunctionParameter property, ViewModel viewModel)
+        {
+
+            TextBlock res = new();
+            res.SetBinding(TextBlock.TextProperty, new Binding("Name") { Source = property });
+            return res;
+        }
+    }
 }

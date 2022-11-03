@@ -41,17 +41,22 @@ namespace GaussiansModel.Functions
     {
         public FileReaderBase()
         {
-            Inputs.Add(new FunctionParameter(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Open)));
-            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraph, typeof(PointGraph), new PointGraph()));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputSource, typeof(IEnumerable<StreamData>), new List<StreamData>()));
+            Outputs.Add(new FunctionParameter(Properties.Resources.OutputGraphs, typeof(IEnumerable<PointGraph>), new List<PointGraph>()));
         }
 
         public override void Invoke(CancellationToken token)
         {
-            string fileName = ((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).FileName;
-            using (FileStream stream = new(fileName, FileMode.Open))
+            var fileNames = ((IEnumerable<StreamData>)FindInputParameter(Properties.Resources.InputSource).Value).Select(i => i.FileName);
+            List<PointGraph> res = new();
+            foreach (var fileName in fileNames)
             {
-                SetOutputParameter(Properties.Resources.OutputGraph, this.ReadFile(stream));
+                using (FileStream stream = new(fileName, FileMode.Open))
+                {
+                    res.Add(ReadFile(stream));
+                }
             }
+            SetOutputParameter(Properties.Resources.OutputGraphs, res);
         }
 
         public abstract PointGraph ReadFile(Stream file);

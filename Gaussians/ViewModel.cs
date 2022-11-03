@@ -258,14 +258,18 @@ namespace Gaussians
                 {
                     OpenFileDialog dialog = new()
                     {
-                        Title = Properties.Resources.MenuOpen
+                        Title = Properties.Resources.MenuOpen,
+                        Multiselect = true,
                     };
                     if (dialog.ShowDialog() == true)
                     {
-                        using (Stream file = dialog.OpenFile())
+                        foreach (string fileName in dialog.FileNames)
                         {
-                            GaussiansModel.PointGraph chart = reader.ReadFile(file);
-                            CreateVisualGraphByModel(chart);
+                            using (FileStream file = new(fileName, FileMode.Open))
+                            {
+                                GaussiansModel.PointGraph chart = reader.ReadFile(file);
+                                CreateVisualGraphByModel(chart);
+                            }
                         }
                     }
                 }

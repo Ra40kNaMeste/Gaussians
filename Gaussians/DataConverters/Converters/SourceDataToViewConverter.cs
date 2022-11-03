@@ -14,7 +14,7 @@ namespace Gaussians.DataConverters
 {
     internal class InputSourceDataToViewConverter : IPropertyModelToViewable
     {
-        public bool CanConvert(Type type)
+        public virtual bool CanConvert(Type type)
         {
             return type == typeof(StreamData);
         }
@@ -42,7 +42,7 @@ namespace Gaussians.DataConverters
         }
         private DefaultCommand? openCommand;
         public DefaultCommand OpenCommand => openCommand ??= new(OpenBody);
-        private void OpenBody(object? parameter)
+        protected virtual void OpenBody(object? parameter)
         {
             try
             {
@@ -69,18 +69,72 @@ namespace Gaussians.DataConverters
             }
 
         }
-        private FunctionParameter TargetParameter { get; set; }
-        public string FileName 
+        protected FunctionParameter TargetParameter { get; set; }
+        public string FileName
         {
-            get 
+            get
             {
                 return ((StreamData)TargetParameter.Value).FileName;
 
             }
-            set 
+            set
             {
                 ((StreamData)TargetParameter.Value).FileName = value;
             }
         }
     }
+
+    internal class InputMultiSourceDataToViewConverter : InputSourceDataToViewConverter
+    {
+        public override bool CanConvert(Type type)
+        {
+            return type == typeof(IEnumerable<StreamData>);
+        }
+
+        protected override void OpenBody(object? parameter)
+        {
+            try
+            {
+                var dialog = new OpenFileDialog()
+                {
+                    Title = Properties.Resources.MenuOpen,
+                    Multiselect = true
+                };
+                if (dialog.ShowDialog() == true)
+                {
+                    FileNames = dialog.FileNames;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
+        public new string FileName
+        {
+            get
+            {
+                return string.Empty;
+
+            }
+            set
+            {
+
+            }
+        }
+        public IEnumerable<string> FileNames
+        {
+            get
+            {
+                return ((IEnumerable<StreamData>)TargetParameter.Value).Select(i => i.FileName);
+            }
+            set
+            {
+                TargetParameter.Value = value.Select(i => new StreamData(i, FileMode.Open));
+
+            }
+        }
+    }
+
 }

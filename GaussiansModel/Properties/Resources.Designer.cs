@@ -97,6 +97,15 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Values.
+        /// </summary>
+        internal static string InputArray {
+            get {
+                return ResourceManager.GetString("InputArray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Input graph.
         /// </summary>
         internal static string InputChartName {
@@ -327,6 +336,33 @@ namespace GaussiansModel.Properties {
         internal static string OutputString {
             get {
                 return ResourceManager.GetString("OutputString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Value.
+        /// </summary>
+        internal static string OutputValue {
+            get {
+                return ResourceManager.GetString("OutputValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Index.
+        /// </summary>
+        internal static string OutputValueIndex {
+            get {
+                return ResourceManager.GetString("OutputValueIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Point graphs.
+        /// </summary>
+        internal static string PointGraphForeachFunctionName {
+            get {
+                return ResourceManager.GetString("PointGraphForeachFunctionName", resourceCulture);
             }
         }
         

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using GaussiansModel.Functions;
 using System.Collections.ObjectModel;
 
-namespace GaussiansModel
+namespace GaussiansModel.Functions
 {
     public class TreesManager
     {

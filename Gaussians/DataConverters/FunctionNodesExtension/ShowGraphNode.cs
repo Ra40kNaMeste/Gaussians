@@ -22,7 +22,7 @@ namespace Gaussians.DataConverters
 
     internal interface IVisualGraph
     {
-        public GraphVisualData CreateVisualElements();
+        public IEnumerable<GraphVisualData> CreateVisualElements();
     }
     internal interface IVisualMessage
     {
@@ -35,6 +35,7 @@ namespace Gaussians.DataConverters
     {
         public ShowGraphNode()
         {
+            ResultGraphs = new List<IGraph>();
             Inputs.Add(new FunctionParameter(Properties.Resources.FunctionParameterGraph, typeof(IGraph), new GaussiansModel.PointGraph()));
         }
         public ShowGraphNode(SourceGenerator generator, GraphVisualDataBuilder builder)
@@ -60,14 +61,17 @@ namespace Gaussians.DataConverters
 
         public override void Invoke(CancellationToken token)
         {
-            ResultGraph = (IGraph)FindInputParameter(Resources.FunctionParameterGraph).Value;
+            ResultGraphs.Add((IGraph)FindInputParameter(Resources.FunctionParameterGraph).Value);
         }
-        public GraphVisualData CreateVisualElements()
+        public IEnumerable<GraphVisualData> CreateVisualElements()
         {
-            return Builder.Build(Generator.GraphNameGenerator.Next(), ResultGraph);
+
+            var res = ResultGraphs.Select(ResultGraph=> Builder.Build(Generator.GraphNameGenerator.Next(), ResultGraph));
+            ResultGraphs = new List<IGraph>();
+            return res;
         }
         [JsonIgnore]
-        public IGraph ResultGraph { get; set; }
+        public ICollection<IGraph> ResultGraphs { get; set; }
         public override object Clone()
         {
             ShowGraphNode res = (ShowGraphNode)base.Clone();

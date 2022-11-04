@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Xceed.Wpf.Toolkit.Primitives;
 
 namespace Gaussians.DataConverters
 {
@@ -58,13 +59,56 @@ namespace Gaussians.DataConverters
             binding.ValidationRules.Add(new ValidationRuleWithConverter(new GraphNameToGraphModelConverter(manager)));
             box.SetBinding(ComboBox.SelectedValueProperty, binding);
 
-
-
-
-
             if (box.Items.Count > 0)
                 box.SelectedItem = manager.GraphDataList.Where(i => i.Name == bindingData.NamePropertyOnContext).FirstOrDefault();
 
+            return box;
+        }
+    }
+    internal class InputPointGraphsDataToViewConverter : IPropertyModelToViewable
+    {
+        public bool CanConvert(Type type)
+        {
+            return typeof(IEnumerable<GaussiansModel.PointGraph>).IsAssignableFrom(type);
+        }
+
+        public FrameworkElement GetView(FunctionParameter parameter, ViewModel viewModel)
+        {
+            ComboBox box = new ComboBox();
+            if (viewModel.SelectedOperation == null)
+                return box;
+            box.MinWidth = 50;
+
+            var context = viewModel.SelectedOperation.Context;
+            //Получение данных о привязке сначала для графиков из нодов
+            FunctionNodeBindingData? bindingData =
+                viewModel.SelectedOperation.BindingDates.Where(i => i.NameTargetProperty == parameter.Name).FirstOrDefault();
+
+            InputDataBindingItem? selectItem = null;
+            //Сбор элементов для выюора
+            List<object> values = new();
+
+            foreach (var item in context.Context)
+            {
+                if (FunctionParameter.CanValidation(parameter.ValueType, item.Value))
+                {
+                    InputDataBindingItem input = new InputDataBindingItem(item.Key, parameter);
+                    values.Add(input);
+                    if (bindingData != null && bindingData.NamePropertyOnContext == item.Key)
+                        selectItem = input;
+                }
+            }
+            //Установка элементов
+            box.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = values });
+
+            PointGraphsDataConverter converter = new();
+            ElementaryDataConverter elementaryConverter = new(converter, viewModel.SelectedOperation.BindingDates, bindingData);
+            Binding binding = new Binding("Value") { Source = parameter, Converter = elementaryConverter, Mode = BindingMode.OneWayToSource };
+            binding.ValidationRules.Add(new ValidationRuleWithConverter(elementaryConverter));
+            box.SetBinding(ComboBox.SelectedItemProperty, binding);
+            elementaryConverter.CurrentBinding = BindingOperations.GetBindingExpression(box, ComboBox.SelectedItemProperty);
+            box.ItemTemplateSelector = new ElementaryDataToViewDataTempateSelector();
+            box.SelectedItem = selectItem;
             return box;
         }
     }
@@ -84,18 +128,23 @@ namespace Gaussians.DataConverters
         }
     }
 
-    internal class GraphdataConverter : IValueConverter
+    internal class PointGraphsDataConverter : IValidationConverter
     {
+        public bool CanValidation(object value, CultureInfo cultureInfo)
+        {
+            return true;
+        }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ObservableCollection<GraphVisualData> dates)
-                return dates.Select(i => i.Name);
-            return null;
+
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
+
 }

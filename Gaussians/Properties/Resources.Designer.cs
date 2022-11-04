@@ -103,6 +103,15 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Branchs.
+        /// </summary>
+        public static string ForeachOperations {
+            get {
+                return ResourceManager.GetString("ForeachOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Show graph.
         /// </summary>
         public static string FunctionNodeShowGraphName {

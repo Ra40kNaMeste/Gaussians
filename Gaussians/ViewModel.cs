@@ -36,7 +36,8 @@ namespace Gaussians
             {Properties.Resources.OperationGraphChangers, typeof(FunctionChangedAttribute) },
             {Properties.Resources.GraphProperties, typeof(FunctionParameterAttribute) },
             {Properties.Resources.ExportGraphOperations, typeof(ExportGraphAttribute) },
-            {Properties.Resources.StringOperations, typeof(StringFunctionsAttribute) }
+            {Properties.Resources.StringOperations, typeof(StringFunctionsAttribute) },
+            {Properties.Resources.ForeachOperations, typeof(ForeachFunctionAttribute) }
         };
 
         #endregion
@@ -329,12 +330,14 @@ namespace Gaussians
                 {
                     if (function.Function is IVisualGraph graph)
                     {
-                        var metadata = graph.CreateVisualElements();
-                        if (metadata == null)
-                            break;
-                        metadata.GraphBrush = new SolidColorBrush(Generator.GetColor());
-                        GraphList.AddGraph(metadata);
-                        metadata.SetBindings();
+                        var metadates = graph.CreateVisualElements();
+                        foreach (var metadata in metadates)
+                        {
+                            metadata.GraphBrush = new SolidColorBrush(Generator.GetColor());
+                            GraphList.AddGraph(metadata);
+                            metadata.SetBindings();
+                        }
+
                     }
                     else if (function.Function is IVisualMessage message)
                         MessageBox.Show(message.Message);

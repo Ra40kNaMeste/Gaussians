@@ -129,6 +129,9 @@
   <data name="ExtremumParameterName" xml:space="preserve">
     <value>Extremums</value>
   </data>
+  <data name="InputArray" xml:space="preserve">
+    <value>Values</value>
+  </data>
   <data name="InputChartName" xml:space="preserve">
     <value>Input graph</value>
   </data>
@@ -206,6 +209,15 @@
   </data>
   <data name="OutputString" xml:space="preserve">
     <value>String</value>
+  </data>
+  <data name="OutputValue" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="OutputValueIndex" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="PointGraphForeachFunctionName" xml:space="preserve">
+    <value>Point graphs</value>
   </data>
   <data name="SmoothingByAverageFunctionName" xml:space="preserve">
     <value>By average value</value>

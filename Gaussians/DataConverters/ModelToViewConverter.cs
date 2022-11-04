@@ -173,6 +173,7 @@ namespace Gaussians.DataConverters
             new BooleanDataToViewConverter(new InputDataShow()),
             new ObjectDataToViewConverter(new InputDataShow()),
             new InputGraphDataToViewConverter(),
+            new InputPointGraphsDataToViewConverter(),
             new InputMultiSourceDataToViewConverter(),
             new InputSourceDataToViewConverter()
         };

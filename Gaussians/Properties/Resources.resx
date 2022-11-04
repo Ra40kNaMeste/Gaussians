@@ -130,6 +130,9 @@
   <data name="ExportGraphOperations" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="ForeachOperations" xml:space="preserve">
+    <value>Branchs</value>
+  </data>
   <data name="FunctionNodeShowGraphName" xml:space="preserve">
     <value>Show graph</value>
   </data>

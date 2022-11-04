@@ -24,7 +24,9 @@ namespace GaussiansModel.Functions
         public ForeachFunction()
         {
             Inputs.Add(new(Properties.Resources.InputArray, typeof(IEnumerable<T>), new List<T>()));
+            Inputs.Add(new(Properties.Resources.InputFileNames, typeof(IEnumerable<string>), new List<string>()));
             Outputs.Add(new(Properties.Resources.OutputValue, typeof(T), new T()));
+            Outputs.Add(new(Properties.Resources.OutputFileName, typeof(string), string.Empty));
             Outputs.Add(new(Properties.Resources.OutputValueIndex, typeof(string), string.Empty));
         }
         public int Count()
@@ -35,6 +37,8 @@ namespace GaussiansModel.Functions
         public void InvokeByIndex(int index, CancellationToken token)
         {
             IEnumerable<T> res = (IEnumerable<T>)FindInputParameter(Properties.Resources.InputArray).Value;
+            IEnumerable<string> names = (IEnumerable<string>)FindInputParameter(Properties.Resources.InputFileNames).Value;
+            SetOutputParameter(Properties.Resources.OutputFileName, index < names.Count() ? names.ElementAt(index):string.Empty);
             SetOutputParameter(Properties.Resources.OutputValue, res.ElementAt(index));
             SetOutputParameter(Properties.Resources.OutputValueIndex, index + 1);
         }

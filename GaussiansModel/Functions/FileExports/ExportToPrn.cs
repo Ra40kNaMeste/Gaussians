@@ -21,7 +21,8 @@ namespace GaussiansModel.Functions
             Inputs.Add(new FunctionParameter(Properties.Resources.InputMinValue, typeof(double), 0.0));
             Inputs.Add(new FunctionParameter(Properties.Resources.InputMaxValue, typeof(double), 1.0));
             Inputs.Add(new FunctionParameter(Properties.Resources.InputStep, typeof(double), 0.1));
-            Inputs.Add(new FunctionParameter(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Create)));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputFolder, typeof(StreamData), new StreamData(null, FileMode.Create)));
+            Inputs.Add(new FunctionParameter(Properties.Resources.InputPath, typeof(string), Properties.Resources.DefaultInputPrnPath + ".prn"));
         }
         public override string GetName()
         {
@@ -34,7 +35,8 @@ namespace GaussiansModel.Functions
             double max = (double)FindInputParameter(Properties.Resources.InputMaxValue).Value;
             double min = (double)FindInputParameter(Properties.Resources.InputMinValue).Value;
             double step = (double)FindInputParameter(Properties.Resources.InputStep).Value;
-            string fileName = ((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).FileName;
+            string fileName = ((StreamData)FindInputParameter(Properties.Resources.InputFolder).Value).FileName + "\\"
+                + FindInputParameter(Properties.Resources.InputPath).Value.ToString();
             var points = GetPoints(graph, min, max, step);
             double progressStep = 100 / points.Count();
             using (StreamWriter sw = new(fileName, false))
@@ -66,7 +68,8 @@ namespace GaussiansModel.Functions
         public ExportString()
         {
             Inputs.Add(new(Properties.Resources.InputString, typeof(string), string.Empty));
-            Inputs.Add(new(Properties.Resources.InputSource, typeof(StreamData), new StreamData(null, FileMode.Create)));
+            Inputs.Add(new(Properties.Resources.InputFolder, typeof(StreamData), new StreamData(null, FileMode.Create)));
+            Inputs.Add(new(Properties.Resources.InputPath, typeof(string), Properties.Resources.DefaultInputStringPath));
         }
         public override string GetName()
         {
@@ -76,7 +79,8 @@ namespace GaussiansModel.Functions
         public override void Invoke(CancellationToken token)
         {
             string str = (string)FindInputParameter(Properties.Resources.InputString).Value;
-            string fileName = ((StreamData)FindInputParameter(Properties.Resources.InputSource).Value).FileName;
+            string fileName = ((StreamData)FindInputParameter(Properties.Resources.InputFolder).Value).FileName + "\\"
+                + FindInputParameter(Properties.Resources.InputPath).Value.ToString();
             using (StreamWriter sw = new(fileName, false))
             {
                     sw.WriteLine(str);

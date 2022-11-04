@@ -70,6 +70,24 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Graph.
+        /// </summary>
+        internal static string DefaultInputPrnPath {
+            get {
+                return ResourceManager.GetString("DefaultInputPrnPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на value.
+        /// </summary>
+        internal static string DefaultInputStringPath {
+            get {
+                return ResourceManager.GetString("DefaultInputStringPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Export string.
         /// </summary>
         internal static string ExportStringName {
@@ -151,6 +169,24 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Name files.
+        /// </summary>
+        internal static string InputFileNames {
+            get {
+                return ResourceManager.GetString("InputFileNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Folder.
+        /// </summary>
+        internal static string InputFolder {
+            get {
+                return ResourceManager.GetString("InputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Graphs collection.
         /// </summary>
         internal static string InputGraphsCollection {
@@ -223,20 +259,20 @@ namespace GaussiansModel.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Path.
+        /// </summary>
+        internal static string InputPath {
+            get {
+                return ResourceManager.GetString("InputPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Min range by Y .
         /// </summary>
         internal static string InputRangeYIgnore {
             get {
                 return ResourceManager.GetString("InputRangeYIgnore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Source.
-        /// </summary>
-        internal static string InputSource {
-            get {
-                return ResourceManager.GetString("InputSource", resourceCulture);
             }
         }
         
@@ -291,6 +327,24 @@ namespace GaussiansModel.Properties {
         internal static string InputValueName {
             get {
                 return ResourceManager.GetString("InputValueName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name file.
+        /// </summary>
+        internal static string OutputFileName {
+            get {
+                return ResourceManager.GetString("OutputFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name files.
+        /// </summary>
+        internal static string OutputFileNames {
+            get {
+                return ResourceManager.GetString("OutputFileNames", resourceCulture);
             }
         }
         

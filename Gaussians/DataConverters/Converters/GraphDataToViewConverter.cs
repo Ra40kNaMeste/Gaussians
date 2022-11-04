@@ -65,11 +65,11 @@ namespace Gaussians.DataConverters
             return box;
         }
     }
-    internal class InputPointGraphsDataToViewConverter : IPropertyModelToViewable
+    internal class DefaultDataToViewConverter : IPropertyModelToViewable
     {
         public bool CanConvert(Type type)
         {
-            return typeof(IEnumerable<GaussiansModel.PointGraph>).IsAssignableFrom(type);
+            return true;
         }
 
         public FrameworkElement GetView(FunctionParameter parameter, ViewModel viewModel)

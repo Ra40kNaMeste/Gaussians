@@ -23,6 +23,7 @@ using System.Windows;
 using System.Reflection;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
+using Ookii.Dialogs.Wpf;
 
 namespace Gaussians
 {
@@ -257,9 +258,8 @@ namespace Gaussians
             {
                 if (parameter is IFileReader reader)
                 {
-                    OpenFileDialog dialog = new()
+                    VistaOpenFileDialog dialog = new()
                     {
-                        Title = Properties.Resources.MenuOpen,
                         Multiselect = true,
                     };
                     if (dialog.ShowDialog() == true)

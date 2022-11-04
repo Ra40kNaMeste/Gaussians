@@ -1,6 +1,7 @@
 ﻿using Gaussians.Commands;
 using GaussiansModel.Functions;
 using Microsoft.Win32;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,7 +49,7 @@ namespace Gaussians.DataConverters
             {
                 if (((StreamData)TargetParameter.Value).Mode == FileMode.Open)
                 {
-                    var dialog = new OpenFileDialog() { Title = Properties.Resources.MenuOpen };
+                    var dialog = new VistaOpenFileDialog();
                     if (dialog.ShowDialog() == true)
                     {
                         FileName = dialog.FileName;
@@ -56,10 +57,11 @@ namespace Gaussians.DataConverters
                 }
                 else
                 {
-                    var dialog = new SaveFileDialog() { Title = Properties.Resources.MenuSave };
+                    
+                    var dialog = new VistaFolderBrowserDialog();
                     if (dialog.ShowDialog() == true)
                     {
-                        FileName = dialog.FileName;
+                        FileName = dialog.SelectedPath;
                     }
                 }
             }
@@ -95,9 +97,8 @@ namespace Gaussians.DataConverters
         {
             try
             {
-                var dialog = new OpenFileDialog()
+                var dialog = new VistaOpenFileDialog()
                 {
-                    Title = Properties.Resources.MenuOpen,
                     Multiselect = true
                 };
                 if (dialog.ShowDialog() == true)

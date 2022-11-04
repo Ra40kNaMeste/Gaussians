@@ -173,9 +173,9 @@ namespace Gaussians.DataConverters
             new BooleanDataToViewConverter(new InputDataShow()),
             new ObjectDataToViewConverter(new InputDataShow()),
             new InputGraphDataToViewConverter(),
-            new InputPointGraphsDataToViewConverter(),
             new InputMultiSourceDataToViewConverter(),
-            new InputSourceDataToViewConverter()
+            new InputSourceDataToViewConverter(),
+            new DefaultDataToViewConverter()
         };
         public static PropertyNodeFuncView ConvertPropertyModelToVisualProperty(FunctionParameter property, ViewModel viewModel)
         {

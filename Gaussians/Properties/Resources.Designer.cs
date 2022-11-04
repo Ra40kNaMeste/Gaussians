@@ -256,15 +256,6 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Save.
-        /// </summary>
-        public static string MenuSave {
-            get {
-                return ResourceManager.GetString("MenuSave", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на None.
         /// </summary>
         public static string NotBindingParameter {

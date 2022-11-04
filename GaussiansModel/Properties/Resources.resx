@@ -120,6 +120,12 @@
   <data name="ByPatternReaderName" xml:space="preserve">
     <value>Import file</value>
   </data>
+  <data name="DefaultInputPrnPath" xml:space="preserve">
+    <value>Graph</value>
+  </data>
+  <data name="DefaultInputStringPath" xml:space="preserve">
+    <value>value</value>
+  </data>
   <data name="ExportStringName" xml:space="preserve">
     <value>Export string</value>
   </data>
@@ -147,6 +153,12 @@
   <data name="InputEndX" xml:space="preserve">
     <value>End</value>
   </data>
+  <data name="InputFileNames" xml:space="preserve">
+    <value>Name files</value>
+  </data>
+  <data name="InputFolder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
   <data name="InputGraphsCollection" xml:space="preserve">
     <value>Graphs collection</value>
   </data>
@@ -171,11 +183,11 @@
   <data name="InputNoizePoint" xml:space="preserve">
     <value>Noize point</value>
   </data>
+  <data name="InputPath" xml:space="preserve">
+    <value>Path</value>
+  </data>
   <data name="InputRangeYIgnore" xml:space="preserve">
     <value>Min range by Y </value>
-  </data>
-  <data name="InputSource" xml:space="preserve">
-    <value>Source</value>
   </data>
   <data name="InputStartX" xml:space="preserve">
     <value>Start</value>
@@ -194,6 +206,12 @@
   </data>
   <data name="InputValueName" xml:space="preserve">
     <value>Value</value>
+  </data>
+  <data name="OutputFileName" xml:space="preserve">
+    <value>Name file</value>
+  </data>
+  <data name="OutputFileNames" xml:space="preserve">
+    <value>Name files</value>
   </data>
   <data name="OutputGraph" xml:space="preserve">
     <value>Graph</value>

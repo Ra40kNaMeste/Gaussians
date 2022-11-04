@@ -181,9 +181,6 @@
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="MenuSave" xml:space="preserve">
-    <value>Save</value>
-  </data>
   <data name="NotBindingParameter" xml:space="preserve">
     <value>None</value>
   </data>

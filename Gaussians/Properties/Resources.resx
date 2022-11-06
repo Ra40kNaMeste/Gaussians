@@ -127,8 +127,41 @@
   <data name="ColorsForGraphs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ColorsForGraphs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="ExportChartDefaultName" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="ExportGraphDefaultFolder" xml:space="preserve">
+    <value>C:\Users\Public\Documents</value>
+  </data>
+  <data name="ExportGraphHeight" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="ExportGraphList" xml:space="preserve">
+    <value>Graphs</value>
+  </data>
+  <data name="ExportGraphNotFolderErrorMessage" xml:space="preserve">
+    <value>Please select output folder</value>
+  </data>
+  <data name="ExportGraphOpenPath" xml:space="preserve">
+    <value>...</value>
+  </data>
   <data name="ExportGraphOperations" xml:space="preserve">
     <value>Export</value>
+  </data>
+  <data name="ExportGraphPath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="ExportGraphProperties" xml:space="preserve">
+    <value>Properties export</value>
+  </data>
+  <data name="ExportGraphSaveErrorMessage" xml:space="preserve">
+    <value>Save error</value>
+  </data>
+  <data name="ExportGraphSuccessfully" xml:space="preserve">
+    <value>Export successfully</value>
+  </data>
+  <data name="ExportGraphWidth" xml:space="preserve">
+    <value>Width</value>
   </data>
   <data name="ForeachOperations" xml:space="preserve">
     <value>Branchs</value>
@@ -165,6 +198,9 @@
   </data>
   <data name="MenuItemAddNodes" xml:space="preserve">
     <value>Add nodes</value>
+  </data>
+  <data name="MenuItemExportGraphs" xml:space="preserve">
+    <value>Export graphs</value>
   </data>
   <data name="MenuItemNodes" xml:space="preserve">
     <value>Nodes</value>

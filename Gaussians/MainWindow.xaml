@@ -12,14 +12,10 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <con:VisibilityConverter x:Key="visibilityConverter"/>
-        <local:ViewModel x:Key="vm"/>
         <con:InputPropertyModelToVisualConverter ViewModel="{StaticResource ResourceKey=vm}" x:Key="inputPropConverter"/>
         <con:OutputPropertyModelToVisualConverter ViewModel="{StaticResource ResourceKey=vm}" x:Key="outputPropConverter"/>
 
     </Window.Resources>
-    <Window.DataContext>
-        <StaticResource ResourceKey="vm"/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -44,6 +40,7 @@
                         </Style>
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
+                <MenuItem Header="{x:Static res:Resources.MenuItemExportGraphs}" Command="{Binding ExportGraphsCommand}"/>
             </MenuItem>
             <MenuItem Header="{x:Static res:Resources.MenuItemNodes}">
                 <MenuItem Header="{x:Static res:Resources.MenuItemAddNodes}" Command="{Binding AddNodeTreeCommand}"/>
@@ -166,7 +163,7 @@
             </TabControl>
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
             <!--GrapsView-->
-            <pl:Chart Grid.Column="2" Content="{Binding GraphList.GraphList}">
+            <pl:Chart Grid.Column="2" Margin="10" Content="{Binding GraphList.GraphList}">
                 <pl:Chart.LegendContent>
                     <ItemsControl ItemsSource="{Binding GraphList.GraphDataList}">
                         <ItemsControl.ItemTemplate>

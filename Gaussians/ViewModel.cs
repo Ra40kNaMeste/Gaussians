@@ -24,6 +24,9 @@ using System.Reflection;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using Ookii.Dialogs.Wpf;
+using Gaussians.ViewFunctions;
+using System.Windows.Media.Imaging;
+using Gaussians.DialogWindows.ExportGraphs;
 
 namespace Gaussians
 {
@@ -44,8 +47,9 @@ namespace Gaussians
         #endregion
 
         #region Constructons
-        public ViewModel()
+        public ViewModel(Window targetWindow)
         {
+            TargetWindow = targetWindow;
             Init();
         }
 
@@ -249,6 +253,9 @@ namespace Gaussians
         private DefaultCommand readTreeCommand;
         public DefaultCommand ReadTreeCommand => readTreeCommand ??= new(ReadTreeBody);
 
+        private DefaultCommand exportGraphsCommand;
+        public DefaultCommand ExportGraphsCommand => exportGraphsCommand ??= new(ExportGraphsBody);
+
         #endregion //HeaderCommand
 
         #region BodyCommand
@@ -335,7 +342,6 @@ namespace Gaussians
                         {
                             metadata.GraphBrush = new SolidColorBrush(Generator.GetColor());
                             GraphList.AddGraph(metadata);
-                            metadata.SetBindings();
                         }
 
                     }
@@ -476,6 +482,13 @@ namespace Gaussians
             }
         }
 
+        public void ExportGraphsBody(object parameter)
+        {
+            ExportGraphsWindow window = new((GraphViewManager)GraphList.Clone());
+            window.Owner = TargetWindow;
+            window.Show();
+
+        }
         #endregion //BodyCommand
 
         #endregion //Commands
@@ -500,6 +513,7 @@ namespace Gaussians
         #region PrivateProperties
         private CancellationTokenSource TokenSource { get; set; }
         private bool IsInvoke { get; set; }
+        private Window TargetWindow { get; init; }
         #endregion //PrivateProperties
 
         #region InternalProperties

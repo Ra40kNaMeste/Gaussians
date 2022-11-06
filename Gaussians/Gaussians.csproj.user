@@ -7,6 +7,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="DialogWindows\ExportGraphs\ExportGraphsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="DialogWindows\ExportGraphs\ExportGraphsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="ResourceDictionaries\ElementaryDataTemplates.xaml">
       <SubType>Designer</SubType>
     </Page>

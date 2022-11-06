@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Gaussians
+namespace Gaussians.DialogWindows.ExportGraphs
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для ExportGraphsWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ExportGraphsWindow : Window
     {
-        public MainWindow()
+        internal ExportGraphsWindow(GraphViewManager manager)
         {
+            DataContext = new ExportGraphsViewModel(manager);
             InitializeComponent();
-            DataContext = new ViewModel(this);
         }
     }
 }

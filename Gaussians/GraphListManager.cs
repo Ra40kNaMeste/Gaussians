@@ -18,7 +18,7 @@ using System.Windows.Input;
 
 namespace Gaussians
 {
-    internal class GraphManager: INotifyPropertyChanged
+    internal class GraphManager: INotifyPropertyChanged, ICloneable
     {
         public GraphManager()
         {
@@ -46,28 +46,22 @@ namespace Gaussians
 
         protected void OnPropertyChanged([CallerMemberName] string? property = null) => PropertyChanged?.Invoke(this, new(property));
         public event PropertyChangedEventHandler? PropertyChanged;
-
+        public virtual object Clone()
+        {
+            return new GraphManager() { GraphDataList = GraphDataList };
+        }
     }
     internal class GraphViewManager : GraphManager
     {
         public GraphViewManager():base()
         {
             GraphList = new Plot();
+            GraphListDates = new();
             GraphDataList.CollectionChanged += OnGraphDataListChanged;
         }
 
         protected void OnGraphDataListChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            //if (e.NewItems != null)
-            //    foreach (GraphData item in e.NewItems)
-            //    {
-            //        if (item is GraphVisualData viewData)
-            //        {
-            //            if (viewData.Graph is LineGraph)
-            //                BindingOperations.SetBinding(viewData.Graph, LineGraph.StrokeProperty, new Binding("GraphBrush") { Source = item });
-
-            //        }
-            //    }
             OnPropertyChanged("GraphName");
             OnPropertyChanged("GraphList");
         }
@@ -83,6 +77,7 @@ namespace Gaussians
             }
         }
 
+        public ObservableCollection<GraphVisualData> GraphListDates { get; init; } 
 
 
         private void OnVisibleGraphPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -94,10 +89,16 @@ namespace Gaussians
                 if (visualData.IsVisible)
                 {
                     if (!GraphList.Children.Contains(visualData.Graph))
+                    {
                         GraphList.Children.Add(visualData.Graph);
+                        GraphListDates.Add(visualData);
+                    }
                 }
                 else
+                {
                     GraphList.Children.Remove(visualData.Graph);
+                    GraphListDates.Remove(visualData);
+                }
             }
 
         }
@@ -112,6 +113,17 @@ namespace Gaussians
         {
             GraphDataList.Remove(GraphDataList.Where(i => i is GraphVisualData visualData && visualData.Graph == plot).First());
         }
+        public override object Clone()
+        {
+            var res = new GraphViewManager();
+            foreach (var data in GraphDataList)
+            {
+                var newData = (GraphData)data.Clone();
+                res.AddGraph(newData);
+            }
+            return res;
+        }
+
     }
 
     internal class UnionGraphListManager : GraphManager
@@ -207,6 +219,7 @@ namespace Gaussians
             {
                 root = value;
                 Graph = ModelToViewConverter.CreateVisualGraph(GraphModel, root);
+                SetBindings();
                 OnPropertyChanged();
             }
         }
@@ -239,7 +252,10 @@ namespace Gaussians
         {
             return new SettingGraphComponent(this, manager, Properties, Commands);
         }
-        
+        public override object Clone()
+        {
+            return new GraphVisualData(Name, GraphModel, GraphBrush, IsVisible);
+        }
     }
     internal class PointGraphVisualDataCreater : IGraphVisualDataCreater
     {
@@ -282,16 +298,16 @@ namespace Gaussians
             { Source = this, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
         }
     }
-    internal class GraphData : INotifyPropertyChanged
+    internal class GraphData : INotifyPropertyChanged, ICloneable
     {
-        public GraphData(string name, GaussiansModel.IGraph graph)
+        public GraphData(string name, IGraph graph)
         {
             Name = name;
             GraphModel = graph;
         }
 
-        private GaussiansModel.IGraph graphModel;
-        public GaussiansModel.IGraph GraphModel
+        private IGraph graphModel;
+        public IGraph GraphModel
         {
             get { return graphModel; }
             set
@@ -320,6 +336,10 @@ namespace Gaussians
         public override string ToString()
         {
             return Name;
+        }
+        public virtual object Clone()
+        {
+            return new GraphData(Name, GraphModel);
         }
     }
 }

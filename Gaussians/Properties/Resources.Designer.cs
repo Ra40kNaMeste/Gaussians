@@ -94,11 +94,110 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Chart.
+        /// </summary>
+        public static string ExportChartDefaultName {
+            get {
+                return ResourceManager.GetString("ExportChartDefaultName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на C:\Users\Public\Documents.
+        /// </summary>
+        public static string ExportGraphDefaultFolder {
+            get {
+                return ResourceManager.GetString("ExportGraphDefaultFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Height.
+        /// </summary>
+        public static string ExportGraphHeight {
+            get {
+                return ResourceManager.GetString("ExportGraphHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Graphs.
+        /// </summary>
+        public static string ExportGraphList {
+            get {
+                return ResourceManager.GetString("ExportGraphList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Please select output folder.
+        /// </summary>
+        public static string ExportGraphNotFolderErrorMessage {
+            get {
+                return ResourceManager.GetString("ExportGraphNotFolderErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ....
+        /// </summary>
+        public static string ExportGraphOpenPath {
+            get {
+                return ResourceManager.GetString("ExportGraphOpenPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Export.
         /// </summary>
         public static string ExportGraphOperations {
             get {
                 return ResourceManager.GetString("ExportGraphOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Path.
+        /// </summary>
+        public static string ExportGraphPath {
+            get {
+                return ResourceManager.GetString("ExportGraphPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Properties export.
+        /// </summary>
+        public static string ExportGraphProperties {
+            get {
+                return ResourceManager.GetString("ExportGraphProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save error.
+        /// </summary>
+        public static string ExportGraphSaveErrorMessage {
+            get {
+                return ResourceManager.GetString("ExportGraphSaveErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Export successfully.
+        /// </summary>
+        public static string ExportGraphSuccessfully {
+            get {
+                return ResourceManager.GetString("ExportGraphSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Width.
+        /// </summary>
+        public static string ExportGraphWidth {
+            get {
+                return ResourceManager.GetString("ExportGraphWidth", resourceCulture);
             }
         }
         
@@ -207,6 +306,15 @@ namespace Gaussians.Properties {
         public static string MenuItemAddNodes {
             get {
                 return ResourceManager.GetString("MenuItemAddNodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Export graphs.
+        /// </summary>
+        public static string MenuItemExportGraphs {
+            get {
+                return ResourceManager.GetString("MenuItemExportGraphs", resourceCulture);
             }
         }
         

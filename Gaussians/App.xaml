@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ResourceDictionaries/DefaultResourceDictionary.xaml"/>
                 <ResourceDictionary Source="ResourceDictionaries/ElementaryDataTemplates.xaml"/>
+                <ResourceDictionary Source="Themes/LightTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -11,13 +11,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
+        <local:ViewModel x:Key="vm"/>
         <con:VisibilityConverter x:Key="visibilityConverter"/>
         <con:InputPropertyModelToVisualConverter ViewModel="{StaticResource ResourceKey=vm}" x:Key="inputPropConverter"/>
         <con:OutputPropertyModelToVisualConverter ViewModel="{StaticResource ResourceKey=vm}" x:Key="outputPropConverter"/>
-
     </Window.Resources>
+    <Window.DataContext>
+        <StaticResource ResourceKey="vm"/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -81,8 +85,13 @@
                 <ProgressBar Minimum="0" Maximum="100" Value="{Binding InvokeFunctionProgress}" Width="50"/>
             </StackPanel>
         </Menu>
+        <!--RunControls-->
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Button Style="{DynamicResource InvokeButtonStyle}"/>
+            <Button Style="{DynamicResource StopButtonStyle}"/>
+        </StackPanel>
         <!--Body-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -91,7 +100,8 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <!--NodesView-->
-            <TabControl Grid.Column="0" ItemsSource="{Binding TreesManager.Trees}" SelectedItem="{Binding SelectNodeTree}" TabStripPlacement="Left">
+            <TabControl Grid.Column="0" ItemsSource="{Binding TreesManager.Trees}" SelectedItem="{Binding SelectNodeTree}" TabStripPlacement="Left"
+                         MinWidth="100">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"/>
@@ -149,12 +159,8 @@
                                 </TabControl.ContentTemplate>
                             </TabControl>
                             <StackPanel Grid.Row="1">
-                                <Button Content="{x:Static res:Resources.OperationRemove}" HorizontalAlignment="Center"
+                                <Button Content="{x:Static res:Resources.OperationRemove}" Margin="0,5"
                                     Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}, Path=DataContext.RemoveNodeCommand}"/>
-                                <Button Content="{x:Static res:Resources.OperationInvoke}" HorizontalAlignment="Center"
-                                    Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}, Path=DataContext.InvokeFunctionGraphCommand}"/>
-                                <Button Content="{x:Static res:Resources.OperationCancelInvoke}" HorizontalAlignment="Center"
-                                    Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}, Path=DataContext.CancelInvokeFunctionGraphCommand}"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -183,14 +189,15 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </TextBlock>
-                                    <Image Grid.Column="2" Style="{DynamicResource VisibleGraphImageStyle}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseDown">
-                                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SwapVisibleGraphCommand}"
-                                                                       CommandParameter="{Binding}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Image>
+                                    <Button Grid.Column="2" Style="{DynamicResource VisibleGraphButtonStyle}" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SwapVisibleGraphCommand}"
+                                             CommandParameter="{Binding}" Background="{DynamicResource VisibleButtonImage}">
+                                        <Button.Triggers>
+                                            <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                <Setter Property="Content" Value="{DynamicResource UnvisibleButtonImage}"/>
+                                            </DataTrigger>
+                                        </Button.Triggers>
+                                        
+                                    </Button>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

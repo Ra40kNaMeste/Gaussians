@@ -23,7 +23,7 @@ namespace Gaussians
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel(this);
+            ((ViewModel)DataContext).TargetWindow = this;
         }
     }
 }

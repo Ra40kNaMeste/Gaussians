@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj": {}
+    "D:\\Новая папка\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
+    "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
+        "projectUniqueName": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
         "projectName": "GaussiansModel",
-        "projectPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
+        "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
         "packagesPath": "C:\\Users\\KPACAB4UK\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\obj\\",
+        "outputPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -70,14 +70,14 @@
         }
       }
     },
-    "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj": {
+    "D:\\Новая папка\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj",
+        "projectUniqueName": "D:\\Новая папка\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj",
         "projectName": "Gaussians",
-        "projectPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj",
+        "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj",
         "packagesPath": "C:\\Users\\KPACAB4UK\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Gaussians\\obj\\",
+        "outputPath": "D:\\Новая папка\\Gaussians\\Gaussians\\Gaussians\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -99,11 +99,11 @@
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
             "projectReferences": {
-              "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
-                "projectPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj"
+              "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
+                "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj"
               },
-              "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Plots\\Plots.csproj": {
-                "projectPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Plots\\Plots.csproj"
+              "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj": {
+                "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj"
               }
             }
           }
@@ -154,14 +154,14 @@
         }
       }
     },
-    "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Plots\\Plots.csproj": {
+    "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
+        "projectUniqueName": "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
         "projectName": "Plots",
-        "projectPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
+        "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
         "packagesPath": "C:\\Users\\KPACAB4UK\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Plots\\obj\\",
+        "outputPath": "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

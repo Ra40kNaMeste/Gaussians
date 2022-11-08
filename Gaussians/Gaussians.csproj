@@ -8,8 +8,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Light\Invoke.png" />
+    <None Remove="Images\Light\NotInvoke.png" />
+    <None Remove="Images\Light\NotStop.png" />
+    <None Remove="Images\Light\Stop.png" />
+    <None Remove="Images\Light\UnvisibleGraph.bmp" />
+    <None Remove="Images\Light\VisibleGraph.bmp" />
     <None Remove="Images\UnvisibleGraph.bmp" />
     <None Remove="Images\VisibleGraph.bmp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Light\Invoke.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Light\NotInvoke.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Light\NotStop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Light\Stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Light\UnvisibleGraph.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Light\VisibleGraph.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -36,15 +63,6 @@
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.4.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\UnvisibleGraph.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\VisibleGraph.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>

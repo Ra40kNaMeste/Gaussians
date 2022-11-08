@@ -1,0 +1,69 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="FrameworkElement" x:Key="BaseStyle">
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+    <Style TargetType="Button" BasedOn="{StaticResource BaseStyle}">
+        
+    </Style>
+    <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
+    </Style>
+    <Style TargetType="TextBlock">
+    </Style>
+
+    <Style TargetType="Button" x:Key="ImageButtonBase" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
+
+    <Style TargetType="Button" x:Key="InvokeButtonStyle" BasedOn="{StaticResource ImageButtonBase}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="pack://application:,,,/Gaussians;component/Images/Light/Invoke.png"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="10"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="pack://application:,,,/Gaussians;component/Images/Light/NotInvoke.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Button" x:Key="StopButtonStyle" BasedOn="{StaticResource ImageButtonBase}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="pack://application:,,,/Gaussians;component/Images/Light/Stop.png"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="10"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="pack://application:,,,/Gaussians;component/Images/Light/NotStop.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Button" x:Key="VisibleGraphButtonStyle" BasedOn="{StaticResource ImageButtonBase}">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Height" Value="20"/>
+    </Style>
+    <ImageBrush x:Key="VisibleButtonImage" ImageSource="pack://application:,,,/Gaussians;component/Images/Light/VisibleGraph.bmp"/>
+    <ImageBrush x:Key="UnvisibleButtonImage" ImageSource="pack://application:,,,/Gaussians;component/Images/Light/UnvisibleGraph.bmp"/>
+
+</ResourceDictionary>

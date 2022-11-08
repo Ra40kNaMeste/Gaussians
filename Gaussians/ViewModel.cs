@@ -47,9 +47,8 @@ namespace Gaussians
         #endregion
 
         #region Constructons
-        public ViewModel(Window targetWindow)
+        public ViewModel()
         {
-            TargetWindow = targetWindow;
             Init();
         }
 
@@ -201,6 +200,16 @@ namespace Gaussians
             set
             {
                 propertyConverter = value;
+                OnPropertyChanged();
+            }
+        }
+        private IEnumerable<string> themes;
+        public IEnumerable<string> Themes 
+        {
+            get => themes;
+            set
+            {
+                themes = value;
                 OnPropertyChanged();
             }
         }
@@ -513,7 +522,7 @@ namespace Gaussians
         #region PrivateProperties
         private CancellationTokenSource TokenSource { get; set; }
         private bool IsInvoke { get; set; }
-        private Window TargetWindow { get; init; }
+        public Window TargetWindow { get; set; }
         #endregion //PrivateProperties
 
         #region InternalProperties

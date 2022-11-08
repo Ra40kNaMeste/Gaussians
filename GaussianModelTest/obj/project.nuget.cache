@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TWXeN62zthkWhpA4AEVkk/yf0a+lhA9vRm1CIIzmK39aUV+KNlMAVLo4wwL8Q6OVoAgLeiiDy3gsZUmSJxdECQ==",
+  "dgSpecHash": "KfyvoTmvQ+kVGY2DxnXCddN8wvVH3EPjVleYVvMVDawE364KzyGRSVAVUo5zsf4RszF8ebcU+9+E0zQ4ODVxmw==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
+  "projectFilePath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\KPACAB4UK\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\KPACAB4UK\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",

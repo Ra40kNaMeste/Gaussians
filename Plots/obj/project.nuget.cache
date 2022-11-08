@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lYVLHWbyMheWYCy6Pg7hrS0C37wKUytCUhczsQTVwSuPZ3J1zjdscioS7rgCuPfchVCRHZ92IunEiayLCjvpjg==",
+  "dgSpecHash": "mlBnW2FZ8QPMT2aztU9YxE+CzFjBhM4Q+DVpW7c1jPilR9k/12dcQM/FUHlIR8bNSsB+Gpx8CqMMMiZ7fxpgrQ==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
+  "projectFilePath": "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\KPACAB4UK\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512",
     "C:\\Users\\KPACAB4UK\\.nuget\\packages\\system.reactive\\5.0.0\\system.reactive.5.0.0.nupkg.sha512"

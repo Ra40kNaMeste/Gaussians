@@ -562,26 +562,6 @@ namespace Gaussians.Properties {
         }
         
         /// <summary>
-        ///   Поиск локализованного ресурса типа System.Byte[].
-        /// </summary>
-        public static byte[] UnvisibleGraph {
-            get {
-                object obj = ResourceManager.GetObject("UnvisibleGraph", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Byte[].
-        /// </summary>
-        public static byte[] VisibleGraph {
-            get {
-                object obj = ResourceManager.GetObject("VisibleGraph", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Write nodes.
         /// </summary>
         public static string WriteNodesOperation {

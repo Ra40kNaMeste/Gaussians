@@ -24,5 +24,8 @@
     <Page Update="ResourceDictionaries\DefaultResourceDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\LightTheme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

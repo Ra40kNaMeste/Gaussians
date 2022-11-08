@@ -6062,11 +6062,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
+      "projectUniqueName": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
       "projectName": "GaussianModelTest",
-      "projectPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
+      "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
       "packagesPath": "C:\\Users\\KPACAB4UK\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussianModelTest\\obj\\",
+      "outputPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussianModelTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -6088,8 +6088,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
-              "projectPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj"
+            "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
+              "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj"
             }
           }
         }

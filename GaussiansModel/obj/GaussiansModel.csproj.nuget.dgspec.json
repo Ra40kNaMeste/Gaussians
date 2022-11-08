@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {}
+    "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
+    "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
+        "projectUniqueName": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
         "projectName": "GaussiansModel",
-        "projectPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
+        "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj",
         "packagesPath": "C:\\Users\\KPACAB4UK\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\c# Project\\Gaussians\\Gaussians\\GaussiansModel\\obj\\",
+        "outputPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

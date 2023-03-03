@@ -312,7 +312,7 @@ namespace Gaussians
 
         public bool CanInvokeFunctionGraphBody(object? parameter)
         {
-            return !IsInvoke;
+            return SelectNodeTree !=null && !IsInvoke;
         }
         public void InvokeFunctionGraphBody(object? parameter)
         {

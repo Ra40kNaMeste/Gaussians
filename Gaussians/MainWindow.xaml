@@ -81,14 +81,14 @@
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding InvokeFunctionName}"/>
-                <ProgressBar Minimum="0" Maximum="100" Value="{Binding InvokeFunctionProgress}" Width="50"/>
             </StackPanel>
         </Menu>
         <!--RunControls-->
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
-            <Button Style="{DynamicResource InvokeButtonStyle}"/>
-            <Button Style="{DynamicResource StopButtonStyle}"/>
+            <Button Style="{DynamicResource InvokeButtonStyle}" Command="{Binding InvokeFunctionGraphCommand}"/>
+            <Button Style="{DynamicResource StopButtonStyle}" Command="{Binding CancelInvokeFunctionGraphCommand}"/>
+            <Label Content="{Binding InvokeFunctionName}"/>
+            <ProgressBar Minimum="0" Maximum="100" Value="{Binding InvokeFunctionProgress}" Width="50"/>
         </StackPanel>
         <!--Body-->
         <Grid Grid.Row="2">
@@ -121,11 +121,11 @@
                                         <StackPanel>
                                             <TextBox Text="{Binding Function.Name}"/>
                                             <TextBlock Text="{x:Static res:Resources.OperationInputs}" HorizontalAlignment="Center"/>
-                                            <ListView ItemsSource="{Binding Function.Inputs}">
+                                            <ListView ItemsSource="{Binding Function.Inputs}" HorizontalAlignment="Stretch" MaxWidth="200">
                                                 <ListView.View>
                                                     <GridView>
                                                         <GridView.Columns>
-                                                            <GridViewColumn Header="{x:Static res:Resources.OperationPropertyName}" DisplayMemberBinding="{Binding Name}"/>
+                                                            <GridViewColumn Header="{x:Static res:Resources.OperationPropertyName}" DisplayMemberBinding="{Binding Name}" Width="auto"/>
                                                             <GridViewColumn Header="{x:Static res:Resources.OperationPropertyValue}">
                                                                 <GridViewColumn.CellTemplate>
                                                                     <DataTemplate>

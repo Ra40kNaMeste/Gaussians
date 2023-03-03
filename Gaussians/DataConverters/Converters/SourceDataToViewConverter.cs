@@ -4,16 +4,19 @@ using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Gaussians.DataConverters
 {
-    internal class InputSourceDataToViewConverter : IPropertyModelToViewable
+    internal class InputSourceDataToViewConverter : IPropertyModelToViewable, INotifyPropertyChanged
     {
         public virtual bool CanConvert(Type type)
         {
@@ -30,7 +33,7 @@ namespace Gaussians.DataConverters
             button.Command = OpenCommand;
 
             TextBlock textBlock = new();
-            textBlock.SetBinding(TextBox.TextProperty, "Stream");
+            textBlock.SetBinding(TextBox.TextProperty, new Binding("FileName") { Source = this }); ;
             textBlock.MinWidth = 20;
 
             res.ColumnDefinitions.Add(new());
@@ -57,7 +60,7 @@ namespace Gaussians.DataConverters
                 }
                 else
                 {
-                    
+
                     var dialog = new VistaFolderBrowserDialog();
                     if (dialog.ShowDialog() == true)
                     {
@@ -72,18 +75,22 @@ namespace Gaussians.DataConverters
 
         }
         protected FunctionParameter TargetParameter { get; set; }
+
         public string FileName
         {
             get
             {
                 return ((StreamData)TargetParameter.Value).FileName;
-
             }
             set
             {
                 ((StreamData)TargetParameter.Value).FileName = value;
+                OnPropertyChanged();
             }
         }
+
+        protected void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new(prop));
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 
     internal class InputMultiSourceDataToViewConverter : InputSourceDataToViewConverter
@@ -133,7 +140,7 @@ namespace Gaussians.DataConverters
             set
             {
                 TargetParameter.Value = value.Select(i => new StreamData(i, FileMode.Open));
-
+                OnPropertyChanged();
             }
         }
     }

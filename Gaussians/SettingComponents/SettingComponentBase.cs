@@ -19,6 +19,9 @@ namespace Gaussians.SettingComponents
         }
         public IEnumerable<ISettingComponentProperty> SettingProperties { get; protected set; }
         public IEnumerable<IActionCompoentable> SettingActions { get; protected set; }
+        public event Action<GraphVisualData> RemoveEvent;
+        protected void OnRemoveEvent(GraphVisualData data) => RemoveEvent?.Invoke(data);
+
     }
     public interface ISettingComponentProperty
     {

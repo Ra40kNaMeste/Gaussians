@@ -6062,11 +6062,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
+      "projectUniqueName": "D:\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
       "projectName": "GaussianModelTest",
-      "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
+      "projectPath": "D:\\Gaussians\\Gaussians\\GaussianModelTest\\GaussianModelTest.csproj",
       "packagesPath": "C:\\Users\\KPACAB4UK\\.nuget\\packages\\",
-      "outputPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussianModelTest\\obj\\",
+      "outputPath": "D:\\Gaussians\\Gaussians\\GaussianModelTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -6088,8 +6088,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
-              "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj"
+            "D:\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj": {
+              "projectPath": "D:\\Gaussians\\Gaussians\\GaussiansModel\\GaussiansModel.csproj"
             }
           }
         }
@@ -6137,7 +6137,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   }

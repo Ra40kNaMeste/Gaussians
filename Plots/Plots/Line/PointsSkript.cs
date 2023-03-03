@@ -50,6 +50,45 @@ namespace InteractiveDataDisplay.WPF
         }
     }
 
+    public class DotReductionToMaxCountPoints : IPointsSkript
+    {
+        public DotReductionToMaxCountPoints(int maxCount) => MaxCount = maxCount;
+        public IEnumerable<Point> OnSkript(IEnumerable<Point> points)
+        {
+            int count = points.Count();
+            if (count <= MaxCount)
+                return points;
+            double t = (double)MaxCount / (count - MaxCount);
+            int skip = (int)Math.Ceiling(t);
+            int delete = (int)Math.Ceiling(1 / t);
+            bool isSkip = true;
+            int step = 0;
+            List<Point> res = new();
+            foreach (var item in points) 
+            {
+                if (isSkip)
+                {
+                    if(step >= skip)
+                    {
+                        step = 0;
+                        isSkip = false;
+                        continue;
+                    }
+                    res.Add(item);
+                }
+                else if(step >= delete)
+                {
+                    step = 0;
+                    isSkip = true;
+                    continue;
+                }
+                step++;
+            }
+            return res;
+        }
+        private int MaxCount { get; set; }
+    }
+
     public class DeleteAngleDeviationPoints : IPointsSkript
     {
         public DeleteAngleDeviationPoints()

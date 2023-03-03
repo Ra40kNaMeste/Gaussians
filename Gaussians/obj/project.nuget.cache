@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Nn1cXhWCBv07biH4D8DnFKjgM2ML06M3Ro1iQNcvmbtQw8tvHWWQZNvMZmHK0Vth/1++2Uzbi03yfbOl09I3kA==",
+  "dgSpecHash": "dltB5NGreMRSaulYFxZHp0UsufgZ8vRbkwJ7mtilfXk4kJDCbeL0qSHYcqiWRz5ZzCAIPY1Kf6H5D8KM4ik7VA==",
   "success": true,
-  "projectFilePath": "D:\\Новая папка\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj",
+  "projectFilePath": "D:\\Gaussians\\Gaussians\\Gaussians\\Gaussians.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\KPACAB4UK\\.nuget\\packages\\extended.wpf.toolkit\\4.4.0\\extended.wpf.toolkit.4.4.0.nupkg.sha512",
     "C:\\Users\\KPACAB4UK\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",

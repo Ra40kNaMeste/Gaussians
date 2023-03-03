@@ -127,8 +127,8 @@ namespace Gaussians
             }
         }
 
-        private SettingComponentBase viewProperties;
-        public SettingComponentBase ViewProperties
+        private SettingComponentBase? viewProperties;
+        public SettingComponentBase? ViewProperties
         {
             get { return viewProperties; }
             private set
@@ -301,7 +301,19 @@ namespace Gaussians
         public void ShowPropertiesGraphBody(object? parameter)
         {
             if (parameter is GraphVisualData metadata)
+            {
                 ViewProperties = metadata.GetSettingGraph(GraphList);
+                int index = GraphList.GraphListDates.IndexOf(metadata);
+                GraphVisualData? nextDate = index < 1? null : GraphList.GraphListDates[--index];
+
+                ViewProperties.RemoveEvent += (i) =>
+                {
+                    if (nextDate != null)
+                        ShowPropertiesGraphBody(nextDate);
+                    else 
+                        ViewProperties = null;
+                };
+            }
         }
 
         public void SwapVisibleGraphBody(object? parameter)
@@ -312,7 +324,7 @@ namespace Gaussians
 
         public bool CanInvokeFunctionGraphBody(object? parameter)
         {
-            return !IsInvoke;
+            return SelectNodeTree !=null && !IsInvoke;
         }
         public void InvokeFunctionGraphBody(object? parameter)
         {
@@ -338,10 +350,11 @@ namespace Gaussians
                     MessageBox.Show("Error");
                     SelectNodeTree.FunctionProgressChanged -= SetInvokeFunctionProgress;
                     IsInvoke = false;
+                    ClearInvokeFunctionProgress();
                     return;
                 }
                 SelectNodeTree.FunctionProgressChanged -= SetInvokeFunctionProgress;
-                
+                ClearInvokeFunctionProgress();
                 foreach (var function in SelectNodeTree.Functions)
                 {
                     if (function.Function is IVisualGraph graph)
@@ -509,7 +522,11 @@ namespace Gaussians
             InvokeFunctionName = e.FuncName;
             InvokeFunctionProgress = e.Progress;
         }
-
+        private void ClearInvokeFunctionProgress() 
+        {
+            InvokeFunctionName = string.Empty;
+            InvokeFunctionProgress = 0;
+        }
         private void CreateVisualGraphByModel(IGraph graph)
         {
             GraphVisualData metadata = GraphBuilder.Build(Generator.GraphNameGenerator.Next(), graph);

@@ -35,7 +35,7 @@ namespace Gaussians.DataConverters
                 PointGraph res = new PointGraph();
                 res.VisualMode = PointGraphState.OnlyPoints;
                 res.RadiusPoint = 2;
-                res.SelectionPoints = new MultiDeletePointsWithShowAll(new DeleteNoisePotins(20), new DeleteAngleDeviationPoints(0.1))
+                res.SelectionPoints = new MultiDeletePointsWithShowAll(new DeleteNoisePotins(20), new DeleteAngleDeviationPoints(0.1), new DotReductionToMaxCountPoints(200))
                 {
                     MaxPointsForShowAll = 300
                 };

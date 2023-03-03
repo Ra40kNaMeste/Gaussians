@@ -32,7 +32,7 @@ namespace Gaussians.SettingComponents
 
             foreach (var item in commands)
             {
-                item.SetDates(data, manager);
+                item.SetDates(data, manager, OnRemoveEvent);
             }
             SettingActions = commands;
         }
@@ -129,7 +129,7 @@ namespace Gaussians.SettingComponents
 
     internal abstract class SettingGraphActionBase : IActionCompoentable
     {
-        public abstract void SetDates(GraphVisualData data, GraphViewManager manager);
+        public abstract void SetDates(GraphVisualData data, GraphViewManager manager, Action<GraphVisualData> removeAction);
         public abstract string Name { get; }
 
         public abstract ICommand Command { get; }
@@ -146,14 +146,15 @@ namespace Gaussians.SettingComponents
         private SolidColorBrush brush = new(Colors.Red);
         public override Brush Brush => brush;
 
-        public override void SetDates(GraphVisualData data, GraphViewManager manager)
+        public override void SetDates(GraphVisualData data, GraphViewManager manager, Action<GraphVisualData> removeAction)
         {
-            command = new DefaultCommand(i => RemoveGraph(i, data, manager));
+            command = new DefaultCommand(i => RemoveGraph(i, data, manager, removeAction));
         }
-        private void RemoveGraph(object? parameter, GraphVisualData data, GraphViewManager manager)
+        private void RemoveGraph(object? parameter, GraphVisualData data, GraphViewManager manager, Action<GraphVisualData> removeAction)
         {
             data.IsVisible = false;
             manager.RemoveGraph(data);
+            removeAction?.Invoke(data);
         }
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj": {}
+    "D:\\Gaussians\\Gaussians\\Plots\\Plots.csproj": {}
   },
   "projects": {
-    "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj": {
+    "D:\\Gaussians\\Gaussians\\Plots\\Plots.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
+        "projectUniqueName": "D:\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
         "projectName": "Plots",
-        "projectPath": "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
+        "projectPath": "D:\\Gaussians\\Gaussians\\Plots\\Plots.csproj",
         "packagesPath": "C:\\Users\\KPACAB4UK\\.nuget\\packages\\",
-        "outputPath": "D:\\Новая папка\\Gaussians\\Gaussians\\Plots\\obj\\",
+        "outputPath": "D:\\Gaussians\\Gaussians\\Plots\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -73,7 +73,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }

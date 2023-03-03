@@ -61,7 +61,13 @@
     </Style>
     <Style TargetType="Button" x:Key="VisibleGraphButtonStyle" BasedOn="{StaticResource ImageButtonBase}">
         <Setter Property="Width" Value="25"/>
-        <Setter Property="Height" Value="20"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property ="Background" Value="{DynamicResource VisibleButtonImage}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                <Setter Property="Background" Value="{DynamicResource UnvisibleButtonImage}"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     <ImageBrush x:Key="VisibleButtonImage" ImageSource="pack://application:,,,/Gaussians;component/Images/Light/VisibleGraph.bmp"/>
     <ImageBrush x:Key="UnvisibleButtonImage" ImageSource="pack://application:,,,/Gaussians;component/Images/Light/UnvisibleGraph.bmp"/>
